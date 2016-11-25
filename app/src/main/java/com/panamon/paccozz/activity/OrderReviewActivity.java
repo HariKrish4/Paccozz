@@ -146,7 +146,6 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCo
 
     private void applyCoupon() {
         progressBar.setVisibility(View.VISIBLE);
-
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = Constants.COUPON_URL;
