@@ -1,0 +1,155 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="icon_center_width">380dp</dimen>
+    <!-- Text Size -->
+    <dimen name="too_small_text">13sp</dimen>
+    <dimen name="too_small_text_sizes">14sp</dimen>
+    <dimen name="small_text">15sp</dimen>
+    <dimen name="small_text_size">16sp</dimen>
+    <dimen name="medium_text_size">20sp</dimen>
+    <dimen name="large_text_size">30sp</dimen>
+    <dimen name="ex_large_text_size">32sp</dimen>
+    <dimen name="default_text_size">16sp</dimen>
+    <dimen name="eighteen_sp">18sp</dimen>
+    <dimen name="ten_sp">10sp</dimen>
+    <dimen name="nine_sp">9sp</dimen>
+    <dimen name="eight_sp">6sp</dimen>
+    <dimen name="proposal_balance_due">24dp</dimen>
+
+    <!-- Presentation text sizes -->
+    <dimen name="presentation_header_small">15sp</dimen>
+    <dimen name="presentation_header_medium">15sp</dimen>
+    <dimen name="presentation_header_large">20sp</dimen>
+
+    <!-- Common -->
+    <dimen name="five">5dp</dimen>
+    <dimen name="ten">10dp</dimen>
+    <dimen name="sixty">60dp</dimen>
+    <dimen name="hundred">100dp</dimen>
+    <dimen name="hundredten">110dp</dimen>
+    <dimen name="hundredsixty">140dp</dimen>
+
+    <dimen name="twentyfive">25dp</dimen>
+    <dimen name="twenty_add">20dp</dimen>
+    <dimen name="thirtyFive">35dp</dimen>
+    <dimen name="fifteen">15dp</dimen>
+    <dimen name="calender_height_sixty">60dp</dimen>
+    <dimen name="fourty">40dp</dimen>
+    <dimen name="thirty">30dp</dimen>
+    <dimen name="forty_six">46dp</dimen>
+
+    <!-- Login Activity -->
+    <dimen name="login_container_width">350dp</dimen>
+    <dimen name="login_container_height">250dp</dimen>
+    <dimen name="grid_height">320dp</dimen>
+
+    <!-- Home Activity -->
+
+    <!--<dimen name="default_toolbar_height">64dp</dimen>-->
+    <dimen name="default_toolbar_height">75dp</dimen>
+    <dimen name="default_toolbar_margin">12dp</dimen>
+    <dimen name="default_toolbar_margin_home_icon">20dp</dimen>
+    <dimen name="toolbar_resource_width">50dp</dimen>
+    <dimen name="toolbar_resource_height">50dp</dimen>
+    <dimen name="home_thirty">30dp</dimen>
+    <dimen name="home_fifty">50dp</dimen>
+    <dimen name="home_sixty">60dp</dimen>
+    <dimen name="home_seventy">70dp</dimen>
+    <dimen name="home_eighty">80dp</dimen>
+    <dimen name="home_ninty">90dp</dimen>
+    <dimen name="home_hundred">100dp</dimen>
+    <dimen name="home_fourty">40dp</dimen>
+    <dimen name="home_two">2dp</dimen>
+    <dimen name="home_three">3dp</dimen>
+    <dimen name="home_four">4dp</dimen>
+    <dimen name="home_five">5dp</dimen>
+    <dimen name="home_seven">7dp</dimen>
+    <dimen name="home_eight">8dp</dimen>
+    <dimen name="too_small_text_size">12sp</dimen>
+    <dimen name="list_text_size">14sp</dimen>
+    <dimen name="seventy">70dp</dimen>
+    <dimen name="nav_drawer_width">264dp</dimen>
+    <dimen name="nav_drawer_user_pf_height">160dp</dimen>
+    <dimen name="search_text_width">110dp</dimen>
+    <dimen name="appnt_result_text_width">180dp</dimen>
+    <dimen name="twohundred">200dp</dimen>
+    <dimen name="nav_drawer_listrow_text_height">1.5dp</dimen>
+    <dimen name="nav_drawer_listrow_height">55dp</dimen>
+    <dimen name="nav_drawer_uf_image_width">110dp</dimen>
+    <dimen name="nav_eighteen">18dp</dimen>
+    <dimen name="home_divider_width">235dp</dimen>
+    <dimen name="schedule_appnt_list">120dp</dimen>
+    <dimen name="legent_txt_size">12sp</dimen>
+    <dimen name="reactive_width">100dp</dimen>
+    <dimen name="hundread_fifty">150dp</dimen>
+
+    <!-- dialog width height -->
+    <dimen name="search_dialog_width">400dp</dimen>
+    <dimen name="search_dialog_height">470dp</dimen>
+    <dimen name="appnt_dialog_width">600dp</dimen>
+    <dimen name="gallery_image_size">130dp</dimen>
+    <dimen name="schedule_appnt_height">500dp</dimen>
+    <dimen name="unsold_text_margin">230dp</dimen>
+    <dimen name="upcoming_appt_margin">230dp</dimen>
+    <dimen name="dialog_height">270dp</dimen>
+
+    <integer name="dialog_x">30</integer>
+    <integer name="dialog_y">60</integer>
+
+    <dimen name="unsold_dialog_width">665dp</dimen>
+    <dimen name="unsold_dialog_height">450dp</dimen>
+    <dimen name="menu_alert_size">35dp</dimen>
+
+    <dimen name="home_one">1dp</dimen>
+    <dimen name="home_one_new">1dp</dimen>
+    <dimen name="two_eighty">300dp</dimen>
+    <dimen name="cus_tag_code_twenty">20dp</dimen>
+    <dimen name="cus_tag_centre_code_margin">30dp</dimen>
+    <dimen name="cus_tag_line_width">170dp</dimen>
+    <dimen name="cus_tag_arrow_margin">95dp</dimen>
+    <dimen name="one_twenty">120dp</dimen>
+    <dimen name="point_five_dp">0.5dp</dimen>
+    <dimen name="twohundreadfifty">250dp</dimen>
+    <dimen name="hundreadfifty">130dp</dimen>
+    <dimen name="fab_fourty">40dp</dimen>
+    <dimen name="sevenhundread">700dp</dimen>
+    <dimen name="sevenhundreadfifty">720dp</dimen>
+    <dimen name="ninehundread">1090dp</dimen>
+    <dimen name="hundredtwenty">150dp</dimen>
+    <dimen name="threehundred">300dp</dimen>
+    <dimen name="demonstration_pro_popup_width">650dp</dimen>
+
+    <dimen name="demonstration_pro_popup_height">300dp</dimen>
+    <dimen name="ninehundred">900dp</dimen>
+
+    <!-- Proposal Finance UI -->
+
+    <dimen name="proposal_finance_width">350dp</dimen>
+    <dimen name="welcome_hundred">120dp</dimen>
+    <dimen name="go_to_timeline_padding">20dp</dimen>
+    <dimen name="go_to_timeline_textsize">23sp</dimen>
+    <dimen name="go_to_timeline_iconsize">30dp</dimen>
+    <dimen name="add_customer_header_height">65dp</dimen>
+    <dimen name="add_customer_field_bg_height">3dp</dimen>
+
+
+    <!--BIZWIZ on the go -->
+    <dimen name="oneforty">140dp</dimen>
+    <dimen name="popup_dialog_width">750dp</dimen>
+
+    <dimen name="text_14">14sp</dimen>
+    <dimen name="text_15">15sp</dimen>
+    <dimen name="text_16">16sp</dimen>
+    <dimen name="text_18">18sp</dimen>
+    <dimen name="text_20">20sp</dimen>
+    <dimen name="text_22">22sp</dimen>
+    <dimen name="text_25">25sp</dimen>
+
+</resources>

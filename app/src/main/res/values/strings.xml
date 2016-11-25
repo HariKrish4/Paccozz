@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Paccozz</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_hotel_details">HotelDetailsActivity</string>
+    <string name="rs">\u20B9</string>
+    <string name="title_activity_order_review">OrderReviewActivity</string>
+</resources>

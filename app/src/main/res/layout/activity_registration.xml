@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_registration"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    tools:context="com.panamon.paccozz.activity.RegistrationActivity">
+
+    <ImageView
+        android:id="@+id/logo_img"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/paccozz_final_logo_orange" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_submit"
+        android:layout_below="@+id/logo_img"
+        android:layout_margin="@dimen/activity_horizontal_margin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_tint"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/ten">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_imageView"
+                android:layout_width="@dimen/home_eighty"
+                android:layout_height="@dimen/home_eighty"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center"
+                android:src="@drawable/image_placeholder" />
+
+            <EditText
+                android:id="@+id/edt_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/five"
+                android:background="@drawable/editext_bckgrund"
+                android:hint="Name"
+                android:inputType="textCapSentences"
+                android:padding="@dimen/five"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/darker_gray" />
+
+            <EditText
+                android:id="@+id/edt_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/five"
+                android:background="@drawable/editext_bckgrund"
+                android:hint="Age"
+                android:inputType="number"
+                android:padding="@dimen/five"
+                android:maxLength="2"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/five"
+                android:background="@drawable/editext_bckgrund"
+                android:orientation="horizontal"
+                android:textColorHint="@android:color/white">
+
+                <RadioGroup
+                    android:id="@+id/group_radio_dia_sex"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radio_male"
+                        android:layout_width="30dp"
+                        android:layout_height="28dp"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="10dp"
+                        android:checked="true"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/radio_textone_sex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center|left"
+                        android:paddingLeft="10dp"
+                        android:paddingStart="10dp"
+                        android:text="Male"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_female"
+                        android:layout_width="30dp"
+                        android:layout_height="28dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingStart="10dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/radio_texttwosex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center|left"
+                        android:paddingLeft="10dp"
+                        android:text="Female"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_others"
+                        android:layout_width="30dp"
+                        android:layout_height="28dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/radio_textothers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center|left"
+                        android:paddingLeft="15dp"
+                        android:text="Others"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edt_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/five"
+                android:background="@drawable/editext_bckgrund"
+                android:hint="Email"
+                android:inputType="textCapSentences"
+                android:padding="@dimen/five"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/darker_gray" />
+
+            <EditText
+                android:id="@+id/edt_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/five"
+                android:background="@drawable/editext_bckgrund"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="@dimen/five"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/darker_gray" />
+
+            <EditText
+                android:id="@+id/edt_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/five"
+                android:background="@drawable/editext_bckgrund"
+                android:hint="Mobile Number"
+                android:inputType="number"
+                android:padding="@dimen/five"
+                android:maxLength="10"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/darker_gray" />
+
+            <Spinner
+                android:id="@+id/spn_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/five"
+                android:background="@drawable/editext_bckgrund"
+                android:padding="@dimen/five"
+                android:textColor="@android:color/white" />
+
+            <Spinner
+                android:id="@+id/spn_place"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/five"
+                android:background="@drawable/editext_bckgrund"
+                android:padding="@dimen/five"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:text="Submit"
+        android:textColor="@android:color/white" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:progressDrawable="@drawable/paccozz_progress_bar"
+        android:visibility="gone" />
+
+</RelativeLayout>
