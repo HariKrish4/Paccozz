@@ -230,8 +230,9 @@
                             android:background="@drawable/apply_bckgrund"
                             android:gravity="center"
                             android:padding="@dimen/five"
-                            android:text="Enter Coupon"
-                            android:textColor="@android:color/darker_gray" />
+                            android:hint="Enter Coupon"
+                            android:textColorHint="@android:color/darker_gray"
+                            android:textColor="@android:color/black" />
 
                         <ImageView
                             android:id="@+id/apply_img"

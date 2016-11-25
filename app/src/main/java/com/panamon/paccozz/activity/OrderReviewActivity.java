@@ -166,7 +166,8 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCo
                                 String message = jsonObject.getString("message");
                                 textView_totalprice.setText(grnd_total+"");
                             } else {
-                                Toast.makeText(OrderReviewActivity.this, "Invalid Coupon", Toast.LENGTH_LONG);
+                                Snackbar.make(editText_applycoupon, "Invalid Coupon", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -176,7 +177,8 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCo
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(OrderReviewActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                Snackbar.make(editText_applycoupon, error.toString(), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         }) {
             @Override
