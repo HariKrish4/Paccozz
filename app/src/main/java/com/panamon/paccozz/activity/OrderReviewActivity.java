@@ -165,9 +165,7 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCo
                                 int grnd_total = Integer.parseInt(jsonObject.getString("amount"));
                                 String cupid = jsonObject.getString("couponid");
                                 String message = jsonObject.getString("message");
-
                                 textView_totalprice.setText(grnd_total+"");
-
                             } else {
                                 Toast.makeText(OrderReviewActivity.this, "Invalid Coupon", Toast.LENGTH_LONG);
                             }
