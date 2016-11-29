@@ -1,5 +1,8 @@
 package com.panamon.paccozz.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -29,6 +32,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.facebook.stetho.Stetho;
+import com.panamon.paccozz.common.SharedPref;
 import com.panamon.paccozz.common.Singleton;
 import com.panamon.paccozz.dbadater.CommonDBHelper;
 import com.panamon.paccozz.model.HotelListModel;
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<PlacesModel> placesLists;
     private RecyclerView hotelListView;
     private String placeId;
+    private SharedPref sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +69,8 @@ public class MainActivity extends AppCompatActivity
         Stetho.initializeWithDefaults(this);
         //Initializing the database
         CommonDBHelper.getInstance(this);
+
+        sharedPref = new SharedPref(this);
 
         placeId = Singleton.getInstance().ParkId;
         Singleton.getInstance().context = this;
@@ -266,6 +273,27 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_logout) {
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("Alert!")
+                    .setMessage("Are you sure you want to logout?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            finish();
+                            sharedPref.setIsLogged(false);
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .show();
 
         }
 
