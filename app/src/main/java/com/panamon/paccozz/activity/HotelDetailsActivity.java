@@ -25,8 +25,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.panamon.paccozz.common.Singleton;
+import com.panamon.paccozz.dbadater.AddOnDBAdapter;
 import com.panamon.paccozz.dbadater.CommonDBHelper;
 import com.panamon.paccozz.dbadater.FoodItemDBAdapter;
+import com.panamon.paccozz.model.AddOnItemModel;
+import com.panamon.paccozz.model.AddOnSubItemModel;
 import com.panamon.paccozz.model.CategoryModel;
 import com.panamon.paccozz.model.FoodItemModel;
 import com.panamon.paccozz.R;
@@ -107,6 +110,7 @@ public class HotelDetailsActivity extends AppCompatActivity {
         vendorDetailsModels = new ArrayList<>();
         CommonDBHelper.getInstance().truncateAllTables();
         final FoodItemDBAdapter foodItemDBAdapter = new FoodItemDBAdapter();
+        final AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = Constants.VENDORDETAILS_URL;
@@ -151,6 +155,32 @@ public class HotelDetailsActivity extends AppCompatActivity {
                                     foodItemModel.ItemVendorId = itemObject1.getString("venid");
                                     foodItemModel.ItemType = itemObject1.getString("itemtype");
                                     foodItemDBAdapter.insertFoodItem(foodItemModel);
+                                }
+
+                                //getting addons in vendor
+                                Singleton.getInstance().AddOns = vendorObject.getString("addons");
+                                if(Singleton.getInstance().AddOns.equalsIgnoreCase("1")) {
+                                    JSONObject addOnObject = vendorObject.getJSONObject("headers");
+                                    JSONArray addOnArray = addOnObject.getJSONArray("headerlist");
+                                    for (int l = 0; l < addOnArray.length(); l++) {
+                                        JSONObject addOnArrayObject = addOnArray.getJSONObject(l);
+                                        AddOnItemModel addOnItemModel = new AddOnItemModel();
+                                        addOnItemModel.AddOnCateroryId = addOnArrayObject.getString("hitemid");
+                                        addOnItemModel.AddOnId = addOnArrayObject.getString("headerid");
+                                        addOnItemModel.AddOnName = addOnArrayObject.getString("addonheader");
+                                        JSONArray addOnSubItemArray = addOnArrayObject.getJSONArray("subitemslist");
+                                        for (int m = 0; m < addOnSubItemArray.length(); m++) {
+                                            JSONObject addOnSubItemArrayObject = addOnSubItemArray.getJSONObject(m);
+                                            AddOnSubItemModel addOnSubItemModel = new AddOnSubItemModel();
+                                            addOnSubItemModel.AddOnCateroryId = addOnArrayObject.getString("hitemid");
+                                            addOnSubItemModel.AddOnSubItemId = addOnSubItemArrayObject.getString("addonid");
+                                            addOnSubItemModel.AddOnSubItemName = addOnSubItemArrayObject.getString("addonname");
+                                            addOnSubItemModel.AddOnId = addOnSubItemArrayObject.getString("headid");
+                                            addOnSubItemModel.AddOnPrice = addOnSubItemArrayObject.getString("addonprice");
+                                            addOnDBAdapter.insertAddOnSubItem(addOnSubItemModel);
+                                        }
+                                        addOnDBAdapter.insertAddOnItem(addOnItemModel);
+                                    }
                                 }
                                 vendorDetailsModel.VenId = vendorObject.getString("venid");
                                 vendorDetailsModel.VenName = vendorObject.getString("venname");

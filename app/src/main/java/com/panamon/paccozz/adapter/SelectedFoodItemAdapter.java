@@ -1,7 +1,6 @@
 package com.panamon.paccozz.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,7 @@ import android.widget.TextView;
 
 import com.panamon.paccozz.R;
 import com.panamon.paccozz.dbadater.FoodItemDBAdapter;
-import com.panamon.paccozz.interfaces.FoodItemCountChange;
+import com.panamon.paccozz.interfaces.SelectedFoodItemCountChange;
 import com.panamon.paccozz.model.FoodItemModel;
 
 import java.util.List;
@@ -24,10 +23,10 @@ public class SelectedFoodItemAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<FoodItemModel> foodItemModels;
     private int itemCount = 0, itemCost = 0;
-    private FoodItemCountChange foodItemCountChange;
+    private SelectedFoodItemCountChange foodItemCountChange;
     private FoodItemDBAdapter foodItemDBAdapter;
 
-    public SelectedFoodItemAdapter(Context context, List<FoodItemModel> foodItemModels, FoodItemCountChange foodItemCountChange) {
+    public SelectedFoodItemAdapter(Context context, List<FoodItemModel> foodItemModels, SelectedFoodItemCountChange foodItemCountChange) {
         this.context = context;
         this.foodItemModels = foodItemModels;
         this.foodItemCountChange = foodItemCountChange;

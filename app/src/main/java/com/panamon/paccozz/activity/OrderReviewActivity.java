@@ -1,7 +1,6 @@
 package com.panamon.paccozz.activity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,12 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,16 +22,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.panamon.paccozz.R;
-import com.panamon.paccozz.adapter.FoodItemAdapter;
 import com.panamon.paccozz.adapter.SelectedFoodItemAdapter;
 import com.panamon.paccozz.common.Constants;
 import com.panamon.paccozz.common.Singleton;
 import com.panamon.paccozz.dbadater.FoodItemDBAdapter;
-import com.panamon.paccozz.interfaces.FoodItemCountChange;
+import com.panamon.paccozz.interfaces.SelectedFoodItemCountChange;
 import com.panamon.paccozz.model.FoodItemModel;
-import com.panamon.paccozz.model.PlacesModel;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,10 +36,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.panamon.paccozz.R.id.tax_txt;
-import static com.panamon.paccozz.R.id.textView_proceed;
-
-public class OrderReviewActivity extends AppCompatActivity implements FoodItemCountChange, View.OnClickListener {
+public class OrderReviewActivity extends AppCompatActivity implements SelectedFoodItemCountChange, View.OnClickListener {
 
     private RecyclerView selectedItemLists;
     private TextView textView_item, textView_proceed, textView_discount, textView_taxprice, textView_totalprice, textView_vendor_name;

@@ -36,4 +36,5 @@ public class Singleton {
     public String VendorName = "";
     public Context context;
     public ArrayList<CategoryModel> categories = new ArrayList<>();
+    public String AddOns = "";
 }

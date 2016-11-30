@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomSheetLayout"
+    android:layout_width="match_parent"
+    android:background="#FFF"
+    android:layout_height="400dp"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="60dp"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <LinearLayout
+        android:id="@+id/titleLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#DDD"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/ten"
+        android:paddingLeft="@dimen/twentyfive"
+        android:paddingTop="@dimen/ten">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add ons"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/five"
+                android:text="₹ 85"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="@dimen/text_16" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/doneTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/ten"
+            android:text="Done"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_18" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/addon_lists"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titleLL"
+        android:paddingLeft="@dimen/twentyfive"
+        android:paddingTop="@dimen/ten"
+        android:paddingRight="@dimen/ten"
+        android:scrollbars="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>

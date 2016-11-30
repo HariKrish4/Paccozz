@@ -8,7 +8,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.panamon.paccozz.R;
+import com.panamon.paccozz.common.Singleton;
 import com.panamon.paccozz.dbadater.FoodItemDBAdapter;
+import com.panamon.paccozz.interfaces.FoodItemChanged;
+import com.panamon.paccozz.interfaces.SelectedFoodItemCountChange;
 import com.panamon.paccozz.model.FoodItemModel;
 
 import java.util.List;
@@ -23,10 +26,12 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
     private List<FoodItemModel> foodItemModels;
     private int itemCount = 0, itemCost = 0;
     private FoodItemDBAdapter foodItemDBAdapter;
+    private FoodItemChanged foodItemCountChange;
 
-    public FoodItemAdapter(Context context, List<FoodItemModel> foodItemModels) {
+    public FoodItemAdapter(Context context, List<FoodItemModel> foodItemModels, FoodItemChanged foodItemCountChange) {
         this.context = context;
         this.foodItemModels = foodItemModels;
+        this.foodItemCountChange = foodItemCountChange;
     }
 
     @Override
@@ -71,12 +76,21 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
                 itemCount--;
                 if (itemCount >= 0) {
                     calculateTotalCost(myViewHolder, clikedFoodItemModel);
-                    if(itemCount == 0){
+                    if (itemCount == 0) {
                         foodItemDBAdapter.updateIsItemSelected("0", clikedFoodItemModel.ItemId);
                     }
                 }
             }
         });
+
+        if(Singleton.getInstance().AddOns.equalsIgnoreCase("1")){
+            myViewHolder.TxtCustomization.setVisibility(View.VISIBLE);
+            myViewHolder.ViewCustomization.setVisibility(View.VISIBLE);
+        }
+        else{
+            myViewHolder.TxtCustomization.setVisibility(View.GONE);
+            myViewHolder.ViewCustomization.setVisibility(View.GONE);
+        }
     }
 
     private void calculateTotalCost(MyViewHolder myViewHolder, FoodItemModel clikedFoodItemModel) {
@@ -84,6 +98,7 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
         int totalCost = itemCost * itemCount;
         foodItemDBAdapter.updateItemCount(itemCount + "", clikedFoodItemModel.ItemId);
         foodItemDBAdapter.updateTotalCost(totalCost + "", clikedFoodItemModel.ItemId);
+        foodItemCountChange.onFoodItemCountChanged(clikedFoodItemModel.ItemId,itemCount);
     }
 
     @Override
@@ -98,6 +113,8 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
         public TextView ItemCount;
         public TextView TxtPlus;
         public TextView TxtMinus;
+        public TextView TxtCustomization;
+        public View ViewCustomization;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -106,6 +123,8 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
             ItemCount = (TextView) itemView.findViewById(R.id.item_count_txt);
             TxtMinus = (TextView) itemView.findViewById(R.id.minus);
             TxtPlus = (TextView) itemView.findViewById(R.id.plus);
+            TxtCustomization = (TextView) itemView.findViewById(R.id.customization_txt);
+            ViewCustomization = itemView.findViewById(R.id.customization_view);
         }
     }
 }
