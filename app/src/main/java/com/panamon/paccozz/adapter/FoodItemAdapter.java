@@ -50,6 +50,7 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
         myViewHolder.ItemRate.setText(foodItemModel.ItemCost);
         myViewHolder.TxtPlus.setTag(position);
         myViewHolder.TxtMinus.setTag(position);
+        myViewHolder.TxtCustomization.setTag(position);
         itemCount = Integer.parseInt(foodItemModel.ItemCount);
         foodItemDBAdapter = new FoodItemDBAdapter();
         myViewHolder.TxtPlus.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +81,15 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
                         foodItemDBAdapter.updateIsItemSelected("0", clikedFoodItemModel.ItemId);
                     }
                 }
+            }
+        });
+
+        myViewHolder.TxtCustomization.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int pos = (int) view.getTag();
+                FoodItemModel clikedFoodItemModel = foodItemModels.get(pos);
+                foodItemCountChange.onCustomizationClicked(clikedFoodItemModel.ItemId);
             }
         });
 

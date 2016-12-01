@@ -76,4 +76,14 @@ public class AddOnDBAdapter implements TableConstants {
         CommonDBHelper.getInstance().close();
         return addOnSubItemModels;
     }
+
+    //update selected item value when the value is 0
+    public void updateIsItemSelected(String isItemSelected, String itemId) {
+        CommonDBHelper.getInstance().open();
+        ContentValues values = new ContentValues();
+        values.put(IS_ITEM_SELECTED, isItemSelected);
+        CommonDBHelper.getInstance().getDb().update(ADDON_SUBITEM_TABLE, values, ADDON_SUBITEM_ID + " = ?",
+                new String[]{String.valueOf(itemId)});
+        CommonDBHelper.getInstance().close();
+    }
 }

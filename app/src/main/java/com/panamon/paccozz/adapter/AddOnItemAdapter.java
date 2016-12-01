@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.panamon.paccozz.R;
 import com.panamon.paccozz.common.Singleton;
 import com.panamon.paccozz.dbadater.AddOnDBAdapter;
+import com.panamon.paccozz.interfaces.AddonItemClicked;
 import com.panamon.paccozz.model.AddOnItemModel;
 import com.panamon.paccozz.model.AddOnSubItemModel;
 
@@ -26,11 +28,12 @@ public class AddOnItemAdapter extends RecyclerView.Adapter {
 
     private Context context;
     private List<AddOnItemModel> addOnItemModels;
+    private AddonItemClicked addonItemClicked;
 
-    public AddOnItemAdapter(Context context, List<AddOnItemModel> addOnItemModels) {
+    public AddOnItemAdapter(Context context, List<AddOnItemModel> addOnItemModels, AddonItemClicked addonItemClicked) {
         this.context = context;
         this.addOnItemModels = addOnItemModels;
-
+        this.addonItemClicked = addonItemClicked;
     }
 
     @Override
@@ -43,14 +46,14 @@ public class AddOnItemAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MyViewHolder myViewHolder = (MyViewHolder) holder;
-        AddOnItemModel addOnItemModel = addOnItemModels.get(position);
+        final AddOnItemModel addOnItemModel = addOnItemModels.get(position);
         myViewHolder.HeaderTxt.setText(addOnItemModel.AddOnName);
-        AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
-        ArrayList<AddOnSubItemModel> addOnSubItemModels = addOnDBAdapter.getAddOnSubItems(addOnItemModel.AddOnId);
-        AddOnSubItemAdapter addOnSubItemAdapter = new AddOnSubItemAdapter(Singleton.getInstance().context, addOnSubItemModels);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
-        myViewHolder.AddOnSubItemLists.setLayoutManager(mLayoutManager);
-        myViewHolder.AddOnSubItemLists.setAdapter(addOnSubItemAdapter);
+        myViewHolder.ItemLL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addonItemClicked.onAddonItemClicked(addOnItemModel.AddOnId);
+            }
+        });
     }
 
     @Override
@@ -62,12 +65,14 @@ public class AddOnItemAdapter extends RecyclerView.Adapter {
 
         public TextView HeaderTxt;
         public ImageView ExpandImg;
+        public RelativeLayout ItemLL;
         public RecyclerView AddOnSubItemLists;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             HeaderTxt = (TextView) itemView.findViewById(R.id.headerTxt);
             ExpandImg = (ImageView) itemView.findViewById(R.id.expandImg);
+            ItemLL = (RelativeLayout) itemView.findViewById(R.id.item_ll);
             AddOnSubItemLists = (RecyclerView) itemView.findViewById(R.id.addonSubItem_lists);
         }
     }

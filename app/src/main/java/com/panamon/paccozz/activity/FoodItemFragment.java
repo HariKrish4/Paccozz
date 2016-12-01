@@ -11,17 +11,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.panamon.paccozz.R;
 import com.panamon.paccozz.adapter.AddOnItemAdapter;
+import com.panamon.paccozz.adapter.AddOnSubItemAdapter;
 import com.panamon.paccozz.adapter.FoodItemAdapter;
 import com.panamon.paccozz.common.Singleton;
 import com.panamon.paccozz.dbadater.AddOnDBAdapter;
 import com.panamon.paccozz.dbadater.FoodItemDBAdapter;
+import com.panamon.paccozz.interfaces.AddonItemClicked;
 import com.panamon.paccozz.interfaces.FoodItemChanged;
 import com.panamon.paccozz.interfaces.SelectedFoodItemCountChange;
 import com.panamon.paccozz.model.AddOnItemModel;
+import com.panamon.paccozz.model.AddOnSubItemModel;
 import com.panamon.paccozz.model.FoodItemModel;
 
 import java.util.ArrayList;
@@ -31,7 +35,7 @@ import java.util.List;
  * Created by Hari on 11/18/2016.
  */
 
-public class FoodItemFragment extends Fragment implements FoodItemChanged{
+public class FoodItemFragment extends Fragment implements FoodItemChanged, AddonItemClicked{
 
     private RecyclerView vendorFoodLists,addOnsItemLists;
     private FoodItemAdapter foodItemAdapter;
@@ -41,6 +45,8 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged{
     private TextView noDataTxt;
     private String categoryId;
     private BottomSheetBehavior behavior;
+    private RelativeLayout bottomSheetLayout;
+    private boolean addonsChoosed = false;
 
     public FoodItemFragment() {
         // Required empty public constructor
@@ -86,8 +92,9 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged{
         });
 
         //bottom sheet layout
-        behavior = BottomSheetBehavior.from(rootView.findViewById(R.id.bottomSheetLayout));
-        behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        //behavior = BottomSheetBehavior.from(rootView.findViewById(R.id.bottomSheetLayout));
+        bottomSheetLayout = (RelativeLayout) rootView.findViewById(R.id.bottomSheetLayout);
+        //behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
         //displaying addons
         addOnsItemLists = (RecyclerView) rootView.findViewById(R.id.addon_lists);
@@ -95,7 +102,9 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged{
         doneTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                bottomSheetLayout.setVisibility(View.GONE);
+                vendorFoodLists.setVisibility(View.VISIBLE);
+                //behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
             }
         });
 
@@ -110,6 +119,13 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged{
     }
 
     private void displayFoodItems() {
+        AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
+        ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(categoryId);
+        if(addOnItemModels.size()>0){
+            Singleton.getInstance().AddOns = "1";
+        }else{
+
+        }
         foodItemModels = foodItemDBAdapter.getFoodItems(categoryId);
         foodItemAdapter = new FoodItemAdapter(Singleton.getInstance().context, foodItemModels,this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
@@ -136,14 +152,40 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged{
 
     @Override
     public void onFoodItemCountChanged(String itemId,int itemcount) {
-        if(itemcount == 1) {
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        if(!addonsChoosed&&Singleton.getInstance().AddOns.equalsIgnoreCase("1")) {
+            //behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            bottomSheetLayout.setVisibility(View.VISIBLE);
+            vendorFoodLists.setVisibility(View.GONE);
             AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
             ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(itemId);
-            AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().context, addOnItemModels);
+            AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().context, addOnItemModels,this);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
             addOnsItemLists.setLayoutManager(mLayoutManager);
             addOnsItemLists.setAdapter(addOnItemAdapter);
+            addonsChoosed = true;
         }
+
+    }
+
+    @Override
+    public void onCustomizationClicked(String itemId) {
+        bottomSheetLayout.setVisibility(View.VISIBLE);
+        vendorFoodLists.setVisibility(View.GONE);
+        AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
+        ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(itemId);
+        AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().context, addOnItemModels,this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
+        addOnsItemLists.setLayoutManager(mLayoutManager);
+        addOnsItemLists.setAdapter(addOnItemAdapter);
+    }
+
+    @Override
+    public void onAddonItemClicked(String addonId) {
+        AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
+        ArrayList<AddOnSubItemModel> addOnSubItemModels = addOnDBAdapter.getAddOnSubItems(addonId);
+        AddOnSubItemAdapter addOnSubItemAdapter = new AddOnSubItemAdapter(Singleton.getInstance().context, addOnSubItemModels);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
+        addOnsItemLists.setLayoutManager(mLayoutManager);
+        addOnsItemLists.setAdapter(addOnSubItemAdapter);
     }
 }
