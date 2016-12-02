@@ -67,6 +67,8 @@ public class AddOnDBAdapter implements TableConstants {
         if (cursor.moveToFirst()) {
             do {
                 addOnSubItemModel = new AddOnSubItemModel();
+                addOnSubItemModel.AddOnCateroryId = cursor.getString(1);
+                addOnSubItemModel.AddOnId = cursor.getString(2);
                 addOnSubItemModel.AddOnSubItemId = cursor.getString(3);
                 addOnSubItemModel.AddOnSubItemName = cursor.getString(4);
                 addOnSubItemModel.AddOnPrice = cursor.getString(5);
@@ -85,5 +87,25 @@ public class AddOnDBAdapter implements TableConstants {
         CommonDBHelper.getInstance().getDb().update(ADDON_SUBITEM_TABLE, values, ADDON_SUBITEM_ID + " = ?",
                 new String[]{String.valueOf(itemId)});
         CommonDBHelper.getInstance().close();
+    }
+
+    //getting sum of totalcost
+    public String getTotalSubItemCost() {
+        String totalCost = "0.00";
+        CommonDBHelper.getInstance().open();
+        Cursor sumCursor = null;
+        try {
+            sumCursor = CommonDBHelper.getInstance().getDb().rawQuery(" SELECT SUM " + "(" + ADDON_SUBITEM_PRICE + ")" + " FROM " + ADDON_SUBITEM_TABLE + " WHERE " + IS_ITEM_SELECTED + " = '" + 1 + "'", null);
+            if (sumCursor != null && sumCursor.getCount() > 0 && sumCursor.moveToFirst()) {
+                totalCost = String.format("%.2f", sumCursor.getDouble(0));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if (!sumCursor.isClosed())
+                sumCursor.close();
+        }
+        CommonDBHelper.getInstance().close();
+        return totalCost;
     }
 }

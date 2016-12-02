@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.panamon.paccozz.R;
 import com.panamon.paccozz.dbadater.AddOnDBAdapter;
+import com.panamon.paccozz.interfaces.AddonItemClicked;
 import com.panamon.paccozz.model.AddOnItemModel;
 import com.panamon.paccozz.model.AddOnSubItemModel;
 
@@ -25,10 +26,12 @@ public class AddOnSubItemAdapter extends RecyclerView.Adapter {
 
     private Context context;
     private List<AddOnSubItemModel> addOnSubItemModels;
+    private AddonItemClicked addonItemClicked;
 
-    public AddOnSubItemAdapter(Context context, List<AddOnSubItemModel> addOnSubItemModels) {
+    public AddOnSubItemAdapter(Context context, List<AddOnSubItemModel> addOnSubItemModels, AddonItemClicked addonItemClicked) {
         this.context = context;
         this.addOnSubItemModels = addOnSubItemModels;
+        this.addonItemClicked = addonItemClicked;
     }
 
     @Override
@@ -53,8 +56,12 @@ public class AddOnSubItemAdapter extends RecyclerView.Adapter {
                 AddOnSubItemModel addOnClickedSubItemModel =  addOnSubItemModels.get(pos);
                 if(b){
                     addOnDBAdapter.updateIsItemSelected("1",addOnClickedSubItemModel.AddOnSubItemId);
+                    String cost = addOnDBAdapter.getTotalSubItemCost();
+                    addonItemClicked.onAddonSubItemClicked(cost,addOnClickedSubItemModel.AddOnCateroryId);
                 }else{
                     addOnDBAdapter.updateIsItemSelected("0",addOnClickedSubItemModel.AddOnSubItemId);
+                    String cost = addOnDBAdapter.getTotalSubItemCost();
+                    addonItemClicked.onAddonSubItemClicked(cost,addOnClickedSubItemModel.AddOnCateroryId);
                 }
             }
         });

@@ -97,6 +97,16 @@ public class FoodItemDBAdapter implements TableConstants {
         CommonDBHelper.getInstance().close();
     }
 
+    //updating itemcost
+    public void updateItemCost(String itemCost, String itemId) {
+        CommonDBHelper.getInstance().open();
+        ContentValues values = new ContentValues();
+        values.put(ITEM_COST, itemCost);
+        CommonDBHelper.getInstance().getDb().update(FOOD_ITEM_TABLE, values, ITEM_ID + " = ?",
+                new String[]{String.valueOf(itemId)});
+        CommonDBHelper.getInstance().close();
+    }
+
     //update selected item value when the value is 0
     public void updateIsItemSelected(String isItemSelected, String itemId) {
         CommonDBHelper.getInstance().open();

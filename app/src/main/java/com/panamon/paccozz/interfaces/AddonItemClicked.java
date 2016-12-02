@@ -6,4 +6,5 @@ package com.panamon.paccozz.interfaces;
 
 public interface AddonItemClicked {
      void onAddonItemClicked(String addonId);
+     void onAddonSubItemClicked(String subItemCost,String addOnItemId);
 }
