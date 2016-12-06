@@ -15,11 +15,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -59,6 +62,8 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView hotelListView;
     private String placeId;
     private SharedPref sharedPref;
+    private EditText searchEdt;
+    private ArrayList<HotelListModel> hotelListModels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +116,38 @@ public class MainActivity extends AppCompatActivity
         //hotel list views
         hotelListView = (RecyclerView) findViewById(R.id.hotelLists);
         getHotelLists();
+
+        //search codes
+        searchEdt = (EditText) findViewById(R.id.searchEdt);
+        searchEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String searchTxt = editable.toString().toLowerCase();
+
+                final ArrayList<HotelListModel> filteredList = new ArrayList<HotelListModel>();
+                for(int i = 0; i<hotelListModels.size();i++){
+                    String text = hotelListModels.get(i).HotelName.toLowerCase();
+                    if(text.contains(searchTxt)){
+                        HotelListModel hotelListModel = hotelListModels.get(i);
+                        filteredList.add(hotelListModel);
+                    }
+                }
+                HotelListAdapter hotelListAdapter = new HotelListAdapter(MainActivity.this, filteredList);
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
+                hotelListView.setLayoutManager(mLayoutManager);
+                hotelListView.setAdapter(hotelListAdapter);
+            }
+        });
     }
 
     /**
@@ -118,7 +155,7 @@ public class MainActivity extends AppCompatActivity
      */
     private void getHotelLists() {
         progressBar.setVisibility(View.VISIBLE);
-        final ArrayList<HotelListModel> hotelListModels = new ArrayList<>();
+        hotelListModels = new ArrayList<>();
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = Constants.HOTELLIST_URL;

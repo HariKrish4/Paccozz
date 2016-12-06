@@ -18,11 +18,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.SearchView
+            <EditText
+                android:id="@+id/searchEdt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/five"
-                android:background="@android:color/white"></android.support.v7.widget.SearchView>
+                android:background="@android:color/white"
+                android:drawableLeft="@drawable/ic_search"
+                android:paddingBottom="@dimen/ten"
+                android:paddingLeft="@dimen/ten"
+                android:paddingRight="@dimen/ten"
+                android:paddingTop="@dimen/ten"></EditText>
 
             <ImageView
                 android:id="@+id/imageView_list"
@@ -37,9 +42,9 @@
                 android:id="@+id/hotelLists"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/five"
                 android:scrollbars="vertical"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                android:layout_margin="@dimen/five"></android.support.v7.widget.RecyclerView>
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

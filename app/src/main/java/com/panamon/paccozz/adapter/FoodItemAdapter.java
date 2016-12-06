@@ -111,9 +111,6 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
         foodItemCountChange.onFoodItemCountChanged(clikedFoodItemModel.ItemId,itemCost);
     }
 
-    public void changeCost(String itemCost){
-
-    }
     @Override
     public int getItemCount() {
         return foodItemModels.size();

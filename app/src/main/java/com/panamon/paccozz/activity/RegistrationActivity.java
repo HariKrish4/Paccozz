@@ -430,7 +430,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 entity.addPart("uphone", new StringBody(editText_mobile.getText().toString()));
                 entity.addPart("ucity", new StringBody(cityId));
                 entity.addPart("upark", new StringBody(placeId));
-                Log.e("--Path", destination.getPath() + "hhg");
+
                 if (destination != null) {
                     entity.addPart("fimage", new FileBody(new File(destination.getPath()), "image/jpg"));
                 }

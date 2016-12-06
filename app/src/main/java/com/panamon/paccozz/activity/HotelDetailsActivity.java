@@ -70,11 +70,13 @@ public class HotelDetailsActivity extends AppCompatActivity {
         vendorImage = (ImageView) findViewById(R.id.vendor_image);
         vendorNameTxt = (TextView) findViewById(R.id.vendor_name_txt);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        getVendorDetails(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        vendorDetailsModels = new ArrayList<>();
+
+        getVendorDetails();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -92,22 +94,19 @@ public class HotelDetailsActivity extends AppCompatActivity {
         return true;
     }
 
-    private void setupViewPager(ViewPager viewPager) {
+    private void setupViewPager() {
         if (Singleton.getInstance().categories.size() > 0) {
             adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
             for (int i = 0; i < Singleton.getInstance().categories.size(); i++) {
                 adapter.addFragment(new FoodItemFragment(), Singleton.getInstance().categories.get(i).CategoryName);
             }
             viewPager.setAdapter(adapter);
-
         }
     }
 
-    private void getVendorDetails(final ViewPager viewPager) {
+    private void getVendorDetails() {
         progressBar.setVisibility(View.VISIBLE);
         Singleton.getInstance().categories.clear();
-        vendorDetailsModels = new ArrayList<>();
         CommonDBHelper.getInstance().truncateAllTables();
         final FoodItemDBAdapter foodItemDBAdapter = new FoodItemDBAdapter();
         final AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
@@ -118,10 +117,10 @@ public class HotelDetailsActivity extends AppCompatActivity {
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
+
                     @Override
                     public void onResponse(String response) {
                         try {
-                            progressBar.setVisibility(View.GONE);
                             Log.e("response", response);
                             JSONObject jsonObject = new JSONObject(response);
                             JSONArray vendorArray = jsonObject.getJSONArray("vendor");
@@ -159,7 +158,7 @@ public class HotelDetailsActivity extends AppCompatActivity {
 
                                 //getting addons in vendor
                                 Singleton.getInstance().AddOns = vendorObject.getString("addons");
-                                if(Singleton.getInstance().AddOns.equalsIgnoreCase("1")) {
+                                if (Singleton.getInstance().AddOns.equalsIgnoreCase("1")) {
                                     JSONObject addOnObject = vendorObject.getJSONObject("headers");
                                     JSONArray addOnArray = addOnObject.getJSONArray("headerlist");
                                     for (int l = 0; l < addOnArray.length(); l++) {
@@ -190,7 +189,8 @@ public class HotelDetailsActivity extends AppCompatActivity {
                                 vendorNameTxt.setText(vendorDetailsModel.VenName);
                                 Picasso.with(HotelDetailsActivity.this).load(vendorDetailsModel.VenImage).placeholder(R.drawable.image_placeholder).into(vendorImage);
                             }
-                            setupViewPager(viewPager);
+                            progressBar.setVisibility(View.GONE);
+                            setupViewPager();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
