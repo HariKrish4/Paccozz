@@ -125,7 +125,7 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
         if (addOnItemModels.size() > 0) {
             Singleton.getInstance().AddOns = "1";
         } else {
-
+            Singleton.getInstance().AddOns = "0";
         }
         foodItemModels = foodItemDBAdapter.getFoodItems(categoryId);
         foodItemAdapter = new FoodItemAdapter(Singleton.getInstance().context, foodItemModels, this);
