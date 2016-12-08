@@ -9,11 +9,14 @@ import android.widget.TextView;
 
 import com.panamon.paccozz.R;
 import com.panamon.paccozz.common.Singleton;
+import com.panamon.paccozz.dbadater.AddOnDBAdapter;
 import com.panamon.paccozz.dbadater.FoodItemDBAdapter;
 import com.panamon.paccozz.interfaces.FoodItemChanged;
 import com.panamon.paccozz.interfaces.SelectedFoodItemCountChange;
+import com.panamon.paccozz.model.AddOnItemModel;
 import com.panamon.paccozz.model.FoodItemModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -89,13 +92,27 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
             public void onClick(View view) {
                 int pos = (int) view.getTag();
                 FoodItemModel clikedFoodItemModel = foodItemModels.get(pos);
-                foodItemCountChange.onCustomizationClicked(clikedFoodItemModel.ItemId);
+                String itemId = clikedFoodItemModel.ItemId;
+                itemCost = Integer.parseInt(foodItemDBAdapter.getItemCost(itemId));
+                if(itemCount == 0){
+                    itemCount = Integer.parseInt(foodItemDBAdapter.getItemCount(itemId));
+                    itemCount++;
+                    calculateTotalCost(myViewHolder, clikedFoodItemModel);
+                }else {
+                    itemCost = Integer.parseInt(foodItemDBAdapter.getItemCost(itemId));
+                    foodItemCountChange.onCustomizationClicked(clikedFoodItemModel.ItemId,itemCost);
+                }
             }
         });
 
+
         if(Singleton.getInstance().AddOns.equalsIgnoreCase("1")){
-            myViewHolder.TxtCustomization.setVisibility(View.VISIBLE);
-            myViewHolder.ViewCustomization.setVisibility(View.VISIBLE);
+            AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
+            ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(foodItemModel.ItemId);
+            if(addOnItemModels.size()>0) {
+                myViewHolder.TxtCustomization.setVisibility(View.VISIBLE);
+                myViewHolder.ViewCustomization.setVisibility(View.VISIBLE);
+            }
         }
         else{
             myViewHolder.TxtCustomization.setVisibility(View.GONE);

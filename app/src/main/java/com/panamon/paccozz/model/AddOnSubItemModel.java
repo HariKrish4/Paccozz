@@ -5,5 +5,5 @@ package com.panamon.paccozz.model;
  */
 
 public class AddOnSubItemModel {
-    public String AddOnId,AddOnCateroryId,AddOnSubItemId,AddOnSubItemName,AddOnPrice;
+    public String AddOnId,AddOnCateroryId,AddOnSubItemId,AddOnSubItemName,AddOnPrice,IsItemSelected;
 }

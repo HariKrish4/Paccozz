@@ -24,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
                 android:drawableLeft="@drawable/ic_search"
+                android:cursorVisible="false"
                 android:paddingBottom="@dimen/ten"
                 android:paddingLeft="@dimen/ten"
                 android:paddingRight="@dimen/ten"

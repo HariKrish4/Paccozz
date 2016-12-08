@@ -71,7 +71,8 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text=""
-                            android:textColor="@color/colorPrimary" />
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/text_18" />
 
                     </LinearLayout>
 
@@ -229,10 +230,10 @@
                             android:layout_weight="1.5"
                             android:background="@drawable/apply_bckgrund"
                             android:gravity="center"
-                            android:padding="@dimen/five"
                             android:hint="Enter Coupon"
-                            android:textColorHint="@android:color/darker_gray"
-                            android:textColor="@android:color/black" />
+                            android:padding="@dimen/five"
+                            android:textColor="@android:color/black"
+                            android:textColorHint="@android:color/darker_gray" />
 
                         <ImageView
                             android:id="@+id/apply_img"

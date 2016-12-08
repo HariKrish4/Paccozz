@@ -72,6 +72,7 @@ public class AddOnDBAdapter implements TableConstants {
                 addOnSubItemModel.AddOnSubItemId = cursor.getString(3);
                 addOnSubItemModel.AddOnSubItemName = cursor.getString(4);
                 addOnSubItemModel.AddOnPrice = cursor.getString(5);
+                addOnSubItemModel.IsItemSelected = cursor.getString(6);
                 addOnSubItemModels.add(addOnSubItemModel);
             } while (cursor.moveToNext());
         }

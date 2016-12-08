@@ -1,6 +1,7 @@
 package com.panamon.paccozz.activity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -52,6 +53,9 @@ public class HotelDetailsActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private ProgressBar progressBar;
     private ArrayList<VendorDetailsModel> vendorDetailsModels;
+    private ArrayList<FoodItemModel> foodItemModels;
+    private ArrayList<AddOnItemModel> addOnItemModels;
+    private ArrayList<AddOnSubItemModel> addOnSubItemModels;
     private ImageView vendorImage;
     private TextView vendorNameTxt;
     private ViewPagerAdapter adapter;
@@ -75,6 +79,9 @@ public class HotelDetailsActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         vendorDetailsModels = new ArrayList<>();
+        foodItemModels = new ArrayList<>();
+        addOnItemModels = new ArrayList<>();
+        addOnSubItemModels = new ArrayList<>();
 
         getVendorDetails();
 
@@ -108,8 +115,7 @@ public class HotelDetailsActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         Singleton.getInstance().categories.clear();
         CommonDBHelper.getInstance().truncateAllTables();
-        final FoodItemDBAdapter foodItemDBAdapter = new FoodItemDBAdapter();
-        final AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
+
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = Constants.VENDORDETAILS_URL;
@@ -153,7 +159,8 @@ public class HotelDetailsActivity extends AppCompatActivity {
                                     foodItemModel.ItemCategoryId = itemObject1.getString("catid");
                                     foodItemModel.ItemVendorId = itemObject1.getString("venid");
                                     foodItemModel.ItemType = itemObject1.getString("itemtype");
-                                    foodItemDBAdapter.insertFoodItem(foodItemModel);
+                                    foodItemModels.add(foodItemModel);
+                                    //foodItemDBAdapter.insertFoodItem(foodItemModel);
                                 }
 
                                 //getting addons in vendor
@@ -176,9 +183,11 @@ public class HotelDetailsActivity extends AppCompatActivity {
                                             addOnSubItemModel.AddOnSubItemName = addOnSubItemArrayObject.getString("addonname");
                                             addOnSubItemModel.AddOnId = addOnSubItemArrayObject.getString("headid");
                                             addOnSubItemModel.AddOnPrice = addOnSubItemArrayObject.getString("addonprice");
-                                            addOnDBAdapter.insertAddOnSubItem(addOnSubItemModel);
+                                            addOnSubItemModels.add(addOnSubItemModel);
+                                            //addOnDBAdapter.insertAddOnSubItem(addOnSubItemModel);
                                         }
-                                        addOnDBAdapter.insertAddOnItem(addOnItemModel);
+                                        addOnItemModels.add(addOnItemModel);
+                                        //addOnDBAdapter.insertAddOnItem(addOnItemModel);
                                     }
                                 }
                                 vendorDetailsModel.VenId = vendorObject.getString("venid");
@@ -189,8 +198,7 @@ public class HotelDetailsActivity extends AppCompatActivity {
                                 vendorNameTxt.setText(vendorDetailsModel.VenName);
                                 Picasso.with(HotelDetailsActivity.this).load(vendorDetailsModel.VenImage).placeholder(R.drawable.image_placeholder).into(vendorImage);
                             }
-                            progressBar.setVisibility(View.GONE);
-                            setupViewPager();
+                           new InsertVendorDetails().execute();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -211,6 +219,21 @@ public class HotelDetailsActivity extends AppCompatActivity {
         };
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
+    }
+
+    private void insertVendorDetails() {
+        FoodItemDBAdapter foodItemDBAdapter = new FoodItemDBAdapter();
+        AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
+        for (int i = 0; i < foodItemModels.size(); i++) {
+            foodItemDBAdapter.insertFoodItem(foodItemModels.get(i));
+        }
+        for (int i = 0; i < addOnItemModels.size(); i++) {
+            addOnDBAdapter.insertAddOnItem(addOnItemModels.get(i));
+        }
+        for (int i = 0; i < addOnSubItemModels.size(); i++) {
+            addOnDBAdapter.insertAddOnSubItem(addOnSubItemModels.get(i));
+        }
+
     }
 
     private void initCollapsingToolbar() {
@@ -239,5 +262,26 @@ public class HotelDetailsActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private class InsertVendorDetails extends AsyncTask<Void,Void,Void>{
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            insertVendorDetails();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            progressBar.setVisibility(View.GONE);
+            setupViewPager();
+        }
     }
 }

@@ -65,6 +65,11 @@ public class AddOnSubItemAdapter extends RecyclerView.Adapter {
                 }
             }
         });
+        if(addOnSubItemModel.IsItemSelected == null || addOnSubItemModel.IsItemSelected.equalsIgnoreCase("0")) {
+            myViewHolder.SelectedBtn.setChecked(false);
+        }else if(addOnSubItemModel.IsItemSelected.equalsIgnoreCase("1")) {
+            myViewHolder.SelectedBtn.setChecked(false);
+        }
     }
 
     @Override

@@ -5,6 +5,6 @@ package com.panamon.paccozz.interfaces;
  */
 
 public interface FoodItemChanged {
-    void onFoodItemCountChanged(String itemId,int itemCount);
-    void onCustomizationClicked(String itemId);
+    void onFoodItemCountChanged(String itemId,int itemCost);
+    void onCustomizationClicked(String itemId,int itemCost);
 }

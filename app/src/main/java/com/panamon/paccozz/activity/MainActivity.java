@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private TextView place_txt;
-    private ImageView place_img;
+    private ImageView place_img, placeHolder_img;
     private ProgressBar progressBar;
     private ArrayList<PlacesModel> placesLists;
     private RecyclerView hotelListView;
@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity
         //title bar codes
         place_img = (ImageView) findViewById(R.id.choose_place_img);
         place_txt = (TextView) findViewById(R.id.place_txt);
+        placeHolder_img = (ImageView) findViewById(R.id.imageView_list);
 
         place_img.setOnClickListener(this);
         place_txt.setText(Singleton.getInstance().ParkName);
@@ -133,11 +134,17 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void afterTextChanged(Editable editable) {
                 String searchTxt = editable.toString().toLowerCase();
-
+                if (searchTxt.trim().length() > 0) {
+                    placeHolder_img.setVisibility(View.GONE);
+                    searchEdt.setCursorVisible(true);
+                } else {
+                    placeHolder_img.setVisibility(View.VISIBLE);
+                    searchEdt.setCursorVisible(false);
+                }
                 final ArrayList<HotelListModel> filteredList = new ArrayList<HotelListModel>();
-                for(int i = 0; i<hotelListModels.size();i++){
+                for (int i = 0; i < hotelListModels.size(); i++) {
                     String text = hotelListModels.get(i).HotelName.toLowerCase();
-                    if(text.contains(searchTxt)){
+                    if (text.contains(searchTxt)) {
                         HotelListModel hotelListModel = hotelListModels.get(i);
                         filteredList.add(hotelListModel);
                     }
