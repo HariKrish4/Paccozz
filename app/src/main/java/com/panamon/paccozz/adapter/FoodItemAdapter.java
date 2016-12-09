@@ -12,7 +12,6 @@ import com.panamon.paccozz.common.Singleton;
 import com.panamon.paccozz.dbadater.AddOnDBAdapter;
 import com.panamon.paccozz.dbadater.FoodItemDBAdapter;
 import com.panamon.paccozz.interfaces.FoodItemChanged;
-import com.panamon.paccozz.interfaces.SelectedFoodItemCountChange;
 import com.panamon.paccozz.model.AddOnItemModel;
 import com.panamon.paccozz.model.FoodItemModel;
 
@@ -30,6 +29,7 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
     private int itemCount = 0, itemCost = 0;
     private FoodItemDBAdapter foodItemDBAdapter;
     private FoodItemChanged foodItemCountChange;
+    private boolean plus;
 
     public FoodItemAdapter(Context context, List<FoodItemModel> foodItemModels, FoodItemChanged foodItemCountChange) {
         this.context = context;
@@ -65,6 +65,7 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
                 itemCount = Integer.parseInt(foodItemDBAdapter.getItemCount(itemId));
                 itemCost = Integer.parseInt(foodItemDBAdapter.getItemCost(itemId));
                 itemCount++;
+                plus = true;
                 calculateTotalCost(myViewHolder, clikedFoodItemModel);
             }
         });
@@ -78,6 +79,7 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
                 itemCount = Integer.parseInt(foodItemDBAdapter.getItemCount(itemId));
                 itemCost = Integer.parseInt(foodItemDBAdapter.getItemCost(itemId));
                 itemCount--;
+                plus = false;
                 if (itemCount >= 0) {
                     calculateTotalCost(myViewHolder, clikedFoodItemModel);
                     if (itemCount == 0) {
@@ -99,7 +101,6 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
                     itemCount++;
                     calculateTotalCost(myViewHolder, clikedFoodItemModel);
                 }else {
-                    itemCost = Integer.parseInt(foodItemDBAdapter.getItemCost(itemId));
                     foodItemCountChange.onCustomizationClicked(clikedFoodItemModel.ItemId,itemCost);
                 }
             }
@@ -125,7 +126,7 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
         int totalCost = itemCost * itemCount;
         foodItemDBAdapter.updateItemCount(itemCount + "", clikedFoodItemModel.ItemId);
         foodItemDBAdapter.updateTotalCost(totalCost + "", clikedFoodItemModel.ItemId);
-        foodItemCountChange.onFoodItemCountChanged(clikedFoodItemModel.ItemId,itemCost);
+        foodItemCountChange.onFoodItemCountChanged(clikedFoodItemModel.ItemId,itemCost,itemCount,plus);
     }
 
     @Override

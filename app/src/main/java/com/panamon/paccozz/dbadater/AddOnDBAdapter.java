@@ -91,12 +91,12 @@ public class AddOnDBAdapter implements TableConstants {
     }
 
     //getting sum of totalcost
-    public String getTotalSubItemCost() {
+    public String getTotalSubItemCost(String subItemId) {
         String totalCost = "0.00";
         CommonDBHelper.getInstance().open();
         Cursor sumCursor = null;
         try {
-            sumCursor = CommonDBHelper.getInstance().getDb().rawQuery(" SELECT SUM " + "(" + ADDON_SUBITEM_PRICE + ")" + " FROM " + ADDON_SUBITEM_TABLE + " WHERE " + IS_ITEM_SELECTED + " = '" + 1 + "'", null);
+            sumCursor = CommonDBHelper.getInstance().getDb().rawQuery(" SELECT SUM " + "(" + ADDON_SUBITEM_PRICE + ")" + " FROM " + ADDON_SUBITEM_TABLE + " WHERE " + IS_ITEM_SELECTED + " = '" + 1 + "'" + " AND " + ADDON_SUBITEM_ID + " = '" + subItemId +"'", null);
             if (sumCursor != null && sumCursor.getCount() > 0 && sumCursor.moveToFirst()) {
                 totalCost = String.format("%.2f", sumCursor.getDouble(0));
             }

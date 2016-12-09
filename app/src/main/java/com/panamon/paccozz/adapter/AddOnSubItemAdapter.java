@@ -56,11 +56,11 @@ public class AddOnSubItemAdapter extends RecyclerView.Adapter {
                 AddOnSubItemModel addOnClickedSubItemModel =  addOnSubItemModels.get(pos);
                 if(b){
                     addOnDBAdapter.updateIsItemSelected("1",addOnClickedSubItemModel.AddOnSubItemId);
-                    String cost = addOnDBAdapter.getTotalSubItemCost();
+                    String cost = addOnDBAdapter.getTotalSubItemCost(addOnClickedSubItemModel.AddOnSubItemId);
                     addonItemClicked.onAddonSubItemClicked(cost,addOnClickedSubItemModel.AddOnCateroryId);
                 }else{
                     addOnDBAdapter.updateIsItemSelected("0",addOnClickedSubItemModel.AddOnSubItemId);
-                    String cost = addOnDBAdapter.getTotalSubItemCost();
+                    String cost = addOnDBAdapter.getTotalSubItemCost(addOnClickedSubItemModel.AddOnSubItemId);
                     addonItemClicked.onAddonSubItemClicked(cost,addOnClickedSubItemModel.AddOnCateroryId);
                 }
             }

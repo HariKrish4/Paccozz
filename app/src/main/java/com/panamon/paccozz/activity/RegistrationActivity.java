@@ -39,6 +39,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.panamon.paccozz.R;
 import com.panamon.paccozz.common.Constants;
+import com.panamon.paccozz.common.SharedPref;
+import com.panamon.paccozz.common.Singleton;
 import com.panamon.paccozz.model.CitySpinnerModel;
 import com.panamon.paccozz.model.PlacesModel;
 
@@ -87,12 +89,14 @@ public class RegistrationActivity extends AppCompatActivity {
     private String placeId = "0";
     private File destination;
     private String json;
+    private SharedPref sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
+        sharedPref = new SharedPref(this);
         //views
         editText_name = (EditText) findViewById(R.id.edt_name);
         editText_age = (EditText) findViewById(R.id.edt_age);
@@ -435,18 +439,14 @@ public class RegistrationActivity extends AppCompatActivity {
                     entity.addPart("fimage", new FileBody(new File(destination.getPath()), "image/jpg"));
                 }
 
-                try {
-                    // Log.e("imagepath", new FileBody(new File( MediaActivity.mFileTemp.getPath()), "image/jpg") + "");
-                    HttpClient httpclient = new DefaultHttpClient();
-                    post.setEntity(entity);
-                    HttpResponse response = httpclient.execute(post);
-                    HttpEntity entityres = response.getEntity();
-                    Log.e("entity", entityres + "");
-                    json = EntityUtils.toString(response.getEntity());
 
-                } catch (FileNotFoundException as) {
-                    as.printStackTrace();
-                }
+                // Log.e("imagepath", new FileBody(new File( MediaActivity.mFileTemp.getPath()), "image/jpg") + "");
+                HttpClient httpclient = new DefaultHttpClient();
+                post.setEntity(entity);
+                HttpResponse response = httpclient.execute(post);
+                HttpEntity entityres = response.getEntity();
+                Log.e("entity", entityres + "");
+                json = EntityUtils.toString(response.getEntity());
 
 
             } catch (Exception e) {
@@ -460,7 +460,6 @@ public class RegistrationActivity extends AppCompatActivity {
         protected void onPostExecute(String sResponse) {
             super.onPostExecute(sResponse);
             progressBar.setVisibility(View.GONE);
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
             try {
                 Log.e("******RES_Register", json);
@@ -470,9 +469,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(json);
                     String succcess = jsonObject.getString("success");
                     if (succcess.equalsIgnoreCase(String.valueOf(1))) {
-                        Intent main = new Intent(RegistrationActivity.this, LoginActivity.class);
-                        startActivity(main);
-                        finish();
+                        getUserDetails();
                     } else {
                         Snackbar.make(progressBar, "Internal server error", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
@@ -487,6 +484,69 @@ public class RegistrationActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    private void getUserDetails() {
+        progressBar.setVisibility(View.VISIBLE);
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = Constants.USERDETAILS_URL;
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            progressBar.setVisibility(View.GONE);
+                            Log.e("response", response);
+                            JSONObject jsonObject = new JSONObject(response);
+                            String succcess = jsonObject.getString("success");
+                            if (succcess.equalsIgnoreCase(String.valueOf(1))) {
+                                Singleton.getInstance().UserId = jsonObject.getString("uid");
+                                String code = jsonObject.getString("ucode");
+                                Singleton.getInstance().ParkId = jsonObject.getString("uparkid");
+                                Singleton.getInstance().ParkName = jsonObject.getString("uparkname");
+                                String cityid = jsonObject.getString("ucityid");
+                                String cityname = jsonObject.getString("ucityname");
+                                String gender = jsonObject.getString("usex");
+                                Singleton.getInstance().UserName = jsonObject.getString("uname");
+                                Singleton.getInstance().UserEmail = jsonObject.getString("umail");
+                                String pass = jsonObject.getString("upass");
+                                String dob = jsonObject.getString("udob");
+                                Singleton.getInstance().UserMobile = jsonObject.getString("umobile");
+                                String wallet = jsonObject.getString("uwallet");
+                                String message = jsonObject.getString("message");
+
+                                sharedPref.setIsLogged(true);
+                                sharedPref.setLoginData(Singleton.getInstance().UserId, Singleton.getInstance().UserName, Singleton.getInstance().UserMobile,
+                                        Singleton.getInstance().UserEmail, Singleton.getInstance().ParkId, Singleton.getInstance().ParkName);
+                                Intent as = new Intent(RegistrationActivity.this, MainActivity.class);
+                                startActivity(as);
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(RegistrationActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("umobile", editText_mobile.getText().toString());
+                return params;
+            }
+        };
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
     }
 
     @Override

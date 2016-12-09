@@ -1,7 +1,6 @@
 package com.panamon.paccozz.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +22,6 @@ import com.panamon.paccozz.dbadater.AddOnDBAdapter;
 import com.panamon.paccozz.dbadater.FoodItemDBAdapter;
 import com.panamon.paccozz.interfaces.AddonItemClicked;
 import com.panamon.paccozz.interfaces.FoodItemChanged;
-import com.panamon.paccozz.interfaces.SelectedFoodItemCountChange;
 import com.panamon.paccozz.model.AddOnItemModel;
 import com.panamon.paccozz.model.AddOnSubItemModel;
 import com.panamon.paccozz.model.FoodItemModel;
@@ -45,9 +43,8 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
     private TextView noDataTxt;
     private String categoryId;
     private RelativeLayout bottomSheetLayout;
-    private boolean addonsChoosed = false;
     private TextView addonPriceTxt;
-    private double itemCost = 0,itemOriginalCost = 0;
+    private double itemCost = 0;
 
     public FoodItemFragment() {
         // Required empty public constructor
@@ -145,26 +142,27 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
     }
 
     @Override
-    public void onFoodItemCountChanged(String itemId, int itemCost) {
-        if (!addonsChoosed && Singleton.getInstance().AddOns.equalsIgnoreCase("1")) {
-            //behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            this.itemCost = itemCost;
-            itemOriginalCost = itemCost;
-            bottomSheetLayout.setVisibility(View.VISIBLE);
-            vendorFoodLists.setVisibility(View.GONE);
-            AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
-            ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(itemId);
-            AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().context, addOnItemModels, this);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
-            addOnsItemLists.setLayoutManager(mLayoutManager);
-            addOnsItemLists.setAdapter(addOnItemAdapter);
-            addonsChoosed = true;
+    public void onFoodItemCountChanged(String itemId, int itemCost, int itemCount, boolean plus) {
+        if(itemCount ==1 && plus) {
+            if (Singleton.getInstance().AddOns.equalsIgnoreCase("1")) {
+                AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
+                ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(itemId);
+                if (addOnItemModels.size() > 0) {
+                    //behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    this.itemCost = itemCost;
+                    bottomSheetLayout.setVisibility(View.VISIBLE);
+                    vendorFoodLists.setVisibility(View.GONE);
+                    AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().context, addOnItemModels, this);
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
+                    addOnsItemLists.setLayoutManager(mLayoutManager);
+                    addOnsItemLists.setAdapter(addOnItemAdapter);
+                }
+            }
         }
-
     }
 
     @Override
-    public void onCustomizationClicked(String itemId,int itemCost) {
+    public void onCustomizationClicked(String itemId, int itemCost) {
         bottomSheetLayout.setVisibility(View.VISIBLE);
         vendorFoodLists.setVisibility(View.GONE);
         this.itemCost = itemCost;
@@ -175,6 +173,11 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
         addOnsItemLists.setLayoutManager(mLayoutManager);
         addOnsItemLists.setAdapter(addOnItemAdapter);
+    }
+
+    @Override
+    public void onFoodItemCountChanged() {
+
     }
 
     @Override
@@ -190,7 +193,6 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
     @Override
     public void onAddonSubItemClicked(String subItemCost, String addOnId) {
         addonPriceTxt.setText("₹" + subItemCost);
-        itemCost = itemOriginalCost;
         itemCost = itemCost + Double.parseDouble(subItemCost);
         int itemCostInt = (int) itemCost;
         foodItemDBAdapter.updateTotalCost(itemCostInt + "", addOnId);

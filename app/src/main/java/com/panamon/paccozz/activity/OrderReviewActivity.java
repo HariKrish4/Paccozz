@@ -12,7 +12,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -22,11 +24,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.panamon.paccozz.R;
+import com.panamon.paccozz.adapter.AddOnItemAdapter;
+import com.panamon.paccozz.adapter.AddOnSubItemAdapter;
 import com.panamon.paccozz.adapter.SelectedFoodItemAdapter;
 import com.panamon.paccozz.common.Constants;
 import com.panamon.paccozz.common.Singleton;
+import com.panamon.paccozz.dbadater.AddOnDBAdapter;
 import com.panamon.paccozz.dbadater.FoodItemDBAdapter;
-import com.panamon.paccozz.interfaces.SelectedFoodItemCountChange;
+import com.panamon.paccozz.interfaces.AddonItemClicked;
+import com.panamon.paccozz.interfaces.FoodItemChanged;
+import com.panamon.paccozz.model.AddOnItemModel;
+import com.panamon.paccozz.model.AddOnSubItemModel;
 import com.panamon.paccozz.model.FoodItemModel;
 
 import org.json.JSONException;
@@ -36,7 +44,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OrderReviewActivity extends AppCompatActivity implements SelectedFoodItemCountChange, View.OnClickListener {
+public class OrderReviewActivity extends AppCompatActivity implements FoodItemChanged,AddonItemClicked, View.OnClickListener {
 
     private RecyclerView selectedItemLists;
     private TextView textView_item, textView_proceed, textView_discount, textView_taxprice, textView_totalprice, textView_vendor_name;
@@ -47,6 +55,10 @@ public class OrderReviewActivity extends AppCompatActivity implements SelectedFo
     private ImageView arrow;
     private double totalCost = 0.00;
     private ProgressBar progressBar;
+    private LinearLayout bottomSheetLayout;
+    private TextView addonPriceTxt;
+    private RecyclerView addOnsItemLists;
+    private double itemCost = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +106,21 @@ public class OrderReviewActivity extends AppCompatActivity implements SelectedFo
         textView_vendor_name.setText(Singleton.getInstance().VendorName);
 
         calculateTotalCost();
+
+        //bottom sheet layout
+        bottomSheetLayout = (LinearLayout) findViewById(R.id.bottomSheetLayout);
+
+        //displaying addons
+        addOnsItemLists = (RecyclerView) findViewById(R.id.addon_lists);
+        TextView doneTxt = (TextView) findViewById(R.id.doneTxt);
+        addonPriceTxt = (TextView) findViewById(R.id.addon_price);
+        doneTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetLayout.setVisibility(View.GONE);
+                //behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            }
+        });
     }
 
     private void calculateTotalCost() {
@@ -111,6 +138,23 @@ public class OrderReviewActivity extends AppCompatActivity implements SelectedFo
     @Override
     public void onFoodItemCountChanged() {
         calculateTotalCost();
+    }
+
+    @Override
+    public void onFoodItemCountChanged(String itemId, int itemCost,int itemCount,boolean plus) {
+
+    }
+
+    @Override
+    public void onCustomizationClicked(String itemId, int itemCost) {
+        bottomSheetLayout.setVisibility(View.VISIBLE);
+        this.itemCost = itemCost;
+        AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
+        ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(itemId);
+        AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().context, addOnItemModels, this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
+        addOnsItemLists.setLayoutManager(mLayoutManager);
+        addOnsItemLists.setAdapter(addOnItemAdapter);
     }
 
     @Override
@@ -183,5 +227,24 @@ public class OrderReviewActivity extends AppCompatActivity implements SelectedFo
         };
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
+    }
+
+    @Override
+    public void onAddonItemClicked(String addonId) {
+        AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
+        ArrayList<AddOnSubItemModel> addOnSubItemModels = addOnDBAdapter.getAddOnSubItems(addonId);
+        AddOnSubItemAdapter addOnSubItemAdapter = new AddOnSubItemAdapter(Singleton.getInstance().context, addOnSubItemModels, this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
+        addOnsItemLists.setLayoutManager(mLayoutManager);
+        addOnsItemLists.setAdapter(addOnSubItemAdapter);
+    }
+
+    @Override
+    public void onAddonSubItemClicked(String subItemCost, String addOnItemId) {
+        addonPriceTxt.setText("₹" + subItemCost);
+        itemCost = itemCost + Double.parseDouble(subItemCost);
+        int itemCostInt = (int) itemCost;
+        foodItemDBAdapter.updateTotalCost(itemCostInt + "", addOnItemId);
+        foodItemDBAdapter.updateItemCost(itemCostInt + "", addOnItemId);
     }
 }
