@@ -43,7 +43,7 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
     private TextView noDataTxt;
     private String categoryId;
     private RelativeLayout bottomSheetLayout;
-    private TextView addonPriceTxt, mainItemPriceTxt,doneTxt;
+    private TextView itemPriceTxt,doneTxt;
     private double itemCost = 0;
     private boolean addonSubitemsIsShown = false;
 
@@ -97,8 +97,7 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
         //displaying addons
         addOnsItemLists = (RecyclerView) rootView.findViewById(R.id.addon_lists);
         doneTxt = (TextView) rootView.findViewById(R.id.doneTxt);
-        addonPriceTxt = (TextView) rootView.findViewById(R.id.addon_price);
-        mainItemPriceTxt = (TextView) rootView.findViewById(R.id.main_price);
+        itemPriceTxt = (TextView) rootView.findViewById(R.id.main_price);
 
         return rootView;
     }
@@ -144,8 +143,7 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
                 if (addOnItemModels.size() > 0) {
                     //behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                     this.itemCost = itemCost;
-                    addonPriceTxt.setText("Addon Price : ₹0" );
-                    mainItemPriceTxt.setText("Main item price : ₹" + itemCost);
+                    itemPriceTxt.setText("Item price : ₹" + itemCost);
                     bottomSheetLayout.setVisibility(View.VISIBLE);
                     vendorFoodLists.setVisibility(View.GONE);
                     AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().context, addOnItemModels, this);
@@ -189,8 +187,7 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
         bottomSheetLayout.setVisibility(View.VISIBLE);
         vendorFoodLists.setVisibility(View.GONE);
         this.itemCost = itemCost;
-        addonPriceTxt.setText("Addon Price : ₹0" );
-        mainItemPriceTxt.setText("Main item price : ₹" + itemCost);
+        itemPriceTxt.setText("Item price : ₹" + itemCost);
         addonSubitemsIsShown = false;
         AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
         ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(itemId);
@@ -209,8 +206,6 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
     @Override
     public void onAddonItemClicked(String addonId) {
         addonSubitemsIsShown = true;
-        addonPriceTxt.setText("Addon Price : ₹0" );
-        mainItemPriceTxt.setText("Main item price : ₹" + itemCost);
         AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
         ArrayList<AddOnSubItemModel> addOnSubItemModels = addOnDBAdapter.getAddOnSubItems(addonId);
         AddOnSubItemAdapter addOnSubItemAdapter = new AddOnSubItemAdapter(Singleton.getInstance().context, addOnSubItemModels, this);
@@ -221,10 +216,9 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
 
     @Override
     public void onAddonSubItemClicked(String subItemCost, String addOnId) {
-        addonPriceTxt.setText("Addon Price : ₹" + subItemCost);
-        mainItemPriceTxt.setText("Main item price : ₹" + itemCost);
         itemCost = itemCost + Double.parseDouble(subItemCost);
         int itemCostInt = (int) itemCost;
+        itemPriceTxt.setText("Item price : ₹" + itemCostInt);
         foodItemDBAdapter.updateTotalCost(itemCostInt + "", addOnId);
         //foodItemDBAdapter.updateItemCost(itemCostInt + "", addOnId);
         //displayFoodItems();
