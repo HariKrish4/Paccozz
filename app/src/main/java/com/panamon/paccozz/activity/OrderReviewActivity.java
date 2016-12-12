@@ -56,7 +56,7 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
     private double totalCost = 0.00;
     private ProgressBar progressBar;
     private LinearLayout bottomSheetLayout;
-    private TextView addonPriceTxt;
+    private TextView addonPriceTxt, mainItemPriceTxt;
     private RecyclerView addOnsItemLists;
     private double itemCost = 0;
 
@@ -114,6 +114,7 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         addOnsItemLists = (RecyclerView) findViewById(R.id.addon_lists);
         TextView doneTxt = (TextView) findViewById(R.id.doneTxt);
         addonPriceTxt = (TextView) findViewById(R.id.addon_price);
+        mainItemPriceTxt = (TextView) findViewById(R.id.main_price);
         doneTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -241,10 +242,11 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
 
     @Override
     public void onAddonSubItemClicked(String subItemCost, String addOnItemId) {
-        addonPriceTxt.setText("₹" + subItemCost);
+        addonPriceTxt.setText("Addon Price:₹" + subItemCost);
+        mainItemPriceTxt.setText("Main item price : ₹" + itemCost);
         itemCost = itemCost + Double.parseDouble(subItemCost);
         int itemCostInt = (int) itemCost;
         foodItemDBAdapter.updateTotalCost(itemCostInt + "", addOnItemId);
-        foodItemDBAdapter.updateItemCost(itemCostInt + "", addOnItemId);
+        //foodItemDBAdapter.updateItemCost(itemCostInt + "", addOnItemId);
     }
 }
