@@ -162,9 +162,9 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
             public void onClick(View view) {
                 if(addonSubitemsIsShown){
                     addonSubitemsIsShown = false;
+                    doneTxt.setText("Apply");
                     bottomSheetLayout.setVisibility(View.VISIBLE);
                     vendorFoodLists.setVisibility(View.GONE);
-                    addonSubitemsIsShown = false;
                     AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
                     ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(itemId);
                     AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().context, addOnItemModels, FoodItemFragment.this);
@@ -175,6 +175,7 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
                 else {
                     bottomSheetLayout.setVisibility(View.GONE);
                     vendorFoodLists.setVisibility(View.VISIBLE);
+                    doneTxt.setText("Done");
                 }
                 //behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
             }

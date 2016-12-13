@@ -56,9 +56,11 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
     private double totalCost = 0.00;
     private ProgressBar progressBar;
     private LinearLayout bottomSheetLayout;
-    private TextView addonPriceTxt, mainItemPriceTxt;
+    private TextView addonPriceTxt, mainItemPriceTxt, doneTxt;
     private RecyclerView addOnsItemLists;
     private double itemCost = 0;
+    private LinearLayout addon_ll;
+    private ArrayList<FoodItemModel> foodItemModels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +98,7 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         //displying seleced food items
         selectedItemLists = (RecyclerView) findViewById(R.id.food_item_lists);
         foodItemDBAdapter = new FoodItemDBAdapter();
-        ArrayList<FoodItemModel> foodItemModels = foodItemDBAdapter.getSelectedFoodItems();
+        foodItemModels = foodItemDBAdapter.getSelectedFoodItems();
 
         SelectedFoodItemAdapter foodItemAdapter = new SelectedFoodItemAdapter(this, foodItemModels, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -112,18 +114,18 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
 
         //displaying addons
         addOnsItemLists = (RecyclerView) findViewById(R.id.addon_lists);
-        TextView doneTxt = (TextView) findViewById(R.id.doneTxt);
+        doneTxt = (TextView) findViewById(R.id.doneTxt);
         addonPriceTxt = (TextView) findViewById(R.id.addon_price);
         mainItemPriceTxt = (TextView) findViewById(R.id.main_price);
-        doneTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bottomSheetLayout.setVisibility(View.GONE);
-                //behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-            }
-        });
+       // displayAddons();
     }
 
+   /* private void displayAddons() {
+
+        AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
+        ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(itemId);
+    }
+*/
     private void calculateTotalCost() {
         double totalItems = Double.parseDouble(foodItemDBAdapter.getTotalItems());
         totalCost = Double.parseDouble(foodItemDBAdapter.getTotalCost());
@@ -156,6 +158,25 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
         addOnsItemLists.setLayoutManager(mLayoutManager);
         addOnsItemLists.setAdapter(addOnItemAdapter);
+        doneClick(itemId);
+    }
+
+    private void doneClick(String itemId) {
+        if(doneTxt.getText().toString().equalsIgnoreCase("Done")){
+            doneTxt.setText("Apply");
+            bottomSheetLayout.setVisibility(View.VISIBLE);
+            AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
+            ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(itemId);
+            AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().context, addOnItemModels, this);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
+            addOnsItemLists.setLayoutManager(mLayoutManager);
+            addOnsItemLists.setAdapter(addOnItemAdapter);
+        }
+        else {
+            bottomSheetLayout.setVisibility(View.GONE);
+            doneTxt.setText("Done");
+        }
+
     }
 
     @Override

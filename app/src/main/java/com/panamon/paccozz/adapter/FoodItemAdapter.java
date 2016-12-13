@@ -96,7 +96,7 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
                 FoodItemModel clikedFoodItemModel = foodItemModels.get(pos);
                 String itemId = clikedFoodItemModel.ItemId;
                 itemCost = Integer.parseInt(foodItemDBAdapter.getItemCost(itemId));
-                if(itemCount == 0){
+                if(foodItemDBAdapter.getItemCount(itemId).equalsIgnoreCase("0")){
                     itemCount = Integer.parseInt(foodItemDBAdapter.getItemCount(itemId));
                     itemCount++;
                     calculateTotalCost(myViewHolder, clikedFoodItemModel);
