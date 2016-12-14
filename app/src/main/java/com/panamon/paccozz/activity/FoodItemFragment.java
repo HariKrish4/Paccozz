@@ -43,7 +43,7 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
     private TextView noDataTxt;
     private String categoryId;
     private RelativeLayout bottomSheetLayout;
-    private TextView itemPriceTxt,doneTxt;
+    private TextView itemPriceTxt, doneTxt;
     private double itemCost = 0;
     private boolean addonSubitemsIsShown = false;
 
@@ -150,7 +150,9 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
                     addOnsItemLists.setLayoutManager(mLayoutManager);
                     addOnsItemLists.setAdapter(addOnItemAdapter);
+                    doneTxt.setText("Done");
                     doneClick(itemId);
+                    HotelDetailsActivity.fab.setVisibility(View.GONE);
                 }
             }
         }
@@ -160,9 +162,7 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
         doneTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(addonSubitemsIsShown){
-                    addonSubitemsIsShown = false;
-                    doneTxt.setText("Apply");
+                if (doneTxt.getText().toString().equalsIgnoreCase("Apply")) {
                     bottomSheetLayout.setVisibility(View.VISIBLE);
                     vendorFoodLists.setVisibility(View.GONE);
                     AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
@@ -171,11 +171,12 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
                     addOnsItemLists.setLayoutManager(mLayoutManager);
                     addOnsItemLists.setAdapter(addOnItemAdapter);
-                }
-                else {
+                    HotelDetailsActivity.fab.setVisibility(View.VISIBLE);
+                    doneTxt.setText("Done");
+                } else {
                     bottomSheetLayout.setVisibility(View.GONE);
                     vendorFoodLists.setVisibility(View.VISIBLE);
-                    doneTxt.setText("Done");
+
                 }
                 //behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
             }
@@ -196,6 +197,8 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
         addOnsItemLists.setLayoutManager(mLayoutManager);
         addOnsItemLists.setAdapter(addOnItemAdapter);
+        HotelDetailsActivity.fab.setVisibility(View.GONE);
+        doneTxt.setText("Done");
         doneClick(itemId);
     }
 
@@ -213,6 +216,7 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
         addOnsItemLists.setLayoutManager(mLayoutManager);
         addOnsItemLists.setAdapter(addOnSubItemAdapter);
+        doneTxt.setText("Apply");
     }
 
     @Override

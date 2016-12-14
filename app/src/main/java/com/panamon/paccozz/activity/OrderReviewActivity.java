@@ -56,10 +56,9 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
     private double totalCost = 0.00;
     private ProgressBar progressBar;
     private LinearLayout bottomSheetLayout;
-    private TextView addonPriceTxt, mainItemPriceTxt, doneTxt;
+    private TextView itemPriceTxt, doneTxt;
     private RecyclerView addOnsItemLists;
     private double itemCost = 0;
-    private LinearLayout addon_ll;
     private ArrayList<FoodItemModel> foodItemModels;
 
     @Override
@@ -115,17 +114,10 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         //displaying addons
         addOnsItemLists = (RecyclerView) findViewById(R.id.addon_lists);
         doneTxt = (TextView) findViewById(R.id.doneTxt);
-        addonPriceTxt = (TextView) findViewById(R.id.addon_price);
-        mainItemPriceTxt = (TextView) findViewById(R.id.main_price);
-       // displayAddons();
+        itemPriceTxt = (TextView) findViewById(R.id.main_price);
+
     }
 
-   /* private void displayAddons() {
-
-        AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
-        ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(itemId);
-    }
-*/
     private void calculateTotalCost() {
         double totalItems = Double.parseDouble(foodItemDBAdapter.getTotalItems());
         totalCost = Double.parseDouble(foodItemDBAdapter.getTotalCost());
@@ -152,18 +144,19 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
     public void onCustomizationClicked(String itemId, int itemCost) {
         bottomSheetLayout.setVisibility(View.VISIBLE);
         this.itemCost = itemCost;
+        itemPriceTxt.setText("Item price : ₹" + itemCost);
         AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
         ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(itemId);
         AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().context, addOnItemModels, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
         addOnsItemLists.setLayoutManager(mLayoutManager);
         addOnsItemLists.setAdapter(addOnItemAdapter);
+        doneTxt.setText("Done");
         doneClick(itemId);
     }
 
     private void doneClick(String itemId) {
-        if(doneTxt.getText().toString().equalsIgnoreCase("Done")){
-            doneTxt.setText("Apply");
+        if (doneTxt.getText().toString().equalsIgnoreCase("Apply")) {
             bottomSheetLayout.setVisibility(View.VISIBLE);
             AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
             ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(itemId);
@@ -171,10 +164,11 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
             addOnsItemLists.setLayoutManager(mLayoutManager);
             addOnsItemLists.setAdapter(addOnItemAdapter);
+            doneTxt.setText("Done");
         }
         else {
             bottomSheetLayout.setVisibility(View.GONE);
-            doneTxt.setText("Done");
+
         }
 
     }
@@ -259,14 +253,14 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
         addOnsItemLists.setLayoutManager(mLayoutManager);
         addOnsItemLists.setAdapter(addOnSubItemAdapter);
+        doneTxt.setText("Apply");
     }
 
     @Override
     public void onAddonSubItemClicked(String subItemCost, String addOnItemId) {
-        addonPriceTxt.setText("Addon Price:₹" + subItemCost);
-        mainItemPriceTxt.setText("Main item price : ₹" + itemCost);
         itemCost = itemCost + Double.parseDouble(subItemCost);
         int itemCostInt = (int) itemCost;
+        itemPriceTxt.setText("Item price : ₹" + itemCostInt);
         foodItemDBAdapter.updateTotalCost(itemCostInt + "", addOnItemId);
         //foodItemDBAdapter.updateItemCost(itemCostInt + "", addOnItemId);
     }

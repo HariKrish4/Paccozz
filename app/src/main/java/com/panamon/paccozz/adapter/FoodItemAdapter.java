@@ -100,9 +100,8 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
                     itemCount = Integer.parseInt(foodItemDBAdapter.getItemCount(itemId));
                     itemCount++;
                     calculateTotalCost(myViewHolder, clikedFoodItemModel);
-                }else {
-                    foodItemCountChange.onCustomizationClicked(clikedFoodItemModel.ItemId,itemCost);
                 }
+                foodItemCountChange.onCustomizationClicked(clikedFoodItemModel.ItemId,itemCost);
             }
         });
 

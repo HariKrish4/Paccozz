@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.panamon.paccozz.R;
@@ -13,6 +15,7 @@ import com.panamon.paccozz.dbadater.AddOnDBAdapter;
 import com.panamon.paccozz.dbadater.FoodItemDBAdapter;
 import com.panamon.paccozz.interfaces.FoodItemChanged;
 import com.panamon.paccozz.model.AddOnItemModel;
+import com.panamon.paccozz.model.AddOnSubItemModel;
 import com.panamon.paccozz.model.FoodItemModel;
 
 import java.util.ArrayList;
@@ -25,15 +28,20 @@ import java.util.List;
 public class SelectedFoodItemAdapter extends RecyclerView.Adapter {
 
     private Context context;
-    private List<FoodItemModel> foodItemModels;
     private int itemCount = 0, itemCost = 0;
     private FoodItemChanged foodItemCountChange;
     private FoodItemDBAdapter foodItemDBAdapter;
+    private List<FoodItemModel> foodItemModels;
+    private ArrayList<AddOnSubItemModel> addOnSubItemModels;
+    private LayoutInflater inflater;
 
     public SelectedFoodItemAdapter(Context context, List<FoodItemModel> foodItemModels, FoodItemChanged foodItemCountChange) {
         this.context = context;
         this.foodItemModels = foodItemModels;
         this.foodItemCountChange = foodItemCountChange;
+        addOnSubItemModels = new ArrayList<>();
+        inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -101,7 +109,17 @@ public class SelectedFoodItemAdapter extends RecyclerView.Adapter {
         ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(foodItemModel.ItemId);
         if (addOnItemModels.size() > 0) {
             myViewHolder.TxtCustomization.setVisibility(View.VISIBLE);
+            for (int i = 0; i < addOnItemModels.size(); i++) {
+                addOnSubItemModels = addOnDBAdapter.getAddOnSelectedSubItems(addOnItemModels.get(i).AddOnId);
+            }
 
+            for (int i = 0; i < addOnSubItemModels.size(); i++) {
+                View subItemView = inflater.inflate(R.layout.addon_list_item,
+                        myViewHolder.food_item_ll, false);
+                TextView subItemNameTxt = (TextView) subItemView.findViewById(R.id.addonName_txt);
+                subItemNameTxt.setText("Test");
+                myViewHolder.addon_listsLL.addView(subItemView);
+            }
         } else {
             myViewHolder.TxtCustomization.setVisibility(View.GONE);
         }
@@ -128,6 +146,8 @@ public class SelectedFoodItemAdapter extends RecyclerView.Adapter {
         public TextView TxtPlus;
         public TextView TxtMinus;
         public TextView TxtCustomization;
+        public LinearLayout addon_listsLL;
+        public RelativeLayout food_item_ll;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -137,6 +157,8 @@ public class SelectedFoodItemAdapter extends RecyclerView.Adapter {
             TxtMinus = (TextView) itemView.findViewById(R.id.minus);
             TxtPlus = (TextView) itemView.findViewById(R.id.plus);
             TxtCustomization = (TextView) itemView.findViewById(R.id.customization_txt);
+            food_item_ll = (RelativeLayout) itemView.findViewById(R.id.food_item_ll);
+            addon_listsLL = (LinearLayout) itemView.findViewById(R.id.addon_lists);
         }
     }
 }

@@ -291,17 +291,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/five"
-                        android:text="Main item price : ₹ 0"
+                        android:text="Item price : ₹ 0"
                         android:textColor="@android:color/holo_green_dark" />
 
-                    <TextView
-                        android:id="@+id/addon_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/five"
-                        android:layout_marginTop="@dimen/five"
-                        android:text="Addon Price:₹ 0"
-                        android:textColor="@android:color/holo_green_dark" />
                 </LinearLayout>
             </LinearLayout>
 

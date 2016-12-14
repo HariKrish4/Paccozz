@@ -34,6 +34,7 @@ public class AddOnDBAdapter implements TableConstants {
         values.put(ADDON_SUBITEM_ID, addOnSubItemModel.AddOnSubItemId);
         values.put(ADDON_SUBITEM_NAME, addOnSubItemModel.AddOnSubItemName);
         values.put(ADDON_SUBITEM_PRICE, addOnSubItemModel.AddOnPrice);
+        values.put(IS_ITEM_SELECTED,"0");
         CommonDBHelper.getInstance().getDb().insert(ADDON_SUBITEM_TABLE, null, values);
         CommonDBHelper.getInstance().close();
     }
@@ -63,6 +64,28 @@ public class AddOnDBAdapter implements TableConstants {
         AddOnSubItemModel addOnSubItemModel;
         ArrayList<AddOnSubItemModel> addOnSubItemModels = new ArrayList<>();
         String query = "SELECT * FROM " + ADDON_SUBITEM_TABLE + " WHERE " + ADDON_ID + " =" + addOn_id + "";
+        Cursor cursor = CommonDBHelper.getInstance().getDb().rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                addOnSubItemModel = new AddOnSubItemModel();
+                addOnSubItemModel.AddOnCateroryId = cursor.getString(1);
+                addOnSubItemModel.AddOnId = cursor.getString(2);
+                addOnSubItemModel.AddOnSubItemId = cursor.getString(3);
+                addOnSubItemModel.AddOnSubItemName = cursor.getString(4);
+                addOnSubItemModel.AddOnPrice = cursor.getString(5);
+                addOnSubItemModel.IsItemSelected = cursor.getString(6);
+                addOnSubItemModels.add(addOnSubItemModel);
+            } while (cursor.moveToNext());
+        }
+        CommonDBHelper.getInstance().close();
+        return addOnSubItemModels;
+    }
+
+    public ArrayList<AddOnSubItemModel> getAddOnSelectedSubItems(String addOn_id) {
+        CommonDBHelper.getInstance().open();
+        AddOnSubItemModel addOnSubItemModel;
+        ArrayList<AddOnSubItemModel> addOnSubItemModels = new ArrayList<>();
+        String query = "SELECT * FROM " + ADDON_SUBITEM_TABLE + " WHERE " + ADDON_ID + " ='" + addOn_id + "'" + " AND " + IS_ITEM_SELECTED + " = '1'";
         Cursor cursor = CommonDBHelper.getInstance().getDb().rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
