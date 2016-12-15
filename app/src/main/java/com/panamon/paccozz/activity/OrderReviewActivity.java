@@ -44,7 +44,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OrderReviewActivity extends AppCompatActivity implements FoodItemChanged,AddonItemClicked, View.OnClickListener {
+public class OrderReviewActivity extends AppCompatActivity implements FoodItemChanged, AddonItemClicked, View.OnClickListener {
 
     private RecyclerView selectedItemLists;
     private TextView textView_item, textView_proceed, textView_discount, textView_taxprice, textView_totalprice, textView_vendor_name;
@@ -136,7 +136,7 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
     }
 
     @Override
-    public void onFoodItemCountChanged(String itemId, int itemCost,int itemCount,boolean plus) {
+    public void onFoodItemCountChanged(String itemId, int itemCost, int itemCount, boolean plus) {
 
     }
 
@@ -155,22 +155,25 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         doneClick(itemId);
     }
 
-    private void doneClick(String itemId) {
-        if (doneTxt.getText().toString().equalsIgnoreCase("Apply")) {
-            bottomSheetLayout.setVisibility(View.VISIBLE);
-            AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
-            ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(itemId);
-            AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().context, addOnItemModels, this);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
-            addOnsItemLists.setLayoutManager(mLayoutManager);
-            addOnsItemLists.setAdapter(addOnItemAdapter);
-            doneTxt.setText("Done");
-        }
-        else {
-            bottomSheetLayout.setVisibility(View.GONE);
+    private void doneClick(final String itemId) {
+        doneTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (doneTxt.getText().toString().equalsIgnoreCase("Apply")) {
+                    bottomSheetLayout.setVisibility(View.VISIBLE);
+                    AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
+                    ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(itemId);
+                    AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().context, addOnItemModels, OrderReviewActivity.this);
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
+                    addOnsItemLists.setLayoutManager(mLayoutManager);
+                    addOnsItemLists.setAdapter(addOnItemAdapter);
+                    doneTxt.setText("Done");
+                } else {
+                    bottomSheetLayout.setVisibility(View.GONE);
 
-        }
-
+                }
+            }
+        });
     }
 
     @Override
@@ -215,7 +218,7 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
                                 int grnd_total = Integer.parseInt(jsonObject.getString("amount"));
                                 String cupid = jsonObject.getString("couponid");
                                 String message = jsonObject.getString("message");
-                                textView_totalprice.setText(grnd_total+"");
+                                textView_totalprice.setText(grnd_total + "");
                             } else {
                                 Snackbar.make(editText_applycoupon, "Invalid Coupon", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
@@ -257,8 +260,12 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
     }
 
     @Override
-    public void onAddonSubItemClicked(String subItemCost, String addOnItemId) {
-        itemCost = itemCost + Double.parseDouble(subItemCost);
+    public void onAddonSubItemClicked(String subItemCost, String addOnItemId, String cost, boolean isChecked) {
+        if(isChecked) {
+            itemCost = itemCost + Double.parseDouble(subItemCost);
+        }else{
+            itemCost = itemCost - Double.parseDouble(cost);
+        }
         int itemCostInt = (int) itemCost;
         itemPriceTxt.setText("Item price : ₹" + itemCostInt);
         foodItemDBAdapter.updateTotalCost(itemCostInt + "", addOnItemId);

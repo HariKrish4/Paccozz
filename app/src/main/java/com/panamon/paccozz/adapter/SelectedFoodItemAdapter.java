@@ -110,16 +110,17 @@ public class SelectedFoodItemAdapter extends RecyclerView.Adapter {
         if (addOnItemModels.size() > 0) {
             myViewHolder.TxtCustomization.setVisibility(View.VISIBLE);
             for (int i = 0; i < addOnItemModels.size(); i++) {
-                addOnSubItemModels = addOnDBAdapter.getAddOnSelectedSubItems(addOnItemModels.get(i).AddOnId);
+                addOnSubItemModels.addAll(addOnDBAdapter.getAddOnSelectedSubItems(addOnItemModels.get(i).AddOnId));
             }
 
             for (int i = 0; i < addOnSubItemModels.size(); i++) {
                 View subItemView = inflater.inflate(R.layout.addon_list_item,
                         myViewHolder.food_item_ll, false);
                 TextView subItemNameTxt = (TextView) subItemView.findViewById(R.id.addonName_txt);
-                subItemNameTxt.setText("Test");
+                subItemNameTxt.setText(addOnSubItemModels.get(i).AddOnSubItemName);
                 myViewHolder.addon_listsLL.addView(subItemView);
             }
+            addOnSubItemModels.clear();
         } else {
             myViewHolder.TxtCustomization.setVisibility(View.GONE);
         }

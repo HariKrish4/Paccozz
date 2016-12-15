@@ -61,11 +61,11 @@ public class AddOnSubItemAdapter extends RecyclerView.Adapter {
                 if (b) {
                     addOnDBAdapter.updateIsItemSelected("1", addOnClickedSubItemModel.AddOnSubItemId);
                     String cost = addOnDBAdapter.getTotalSubItemCost(addOnClickedSubItemModel.AddOnSubItemId);
-                    addonItemClicked.onAddonSubItemClicked(cost, addOnClickedSubItemModel.AddOnCateroryId);
+                    addonItemClicked.onAddonSubItemClicked(cost, addOnClickedSubItemModel.AddOnCateroryId, addOnClickedSubItemModel.AddOnPrice, true);
                 } else {
                     addOnDBAdapter.updateIsItemSelected("0", addOnClickedSubItemModel.AddOnSubItemId);
                     String cost = addOnDBAdapter.getTotalSubItemCost(addOnClickedSubItemModel.AddOnSubItemId);
-                    addonItemClicked.onAddonSubItemClicked(cost, addOnClickedSubItemModel.AddOnCateroryId);
+                    addonItemClicked.onAddonSubItemClicked(cost, addOnClickedSubItemModel.AddOnCateroryId, addOnClickedSubItemModel.AddOnPrice, false);
                 }
             }
         });
@@ -88,7 +88,7 @@ public class AddOnSubItemAdapter extends RecyclerView.Adapter {
         if (addOnSubItemModel.IsItemSelected == null || addOnSubItemModel.IsItemSelected.equalsIgnoreCase("0")) {
             myViewHolder.SelectedBtn.setChecked(false);
         } else if (addOnSubItemModel.IsItemSelected.equalsIgnoreCase("1")) {
-            myViewHolder.SelectedBtn.setChecked(false);
+            myViewHolder.SelectedBtn.setChecked(true);
         }
     }
 

@@ -154,6 +154,23 @@ public class FoodItemDBAdapter implements TableConstants {
 
     }
 
+    public String getItemTotalCost(String itemId) {
+        CommonDBHelper.getInstance().open();
+        String query = "SELECT * FROM " + FOOD_ITEM_TABLE + " WHERE " + ITEM_ID + " ='" + itemId + "'";
+        Cursor cursor = CommonDBHelper.getInstance().getDb().rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                String itemcost = cursor.getString(8);
+                CommonDBHelper.getInstance().close();
+                return itemcost;
+            } while (cursor.moveToNext());
+        } else {
+            CommonDBHelper.getInstance().close();
+            return "0";
+        }
+
+    }
+
     //get food selected items with respect to category id
     public ArrayList<FoodItemModel> getSelectedFoodItems() {
         CommonDBHelper.getInstance().open();

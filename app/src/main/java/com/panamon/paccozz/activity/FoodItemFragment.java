@@ -45,7 +45,6 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
     private RelativeLayout bottomSheetLayout;
     private TextView itemPriceTxt, doneTxt;
     private double itemCost = 0;
-    private boolean addonSubitemsIsShown = false;
 
     public FoodItemFragment() {
         // Required empty public constructor
@@ -171,12 +170,11 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
                     addOnsItemLists.setLayoutManager(mLayoutManager);
                     addOnsItemLists.setAdapter(addOnItemAdapter);
-                    HotelDetailsActivity.fab.setVisibility(View.VISIBLE);
                     doneTxt.setText("Done");
                 } else {
                     bottomSheetLayout.setVisibility(View.GONE);
                     vendorFoodLists.setVisibility(View.VISIBLE);
-
+                    HotelDetailsActivity.fab.setVisibility(View.VISIBLE);
                 }
                 //behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
             }
@@ -190,7 +188,6 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
         vendorFoodLists.setVisibility(View.GONE);
         this.itemCost = itemCost;
         itemPriceTxt.setText("Item price : ₹" + itemCost);
-        addonSubitemsIsShown = false;
         AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
         ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(itemId);
         AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().context, addOnItemModels, this);
@@ -209,7 +206,6 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
 
     @Override
     public void onAddonItemClicked(String addonId) {
-        addonSubitemsIsShown = true;
         AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
         ArrayList<AddOnSubItemModel> addOnSubItemModels = addOnDBAdapter.getAddOnSubItems(addonId);
         AddOnSubItemAdapter addOnSubItemAdapter = new AddOnSubItemAdapter(Singleton.getInstance().context, addOnSubItemModels, this);
@@ -220,8 +216,12 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
     }
 
     @Override
-    public void onAddonSubItemClicked(String subItemCost, String addOnId) {
-        itemCost = itemCost + Double.parseDouble(subItemCost);
+    public void onAddonSubItemClicked(String subItemCost, String addOnId, String cost, boolean isChecked) {
+        if(isChecked) {
+            itemCost = itemCost + Double.parseDouble(subItemCost);
+        }else{
+            itemCost = itemCost - Double.parseDouble(cost);
+        }
         int itemCostInt = (int) itemCost;
         itemPriceTxt.setText("Item price : ₹" + itemCostInt);
         foodItemDBAdapter.updateTotalCost(itemCostInt + "", addOnId);
