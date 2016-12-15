@@ -32,7 +32,7 @@
                 android:layout_gravity="center"
                 android:text="Review Order"
                 android:textColor="#000"
-                android:textSize="@dimen/text_18"
+                android:textSize="@dimen/text_20"
                 android:visibility="visible" />
         </android.support.v7.widget.Toolbar>
 

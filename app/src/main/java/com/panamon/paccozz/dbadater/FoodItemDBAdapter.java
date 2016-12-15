@@ -26,6 +26,7 @@ public class FoodItemDBAdapter implements TableConstants {
         values.put(IS_ITEM_SELECTED, foodItemModel.IsItemSelected);
         values.put(TOTAL_COST, "0");
         values.put(ITEM_TYPE,foodItemModel.ItemType);
+        values.put(ITEM_TOTAL_COST, foodItemModel.ItemCost);
         CommonDBHelper.getInstance().getDb().insert(FOOD_ITEM_TABLE, null, values);
         CommonDBHelper.getInstance().close();
     }
@@ -45,6 +46,7 @@ public class FoodItemDBAdapter implements TableConstants {
                 foodItemModel.ItemCost = cursor.getString(3);
                 foodItemModel.ItemCount = cursor.getString(4);
                 foodItemModel.TotalCost = cursor.getString(8);
+                foodItemModel.ItemTotalCost = cursor.getString(10);
                 foodItemModels.add(foodItemModel);
 
             } while (cursor.moveToNext());
@@ -68,6 +70,7 @@ public class FoodItemDBAdapter implements TableConstants {
                 foodItemModel.ItemCost = cursor.getString(3);
                 foodItemModel.ItemCount = cursor.getString(4);
                 foodItemModel.TotalCost = cursor.getString(8);
+                foodItemModel.ItemTotalCost = cursor.getString(10);
                 foodItemModels.add(foodItemModel);
 
             } while (cursor.moveToNext());
@@ -92,6 +95,16 @@ public class FoodItemDBAdapter implements TableConstants {
         CommonDBHelper.getInstance().open();
         ContentValues values = new ContentValues();
         values.put(TOTAL_COST, totalCost);
+        CommonDBHelper.getInstance().getDb().update(FOOD_ITEM_TABLE, values, ITEM_ID + " = ?",
+                new String[]{String.valueOf(itemId)});
+        CommonDBHelper.getInstance().close();
+    }
+
+    //updating itemtotalcost
+    public void updateItemTotalCost(String totalCost, String itemId) {
+        CommonDBHelper.getInstance().open();
+        ContentValues values = new ContentValues();
+        values.put(ITEM_TOTAL_COST, totalCost);
         CommonDBHelper.getInstance().getDb().update(FOOD_ITEM_TABLE, values, ITEM_ID + " = ?",
                 new String[]{String.valueOf(itemId)});
         CommonDBHelper.getInstance().close();
@@ -160,7 +173,7 @@ public class FoodItemDBAdapter implements TableConstants {
         Cursor cursor = CommonDBHelper.getInstance().getDb().rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
-                String itemcost = cursor.getString(8);
+                String itemcost = cursor.getString(10);
                 CommonDBHelper.getInstance().close();
                 return itemcost;
             } while (cursor.moveToNext());

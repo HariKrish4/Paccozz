@@ -30,6 +30,7 @@ public class AddOnSubItemAdapter extends RecyclerView.Adapter {
     private List<AddOnSubItemModel> addOnSubItemModels;
     private AddonItemClicked addonItemClicked;
     private int clickCount = 0;
+    private AddOnDBAdapter addOnDBAdapter;
 
     public AddOnSubItemAdapter(Context context, List<AddOnSubItemModel> addOnSubItemModels, AddonItemClicked addonItemClicked) {
         this.context = context;
@@ -48,32 +49,17 @@ public class AddOnSubItemAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final MyViewHolder myViewHolder = (MyViewHolder) holder;
         final AddOnSubItemModel addOnSubItemModel = addOnSubItemModels.get(position);
-        final AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
+        addOnDBAdapter = new AddOnDBAdapter();
         myViewHolder.HeaderTxt.setText(addOnSubItemModel.AddOnSubItemName);
         myViewHolder.PriceTxt.setText("₹ " + addOnSubItemModel.AddOnPrice);
         myViewHolder.SelectedBtn.setTag(position);
         myViewHolder.SubItemLL.setTag(position);
-        myViewHolder.SelectedBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                int pos = (int) compoundButton.getTag();
-                AddOnSubItemModel addOnClickedSubItemModel = addOnSubItemModels.get(pos);
-                if (b) {
-                    addOnDBAdapter.updateIsItemSelected("1", addOnClickedSubItemModel.AddOnSubItemId);
-                    String cost = addOnDBAdapter.getTotalSubItemCost(addOnClickedSubItemModel.AddOnSubItemId);
-                    addonItemClicked.onAddonSubItemClicked(cost, addOnClickedSubItemModel.AddOnCateroryId, addOnClickedSubItemModel.AddOnPrice, true);
-                } else {
-                    addOnDBAdapter.updateIsItemSelected("0", addOnClickedSubItemModel.AddOnSubItemId);
-                    String cost = addOnDBAdapter.getTotalSubItemCost(addOnClickedSubItemModel.AddOnSubItemId);
-                    addonItemClicked.onAddonSubItemClicked(cost, addOnClickedSubItemModel.AddOnCateroryId, addOnClickedSubItemModel.AddOnPrice, false);
-                }
-            }
-        });
+        myViewHolder.SelectedBtn.setOnCheckedChangeListener(onCheckedChangeListener);
 
         myViewHolder.SubItemLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                myViewHolder.SelectedBtn.setOnCheckedChangeListener(onCheckedChangeListener);
                 if (clickCount == 0) {
                     clickCount = 1;
                     myViewHolder.SelectedBtn.setChecked(true);
@@ -86,11 +72,31 @@ public class AddOnSubItemAdapter extends RecyclerView.Adapter {
             }
         });
         if (addOnSubItemModel.IsItemSelected == null || addOnSubItemModel.IsItemSelected.equalsIgnoreCase("0")) {
+            myViewHolder.SelectedBtn.setOnCheckedChangeListener(null);
             myViewHolder.SelectedBtn.setChecked(false);
         } else if (addOnSubItemModel.IsItemSelected.equalsIgnoreCase("1")) {
+            myViewHolder.SelectedBtn.setOnCheckedChangeListener(null);
             myViewHolder.SelectedBtn.setChecked(true);
         }
+        myViewHolder.SelectedBtn.setOnCheckedChangeListener(onCheckedChangeListener);
     }
+
+    private CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            int pos = (int) compoundButton.getTag();
+            AddOnSubItemModel addOnClickedSubItemModel = addOnSubItemModels.get(pos);
+            if (b) {
+                addOnDBAdapter.updateIsItemSelected("1", addOnClickedSubItemModel.AddOnSubItemId);
+                String cost = addOnDBAdapter.getTotalSubItemCost(addOnClickedSubItemModel.AddOnSubItemId);
+                addonItemClicked.onAddonSubItemClicked(cost, addOnClickedSubItemModel.AddOnCateroryId, addOnClickedSubItemModel.AddOnPrice, true);
+            } else {
+                addOnDBAdapter.updateIsItemSelected("0", addOnClickedSubItemModel.AddOnSubItemId);
+                String cost = addOnDBAdapter.getTotalSubItemCost(addOnClickedSubItemModel.AddOnSubItemId);
+                addonItemClicked.onAddonSubItemClicked(cost, addOnClickedSubItemModel.AddOnCateroryId, addOnClickedSubItemModel.AddOnPrice, false);
+            }
+        }
+    };
 
     @Override
     public int getItemCount() {

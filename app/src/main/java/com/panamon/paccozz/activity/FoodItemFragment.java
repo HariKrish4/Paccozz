@@ -225,7 +225,6 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
         int itemCostInt = (int) itemCost;
         itemPriceTxt.setText("Item price : ₹" + itemCostInt);
         foodItemDBAdapter.updateTotalCost(itemCostInt + "", addOnId);
-        //foodItemDBAdapter.updateItemCost(itemCostInt + "", addOnId);
-        //displayFoodItems();
+        foodItemDBAdapter.updateItemTotalCost(itemCostInt + "", addOnId);
     }
 }

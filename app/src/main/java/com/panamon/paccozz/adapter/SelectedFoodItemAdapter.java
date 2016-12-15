@@ -70,7 +70,7 @@ public class SelectedFoodItemAdapter extends RecyclerView.Adapter {
                 FoodItemModel clikedFoodItemModel = foodItemModels.get(pos);
                 String itemId = clikedFoodItemModel.ItemId;
                 itemCount = Integer.parseInt(foodItemDBAdapter.getItemCount(itemId));
-                itemCost = Integer.parseInt(foodItemDBAdapter.getItemCost(itemId));
+                itemCost = Integer.parseInt(foodItemDBAdapter.getItemTotalCost(itemId));
                 itemCount++;
                 calculateTotalCost(myViewHolder, clikedFoodItemModel);
             }
@@ -83,7 +83,7 @@ public class SelectedFoodItemAdapter extends RecyclerView.Adapter {
                 FoodItemModel clikedFoodItemModel = foodItemModels.get(pos);
                 String itemId = clikedFoodItemModel.ItemId;
                 itemCount = Integer.parseInt(foodItemDBAdapter.getItemCount(itemId));
-                itemCost = Integer.parseInt(foodItemDBAdapter.getItemCost(itemId));
+                itemCost = Integer.parseInt(foodItemDBAdapter.getItemTotalCost(itemId));
                 itemCount--;
                 if (itemCount >= 0) {
                     calculateTotalCost(myViewHolder, clikedFoodItemModel);
@@ -100,7 +100,7 @@ public class SelectedFoodItemAdapter extends RecyclerView.Adapter {
                 int pos = (int) view.getTag();
                 FoodItemModel clikedFoodItemModel = foodItemModels.get(pos);
                 String itemId = clikedFoodItemModel.ItemId;
-                itemCost = Integer.parseInt(foodItemDBAdapter.getItemCost(itemId));
+                itemCost = Integer.parseInt(foodItemDBAdapter.getItemTotalCost(itemId));
                 foodItemCountChange.onCustomizationClicked(clikedFoodItemModel.ItemId, itemCost);
             }
         });

@@ -13,10 +13,15 @@
     <RelativeLayout
         android:id="@+id/relative_bottom"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/fourty"
+        android:layout_height="@dimen/forty_six"
         android:layout_alignParentBottom="true"
         android:background="#FFF"
         android:gravity="center">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
 
         <TextView
             android:id="@+id/textView_proceed"
@@ -114,14 +119,16 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.5"
-                            android:text="Total Item" />
+                            android:text="Total Item"
+                            android:textSize="@dimen/text_16" />
 
                         <TextView
                             android:id="@+id/item_txt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".5"
-                            android:text="0" />
+                            android:text="0"
+                            android:textSize="@dimen/text_16" />
 
                     </LinearLayout>
 
@@ -140,7 +147,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1.5"
                             android:text="Total Discount"
-                            android:textColor="@android:color/holo_green_light" />
+                            android:textColor="@android:color/holo_green_light"
+                            android:textSize="@dimen/text_16" />
 
                         <TextView
                             android:id="@+id/discount_txt"
@@ -148,7 +156,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight=".5"
                             android:text="10%"
-                            android:textColor="@android:color/holo_green_light" />
+                            android:textColor="@android:color/holo_green_light"
+                            android:textSize="@dimen/text_16" />
 
                     </LinearLayout>
 
@@ -166,14 +175,16 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.5"
-                            android:text="Total Service Tax" />
+                            android:text="VAT"
+                            android:textSize="@dimen/text_16" />
 
                         <TextView
                             android:id="@+id/tax_txt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".5"
-                            android:text="12%" />
+                            android:text="12%"
+                            android:textSize="@dimen/text_16" />
 
                     </LinearLayout>
 
@@ -197,14 +208,16 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.5"
-                            android:text="Grand Total" />
+                            android:text="Grand Total"
+                            android:textSize="@dimen/text_16" />
 
                         <TextView
                             android:id="@+id/total_txt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".5"
-                            android:text="0" />
+                            android:text="0"
+                            android:textSize="@dimen/text_16" />
 
                     </LinearLayout>
 
@@ -235,13 +248,14 @@
                             android:textColor="@android:color/black"
                             android:textColorHint="@android:color/darker_gray" />
 
-                        <ImageView
+                        <TextView
                             android:id="@+id/apply_img"
                             android:layout_width="0dp"
                             android:layout_height="40dp"
                             android:layout_weight=".5"
-                            android:src="@drawable/arrow_cross"
-                            android:textColor="@android:color/holo_green_light" />
+                            android:gravity="center"
+                            android:text="Apply"
+                            android:textColor="@color/colorPrimary" />
 
                     </LinearLayout>
 
@@ -255,8 +269,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:visibility="gone"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/titleLL"

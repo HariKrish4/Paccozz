@@ -63,7 +63,7 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
                 FoodItemModel clikedFoodItemModel = foodItemModels.get(pos);
                 String itemId = clikedFoodItemModel.ItemId;
                 itemCount = Integer.parseInt(foodItemDBAdapter.getItemCount(itemId));
-                itemCost = Integer.parseInt(foodItemDBAdapter.getItemCost(itemId));
+                itemCost = Integer.parseInt(foodItemDBAdapter.getItemTotalCost(itemId));
                 itemCount++;
                 plus = true;
                 calculateTotalCost(myViewHolder, clikedFoodItemModel);
@@ -77,7 +77,7 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
                 FoodItemModel clikedFoodItemModel = foodItemModels.get(pos);
                 String itemId = clikedFoodItemModel.ItemId;
                 itemCount = Integer.parseInt(foodItemDBAdapter.getItemCount(itemId));
-                itemCost = Integer.parseInt(foodItemDBAdapter.getItemCost(itemId));
+                itemCost = Integer.parseInt(foodItemDBAdapter.getItemTotalCost(itemId));
                 itemCount--;
                 plus = false;
                 if (itemCount >= 0) {
@@ -95,7 +95,7 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
                 int pos = (int) view.getTag();
                 FoodItemModel clikedFoodItemModel = foodItemModels.get(pos);
                 String itemId = clikedFoodItemModel.ItemId;
-                itemCost = Integer.parseInt(foodItemDBAdapter.getItemCost(itemId));
+                itemCost = Integer.parseInt(foodItemDBAdapter.getItemTotalCost(itemId));
                 if(foodItemDBAdapter.getItemCount(itemId).equalsIgnoreCase("0")){
                     itemCount = Integer.parseInt(foodItemDBAdapter.getItemCount(itemId));
                     itemCount++;

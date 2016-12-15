@@ -49,7 +49,7 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
     private RecyclerView selectedItemLists;
     private TextView textView_item, textView_proceed, textView_discount, textView_taxprice, textView_totalprice, textView_vendor_name;
     private EditText editText_applycoupon;
-    private ImageView textView_apply;
+    private TextView textView_apply;
     private int discount = 10, tax = 12;
     private FoodItemDBAdapter foodItemDBAdapter;
     private ImageView arrow;
@@ -86,7 +86,7 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         textView_taxprice = (TextView) findViewById(R.id.tax_txt);
         textView_totalprice = (TextView) findViewById(R.id.total_txt);
         editText_applycoupon = (EditText) findViewById(R.id.enter_coupon__txt);
-        textView_apply = (ImageView) findViewById(R.id.apply_img);
+        textView_apply = (TextView) findViewById(R.id.apply_img);
         textView_proceed = (TextView) findViewById(R.id.textView_proceed);
         textView_proceed.setOnClickListener(this);
         textView_apply.setOnClickListener(this);
@@ -96,17 +96,9 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
 
         //displying seleced food items
         selectedItemLists = (RecyclerView) findViewById(R.id.food_item_lists);
-        foodItemDBAdapter = new FoodItemDBAdapter();
-        foodItemModels = foodItemDBAdapter.getSelectedFoodItems();
-
-        SelectedFoodItemAdapter foodItemAdapter = new SelectedFoodItemAdapter(this, foodItemModels, this);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        selectedItemLists.setLayoutManager(mLayoutManager);
-        selectedItemLists.setAdapter(foodItemAdapter);
-
         textView_vendor_name.setText(Singleton.getInstance().VendorName);
-
-        calculateTotalCost();
+        foodItemDBAdapter = new FoodItemDBAdapter();
+        showFoodItems();
 
         //bottom sheet layout
         bottomSheetLayout = (LinearLayout) findViewById(R.id.bottomSheetLayout);
@@ -118,12 +110,23 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
 
     }
 
+    private void showFoodItems() {
+        foodItemModels = foodItemDBAdapter.getSelectedFoodItems();
+        SelectedFoodItemAdapter foodItemAdapter = new SelectedFoodItemAdapter(this, foodItemModels, this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        selectedItemLists.setLayoutManager(mLayoutManager);
+        selectedItemLists.setAdapter(foodItemAdapter);
+        calculateTotalCost();
+    }
+
     private void calculateTotalCost() {
         double totalItems = Double.parseDouble(foodItemDBAdapter.getTotalItems());
         totalCost = Double.parseDouble(foodItemDBAdapter.getTotalCost());
         int totalInt = (int) totalItems;
         double discountCost = (discount * totalCost / 100);
         double taxCost = (tax * totalCost / 100);
+        textView_discount.setText("₹ " + String.format("%.2f", discountCost));
+        textView_taxprice.setText("₹ " + String.format("%.2f", taxCost));
         totalCost = totalCost + taxCost;
         totalCost = totalCost - discountCost;
         textView_item.setText(totalInt + "");
@@ -170,7 +173,7 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
                     doneTxt.setText("Done");
                 } else {
                     bottomSheetLayout.setVisibility(View.GONE);
-
+                    showFoodItems();
                 }
             }
         });
@@ -269,6 +272,6 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         int itemCostInt = (int) itemCost;
         itemPriceTxt.setText("Item price : ₹" + itemCostInt);
         foodItemDBAdapter.updateTotalCost(itemCostInt + "", addOnItemId);
-        //foodItemDBAdapter.updateItemCost(itemCostInt + "", addOnItemId);
+        foodItemDBAdapter.updateItemTotalCost(itemCostInt + "", addOnItemId);
     }
 }

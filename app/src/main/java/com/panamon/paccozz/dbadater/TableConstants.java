@@ -18,6 +18,7 @@ public interface TableConstants {
     public String IS_ITEM_SELECTED = "is_item_selected";
     public String TOTAL_COST = "total_cost";
     public String ITEM_TYPE = "item_type";
+    public String ITEM_TOTAL_COST = "item_total_cost";
 
     //addon item and addon sub item table columns
     public String ADDON_ID = "addon_id";
@@ -27,13 +28,13 @@ public interface TableConstants {
     public String ADDON_SUBITEM_PRICE = "addon_subitem_price";
 
     //Table Names
-    public String FOOD_ITEM_TABLE = "FoodItem";
+    public String FOOD_ITEM_TABLE = "FoodItemTable";
     public String ADDON_ITEM_TABLE = "AddonItemTable";
     public String ADDON_SUBITEM_TABLE = "AddonSubItemTable";
 
     //Create table queries
     public String CREATE_FOOD_ITEM_TABLE = "CREATE TABLE IF NOT EXISTS " + FOOD_ITEM_TABLE + "(" + KEY_ID + " INTEGER PRIMARY KEY," + ITEM_ID + " TEXT," + ITEM_NAME + " TEXT," + ITEM_COST + " TEXT," + ITEM_COUNT + " TEXT,"
-            + ITEM_CATEGORY_ID + " TEXT," + ITEM_VENDOR_ID + " TEXT," + IS_ITEM_SELECTED + " TEXT," + TOTAL_COST + " TEXT," + ITEM_TYPE + " TEXT" + ")";
+            + ITEM_CATEGORY_ID + " TEXT," + ITEM_VENDOR_ID + " TEXT," + IS_ITEM_SELECTED + " TEXT," + TOTAL_COST + " TEXT," + ITEM_TYPE + " TEXT," +  ITEM_TOTAL_COST + " TEXT" +")";
     public String CREATE_ADDON_ITEM_TABLE = "CREATE TABLE IF NOT EXISTS " + ADDON_ITEM_TABLE + "(" + KEY_ID + " INTEGER PRIMARY KEY," + ITEM_CATEGORY_ID + " TEXT," + ADDON_ID + " TEXT," + ADDON_NAME + " TEXT" + ")";
     public String CREATE_ADDON_SUBITEM_TABLE = "CREATE TABLE IF NOT EXISTS " + ADDON_SUBITEM_TABLE + "(" + KEY_ID + " INTEGER PRIMARY KEY," + ITEM_CATEGORY_ID + " TEXT," + ADDON_ID + " TEXT," + ADDON_SUBITEM_ID + " TEXT," + ADDON_SUBITEM_NAME + " TEXT," + ADDON_SUBITEM_PRICE + " TEXT," + IS_ITEM_SELECTED + " TEXT" + ")";
 
