@@ -20,7 +20,7 @@ public class SharedPref {
 
     public void setLoginData(String UserId,
                              String UserName, String UserMobile, String UserEmail,
-                             String ParkId, String ParkName) {
+                             String ParkId, String ParkName, String walletAmount, String profileImage) {
         editor = shared.edit();
         editor.putString("UserName", UserName);
         editor.putString("UserId", UserId);
@@ -28,6 +28,8 @@ public class SharedPref {
         editor.putString("UserEmail", UserEmail);
         editor.putString("ParkId", ParkId);
         editor.putString("ParkName", ParkName);
+        editor.putString("WalletAmount", walletAmount);
+        editor.putString("ProfileImage", profileImage);
 
         editor.apply();
     }
@@ -64,5 +66,13 @@ public class SharedPref {
 
     public String getParkName() {
         return shared.getString("ParkName", null);
+    }
+
+    public String getProfileImage() {
+        return shared.getString("ProfileImage", null);
+    }
+
+    public String getWalletAmount() {
+        return shared.getString("WalletAmount", null);
     }
 }

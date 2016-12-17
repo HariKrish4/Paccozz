@@ -3,6 +3,7 @@ package com.panamon.paccozz.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -16,7 +17,9 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -101,6 +104,14 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        // get menu from navigationView
+        Menu menu = navigationView.getMenu();
+
+        // find MenuItem you want to change
+        MenuItem nav_wallet = menu.findItem(R.id.nav_wallet);
+
+        // set new title to the MenuItem
+        nav_wallet.setTitle("Wallet                                  ₹" + Singleton.getInstance().WalletAmount);
         navigationView.setNavigationItemSelectedListener(this);
 
         //title bar codes
@@ -156,6 +167,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+
 
     /**
      * Showing Hotel List from api using volley
@@ -310,13 +322,16 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_profile) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_help) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_order) {
+            Intent order = new Intent(this, OrderActivity.class);
+            startActivity(order);
+        } else if (id == R.id.nav_wallet) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_fav) {
 
         } else if (id == R.id.nav_logout) {
             new AlertDialog.Builder(MainActivity.this)
@@ -338,7 +353,6 @@ public class MainActivity extends AppCompatActivity
                         }
                     })
                     .show();
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

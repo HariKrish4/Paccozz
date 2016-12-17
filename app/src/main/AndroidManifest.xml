@@ -26,16 +26,14 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.LoginActivity"
-            android:windowSoftInputMode="stateHidden">
-
-        </activity>
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity
             android:name=".activity.RegistrationActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.OrderReviewActivity"
             android:label="@string/title_activity_order_review"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.PaymentActivity" />
         /**
         * Add your API key
@@ -50,6 +48,15 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.OrderActivity"
+            android:label="@string/title_activity_order"
+            android:parentActivityName=".activity.MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.panamon.paccozz.activity.MainActivity" />
         </activity>
     </application>
 

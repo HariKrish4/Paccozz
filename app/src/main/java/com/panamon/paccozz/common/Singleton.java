@@ -34,6 +34,8 @@ public class Singleton {
     public String ParkName = "";
     public String VendorId = "";
     public String VendorName = "";
+    public String WalletAmount = "";
+    public String ProfileImage = "";
     public Context context;
     public ArrayList<CategoryModel> categories = new ArrayList<>();
     public String AddOns = "";

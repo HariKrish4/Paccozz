@@ -189,12 +189,12 @@ public class LoginActivity extends AppCompatActivity {
                                 String pass = jsonObject.getString("upass");
                                 String dob = jsonObject.getString("udob");
                                 Singleton.getInstance().UserMobile = jsonObject.getString("umobile");
-                                String wallet = jsonObject.getString("uwallet");
+                                Singleton.getInstance().WalletAmount = jsonObject.getString("uwallet");
                                 String message = jsonObject.getString("message");
 
                                 sharedPref.setIsLogged(true);
                                 sharedPref.setLoginData(Singleton.getInstance().UserId, Singleton.getInstance().UserName, Singleton.getInstance().UserMobile,
-                                        Singleton.getInstance().UserEmail, Singleton.getInstance().ParkId, Singleton.getInstance().ParkName);
+                                        Singleton.getInstance().UserEmail, Singleton.getInstance().ParkId, Singleton.getInstance().ParkName,Singleton.getInstance().WalletAmount,"");
                                 Intent as = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(as);
                                 finish();

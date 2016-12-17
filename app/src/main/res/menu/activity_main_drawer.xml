@@ -3,19 +3,23 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_profile"
             android:icon="@drawable/ic_menu_camera"
             android:title="Profile" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_order"
             android:icon="@drawable/ic_menu_gallery"
             android:title="My Order" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_wallet"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Wallet" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_fav"
+            android:icon="@drawable/ic_favorite_black_24dp"
+            android:title="Favourites" />
+        <item
+            android:id="@+id/nav_help"
             android:icon="@drawable/ic_menu_manage"
             android:title="Help and Support" />
         <item

@@ -15,4 +15,5 @@ public class Constants {
     public static String VENDORDETAILS_URL = BASE_URL + "vendorfulllist";
     public static String GETCITY_URL = BASE_URL + "citydetails";
     public static String COUPON_URL = BASE_URL + "coupon";
+    public static String ORDERHISTORY_URL = BASE_URL + "myorders";
 }

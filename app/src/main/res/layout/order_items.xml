@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/five"
+    android:paddingRight="@dimen/five">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="5dp"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="@dimen/five">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/ten">
+
+            <TextView
+                android:id="@+id/vandorNameTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Zaitoon"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18" />
+
+            <TextView
+                android:id="@+id/totalAmountTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/five"
+                android:text="₹ 180"
+                android:textColor="#000"
+                android:textSize="@dimen/text_16" />
+
+            <TextView
+                android:id="@+id/dateTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/five"
+                android:text="0000-00-00 00:00:00"
+                android:textColor="#000"
+                android:textSize="@dimen/text_16" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/ten"
+                android:background="#DDD" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/detailsTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/twentyfive"
+                    android:text="View Details"
+                    android:textSize="@dimen/text_16" />
+
+                <TextView
+                    android:id="@+id/statusTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/ten"
+                    android:gravity="right"
+                    android:text="APPROVED"
+                    android:textColor="#000"
+                    android:textSize="@dimen/text_18" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
