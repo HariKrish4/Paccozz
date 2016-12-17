@@ -1,21 +1,14 @@
 package com.panamon.paccozz.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.panamon.paccozz.R;
-import com.panamon.paccozz.activity.HotelDetailsActivity;
-import com.panamon.paccozz.common.Singleton;
-import com.panamon.paccozz.model.HotelListModel;
 import com.panamon.paccozz.model.OrderHistoryModel;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
