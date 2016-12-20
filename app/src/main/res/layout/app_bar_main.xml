@@ -39,9 +39,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginRight="@dimen/fifteen"
                     android:contentDescription="@string/app_name"
-                    android:layout_centerHorizontal="true"
                     android:src="@drawable/select_parl_list_small"
                     android:visibility="visible" />
             </RelativeLayout>
@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/float_review"
-        android:visibility="gone"/>
+        android:visibility="visible"
+        app:srcCompat="@drawable/float_review" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -25,14 +25,14 @@ public class FoodItemDBAdapter implements TableConstants {
         values.put(ITEM_VENDOR_ID, foodItemModel.ItemVendorId);
         values.put(IS_ITEM_SELECTED, foodItemModel.IsItemSelected);
         values.put(TOTAL_COST, "0");
-        values.put(ITEM_TYPE,foodItemModel.ItemType);
+        values.put(ITEM_TYPE, foodItemModel.ItemType);
         values.put(ITEM_TOTAL_COST, foodItemModel.ItemCost);
         CommonDBHelper.getInstance().getDb().insert(FOOD_ITEM_TABLE, null, values);
         CommonDBHelper.getInstance().close();
     }
 
     //get food items with respect to category id
-    public ArrayList<FoodItemModel> getFoodItems(String category_id,String item_type) {
+    public ArrayList<FoodItemModel> getFoodItems(String category_id, String item_type) {
         CommonDBHelper.getInstance().open();
         FoodItemModel foodItemModel;
         ArrayList<FoodItemModel> foodItemModels = new ArrayList<>();
@@ -77,6 +77,52 @@ public class FoodItemDBAdapter implements TableConstants {
         }
         CommonDBHelper.getInstance().close();
         return foodItemModels;
+    }
+
+    public boolean checkRecordExists(String vendorId) {
+        CommonDBHelper.getInstance().open();
+        //String Query = "SELECT TOP 1 " + ITEM_VENDOR_ID + " FROM "+ FOOD_ITEM_TABLE + " WHERE " + ITEM_VENDOR_ID + " = " + vendorId;
+        String Query = "SELECT * FROM " + FOOD_ITEM_TABLE + " WHERE " + ITEM_VENDOR_ID + " = " + vendorId;
+        Cursor cursor = CommonDBHelper.getInstance().getDb().rawQuery(Query, null);
+        if (cursor.getCount() <= 0) {
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        CommonDBHelper.getInstance().close();
+        return true;
+    }
+
+    public boolean checkFoodRecordExists(String itemId) {
+        CommonDBHelper.getInstance().open();
+        //String Query = "SELECT TOP 1 " + ITEM_VENDOR_ID + " FROM "+ FOOD_ITEM_TABLE + " WHERE " + ITEM_VENDOR_ID + " = " + vendorId;
+        String Query = "SELECT * FROM " + FOOD_ITEM_TABLE + " WHERE " + ITEM_ID + " = " + ITEM_ID;
+        Cursor cursor = CommonDBHelper.getInstance().getDb().rawQuery(Query, null);
+        if (cursor.getCount() <= 0) {
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        CommonDBHelper.getInstance().close();
+        return true;
+    }
+
+    //updating fooditem
+    public void updateFoodItem(String itemId) {
+        FoodItemModel foodItemModel = getFoodItem(itemId);
+        CommonDBHelper.getInstance().open();
+        ContentValues values = new ContentValues();
+        values.put(ITEM_NAME, foodItemModel.ItemName);
+        values.put(ITEM_COST, foodItemModel.ItemCost);
+        values.put(ITEM_COUNT, foodItemModel.ItemCount);
+        values.put(ITEM_CATEGORY_ID, foodItemModel.ItemCategoryId);
+        values.put(IS_ITEM_SELECTED, foodItemModel.IsItemSelected);
+        values.put(TOTAL_COST, foodItemModel.ItemCost);
+        values.put(ITEM_TYPE, foodItemModel.ItemType);
+        values.put(ITEM_TOTAL_COST, foodItemModel.ItemTotalCost);
+        CommonDBHelper.getInstance().getDb().update(FOOD_ITEM_TABLE, values, ITEM_ID + " = ?",
+                new String[]{String.valueOf(itemId)});
+        CommonDBHelper.getInstance().close();
     }
 
     //updating itemcount
@@ -184,6 +230,30 @@ public class FoodItemDBAdapter implements TableConstants {
 
     }
 
+    //get food selected items with respect to item id
+    public FoodItemModel getFoodItem(String itemId) {
+        CommonDBHelper.getInstance().open();
+        FoodItemModel foodItemModel = new FoodItemModel();
+        String query = "SELECT * FROM " + FOOD_ITEM_TABLE + " WHERE " + ITEM_ID + " = " + itemId;
+        Cursor cursor = CommonDBHelper.getInstance().getDb().rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+
+                foodItemModel.ItemId = cursor.getString(1);
+                foodItemModel.ItemName = cursor.getString(2);
+                foodItemModel.ItemCost = cursor.getString(3);
+                foodItemModel.ItemCount = cursor.getString(4);
+                foodItemModel.ItemCategoryId = cursor.getString(5);
+                foodItemModel.IsItemSelected = cursor.getString(7);
+                foodItemModel.TotalCost = cursor.getString(8);
+                foodItemModel.ItemType = cursor.getString(9);
+                foodItemModel.ItemTotalCost = cursor.getString(10);
+            } while (cursor.moveToNext());
+        }
+        CommonDBHelper.getInstance().close();
+        return foodItemModel;
+    }
+
     //get food selected items with respect to category id
     public ArrayList<FoodItemModel> getSelectedFoodItems() {
         CommonDBHelper.getInstance().open();
@@ -217,9 +287,9 @@ public class FoodItemDBAdapter implements TableConstants {
             if (sumCursor != null && sumCursor.getCount() > 0 && sumCursor.moveToFirst()) {
                 totalCost = String.format("%.2f", sumCursor.getDouble(0));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             if (!sumCursor.isClosed())
                 sumCursor.close();
         }
@@ -237,9 +307,9 @@ public class FoodItemDBAdapter implements TableConstants {
             if (sumCursor != null && sumCursor.getCount() > 0 && sumCursor.moveToFirst()) {
                 totalItems = String.format("%.2f", sumCursor.getDouble(0));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             if (!sumCursor.isClosed())
                 sumCursor.close();
         }

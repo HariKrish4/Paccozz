@@ -29,6 +29,7 @@ import com.panamon.paccozz.common.Singleton;
 import com.panamon.paccozz.dbadater.AddOnDBAdapter;
 import com.panamon.paccozz.dbadater.CommonDBHelper;
 import com.panamon.paccozz.dbadater.FoodItemDBAdapter;
+import com.panamon.paccozz.dbadater.TableConstants;
 import com.panamon.paccozz.model.AddOnItemModel;
 import com.panamon.paccozz.model.AddOnSubItemModel;
 import com.panamon.paccozz.model.CategoryModel;
@@ -115,7 +116,8 @@ public class HotelDetailsActivity extends AppCompatActivity {
     private void getVendorDetails() {
         progressBar.setVisibility(View.VISIBLE);
         Singleton.getInstance().categories.clear();
-        CommonDBHelper.getInstance().truncateAllTables();
+        CommonDBHelper.getInstance().deleteTableValues(TableConstants.ADDON_SUBITEM_TABLE);
+        CommonDBHelper.getInstance().deleteTableValues(TableConstants.ADDON_ITEM_TABLE);
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -199,7 +201,7 @@ public class HotelDetailsActivity extends AppCompatActivity {
                                 vendorNameTxt.setText(vendorDetailsModel.VenName);
                                 Picasso.with(HotelDetailsActivity.this).load(vendorDetailsModel.VenImage).placeholder(R.drawable.image_placeholder).into(vendorImage);
                             }
-                           new InsertVendorDetails().execute();
+                            new InsertVendorDetails(vendorDetailsModels.get(0).VenId).execute();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -222,19 +224,35 @@ public class HotelDetailsActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
-    private void insertVendorDetails() {
+    private void insertVendorDetails(String venId) {
         FoodItemDBAdapter foodItemDBAdapter = new FoodItemDBAdapter();
         AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
-        for (int i = 0; i < foodItemModels.size(); i++) {
-            foodItemDBAdapter.insertFoodItem(foodItemModels.get(i));
-        }
-        for (int i = 0; i < addOnItemModels.size(); i++) {
-            addOnDBAdapter.insertAddOnItem(addOnItemModels.get(i));
-        }
-        for (int i = 0; i < addOnSubItemModels.size(); i++) {
-            addOnDBAdapter.insertAddOnSubItem(addOnSubItemModels.get(i));
-        }
 
+        if (!foodItemDBAdapter.checkRecordExists(venId)) {
+            for (int i = 0; i < foodItemModels.size(); i++) {
+                foodItemDBAdapter.insertFoodItem(foodItemModels.get(i));
+            }
+            for (int i = 0; i < addOnItemModels.size(); i++) {
+                addOnDBAdapter.insertAddOnItem(addOnItemModels.get(i));
+            }
+            for (int i = 0; i < addOnSubItemModels.size(); i++) {
+                addOnDBAdapter.insertAddOnSubItem(addOnSubItemModels.get(i));
+            }
+        } else {
+            for (int i = 0; i < foodItemModels.size(); i++) {
+                if(foodItemDBAdapter.checkFoodRecordExists(foodItemModels.get(i).ItemId)) {
+                    foodItemDBAdapter.updateFoodItem(foodItemModels.get(i).ItemId);
+                }else{
+                    foodItemDBAdapter.insertFoodItem(foodItemModels.get(i));
+                }
+            }
+            for (int i = 0; i < addOnItemModels.size(); i++) {
+                addOnDBAdapter.insertAddOnItem(addOnItemModels.get(i));
+            }
+            for (int i = 0; i < addOnSubItemModels.size(); i++) {
+                addOnDBAdapter.insertAddOnSubItem(addOnSubItemModels.get(i));
+            }
+        }
     }
 
     private void initCollapsingToolbar() {
@@ -265,7 +283,14 @@ public class HotelDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private class InsertVendorDetails extends AsyncTask<Void,Void,Void>{
+    private class InsertVendorDetails extends AsyncTask<Void, Void, Void> {
+
+        private String venId = "";
+
+        public InsertVendorDetails(String venId) {
+            this.venId = venId;
+        }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -274,7 +299,7 @@ public class HotelDetailsActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            insertVendorDetails();
+            insertVendorDetails(venId);
             return null;
         }
 
