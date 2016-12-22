@@ -3,11 +3,9 @@ package com.panamon.paccozz.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,9 +15,7 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.text.SpannableString;
 import android.text.TextWatcher;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,6 +37,8 @@ import com.facebook.stetho.Stetho;
 import com.panamon.paccozz.common.SharedPref;
 import com.panamon.paccozz.common.Singleton;
 import com.panamon.paccozz.dbadater.CommonDBHelper;
+import com.panamon.paccozz.dbadater.FoodItemDBAdapter;
+import com.panamon.paccozz.model.FoodItemModel;
 import com.panamon.paccozz.model.HotelListModel;
 import com.panamon.paccozz.model.PlacesModel;
 import com.panamon.paccozz.R;
@@ -67,6 +65,7 @@ public class MainActivity extends AppCompatActivity
     private SharedPref sharedPref;
     private EditText searchEdt;
     private ArrayList<HotelListModel> hotelListModels;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,13 +80,13 @@ public class MainActivity extends AppCompatActivity
         sharedPref = new SharedPref(this);
 
         placeId = Singleton.getInstance().ParkId;
-        Singleton.getInstance().context = this;
+        Singleton.getInstance().Context = this;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -168,6 +167,17 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FoodItemDBAdapter foodItemDBAdapter = new FoodItemDBAdapter();
+        ArrayList<FoodItemModel> foodItemModels = foodItemDBAdapter.getSelectedFoodItems();
+        if (foodItemModels.size() > 0) {
+            fab.setVisibility(View.VISIBLE);
+        } else {
+            fab.setVisibility(View.GONE);
+        }
+    }
 
     /**
      * Showing Hotel List from api using volley

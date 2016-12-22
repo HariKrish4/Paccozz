@@ -116,8 +116,8 @@ public class HotelDetailsActivity extends AppCompatActivity {
     private void getVendorDetails() {
         progressBar.setVisibility(View.VISIBLE);
         Singleton.getInstance().categories.clear();
-        CommonDBHelper.getInstance().deleteTableValues(TableConstants.ADDON_SUBITEM_TABLE);
-        CommonDBHelper.getInstance().deleteTableValues(TableConstants.ADDON_ITEM_TABLE);
+        //CommonDBHelper.getInstance().deleteTableValues(TableConstants.ADDON_SUBITEM_TABLE);
+        //CommonDBHelper.getInstance().deleteTableValues(TableConstants.ADDON_ITEM_TABLE);
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -240,17 +240,25 @@ public class HotelDetailsActivity extends AppCompatActivity {
             }
         } else {
             for (int i = 0; i < foodItemModels.size(); i++) {
-                if(foodItemDBAdapter.checkFoodRecordExists(foodItemModels.get(i).ItemId)) {
-                    foodItemDBAdapter.updateFoodItem(foodItemModels.get(i).ItemId);
-                }else{
+                if (foodItemDBAdapter.checkFoodRecordExists(foodItemModels.get(i).ItemId)) {
+                    foodItemDBAdapter.updateFoodItem(foodItemModels.get(i).ItemId, foodItemModels.get(i));
+                } else {
                     foodItemDBAdapter.insertFoodItem(foodItemModels.get(i));
                 }
             }
             for (int i = 0; i < addOnItemModels.size(); i++) {
-                addOnDBAdapter.insertAddOnItem(addOnItemModels.get(i));
+                if (addOnDBAdapter.checkAddOnRecordExists(addOnItemModels.get(i).AddOnId)) {
+                    addOnDBAdapter.updateAddOnItem(addOnItemModels.get(i).AddOnId, addOnItemModels.get(i));
+                } else {
+                    addOnDBAdapter.insertAddOnItem(addOnItemModels.get(i));
+                }
             }
             for (int i = 0; i < addOnSubItemModels.size(); i++) {
-                addOnDBAdapter.insertAddOnSubItem(addOnSubItemModels.get(i));
+                if (addOnDBAdapter.checkAddOnSubItemRecordExists(addOnSubItemModels.get(i).AddOnSubItemId)) {
+                    addOnDBAdapter.updateAddOnSubItem(addOnSubItemModels.get(i).AddOnSubItemId, addOnSubItemModels.get(i));
+                } else {
+                    addOnDBAdapter.insertAddOnSubItem(addOnSubItemModels.get(i));
+                }
             }
         }
     }

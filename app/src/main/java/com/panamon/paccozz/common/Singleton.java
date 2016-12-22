@@ -36,7 +36,7 @@ public class Singleton {
     public String VendorName = "";
     public String WalletAmount = "";
     public String ProfileImage = "";
-    public Context context;
+    public Context Context;
     public ArrayList<CategoryModel> categories = new ArrayList<>();
     public String AddOns = "";
 }

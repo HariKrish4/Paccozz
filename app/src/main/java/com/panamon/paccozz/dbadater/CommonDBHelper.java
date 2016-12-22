@@ -41,6 +41,7 @@ public class CommonDBHelper extends SQLiteOpenHelper implements TableConstants {
         db.execSQL(CREATE_FOOD_ITEM_TABLE);
         db.execSQL(CREATE_ADDON_ITEM_TABLE);
         db.execSQL(CREATE_ADDON_SUBITEM_TABLE);
+        db.execSQL(CREATE_CART_TABLE);
     }
 
     @Override

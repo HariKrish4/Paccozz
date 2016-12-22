@@ -1,6 +1,10 @@
 package com.panamon.paccozz.adapter;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +12,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.panamon.paccozz.R;
+import com.panamon.paccozz.activity.MainActivity;
+import com.panamon.paccozz.activity.OrderReviewActivity;
 import com.panamon.paccozz.common.Singleton;
+import com.panamon.paccozz.common.Utilities;
 import com.panamon.paccozz.dbadater.AddOnDBAdapter;
+import com.panamon.paccozz.dbadater.CommonDBHelper;
 import com.panamon.paccozz.dbadater.FoodItemDBAdapter;
 import com.panamon.paccozz.interfaces.FoodItemChanged;
 import com.panamon.paccozz.model.AddOnItemModel;
@@ -24,14 +32,14 @@ import java.util.List;
 
 public class FoodItemAdapter extends RecyclerView.Adapter {
 
-    private Context context;
+    private Activity context;
     private List<FoodItemModel> foodItemModels;
     private int itemCount = 0, itemCost = 0;
     private FoodItemDBAdapter foodItemDBAdapter;
     private FoodItemChanged foodItemCountChange;
     private boolean plus;
 
-    public FoodItemAdapter(Context context, List<FoodItemModel> foodItemModels, FoodItemChanged foodItemCountChange) {
+    public FoodItemAdapter(Activity context, List<FoodItemModel> foodItemModels, FoodItemChanged foodItemCountChange) {
         this.context = context;
         this.foodItemModels = foodItemModels;
         this.foodItemCountChange = foodItemCountChange;
@@ -61,12 +69,16 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
             public void onClick(View view) {
                 int pos = (int) view.getTag();
                 FoodItemModel clikedFoodItemModel = foodItemModels.get(pos);
-                String itemId = clikedFoodItemModel.ItemId;
-                itemCount = Integer.parseInt(foodItemDBAdapter.getItemCount(itemId));
-                itemCost = Integer.parseInt(foodItemDBAdapter.getItemTotalCost(itemId));
-                itemCount++;
-                plus = true;
-                calculateTotalCost(myViewHolder, clikedFoodItemModel);
+                if (foodItemDBAdapter.getCartItem().equalsIgnoreCase(Singleton.getInstance().VendorId) || foodItemDBAdapter.getCartItem().equalsIgnoreCase("0")) {
+                    String itemId = clikedFoodItemModel.ItemId;
+                    itemCount = Integer.parseInt(foodItemDBAdapter.getItemCount(itemId));
+                    itemCost = Integer.parseInt(foodItemDBAdapter.getItemTotalCost(itemId));
+                    itemCount++;
+                    plus = true;
+                    calculateTotalCost(myViewHolder, clikedFoodItemModel);
+                } else {
+                    Utilities.showAlert(context);
+                }
             }
         });
 
@@ -96,36 +108,36 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
                 FoodItemModel clikedFoodItemModel = foodItemModels.get(pos);
                 String itemId = clikedFoodItemModel.ItemId;
                 itemCost = Integer.parseInt(foodItemDBAdapter.getItemTotalCost(itemId));
-                if(foodItemDBAdapter.getItemCount(itemId).equalsIgnoreCase("0")){
+                if (foodItemDBAdapter.getItemCount(itemId).equalsIgnoreCase("0")) {
                     itemCount = Integer.parseInt(foodItemDBAdapter.getItemCount(itemId));
                     itemCount++;
                     calculateTotalCost(myViewHolder, clikedFoodItemModel);
                 }
-                foodItemCountChange.onCustomizationClicked(clikedFoodItemModel.ItemId,itemCost);
+                foodItemCountChange.onCustomizationClicked(clikedFoodItemModel.ItemId, itemCost);
             }
         });
 
-
-        if(Singleton.getInstance().AddOns.equalsIgnoreCase("1")){
+        String addOns = Singleton.getInstance().AddOns;
+        if (addOns.equalsIgnoreCase("1")) {
             AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
             ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(foodItemModel.ItemId);
-            if(addOnItemModels.size()>0) {
+            if (addOnItemModels.size() > 0) {
                 myViewHolder.TxtCustomization.setVisibility(View.VISIBLE);
                 myViewHolder.ViewCustomization.setVisibility(View.VISIBLE);
             }
-        }
-        else{
+        } else {
             myViewHolder.TxtCustomization.setVisibility(View.GONE);
             myViewHolder.ViewCustomization.setVisibility(View.GONE);
         }
     }
+
 
     private void calculateTotalCost(MyViewHolder myViewHolder, FoodItemModel clikedFoodItemModel) {
         myViewHolder.ItemCount.setText(itemCount + "");
         int totalCost = itemCost * itemCount;
         foodItemDBAdapter.updateItemCount(itemCount + "", clikedFoodItemModel.ItemId);
         foodItemDBAdapter.updateTotalCost(totalCost + "", clikedFoodItemModel.ItemId);
-        foodItemCountChange.onFoodItemCountChanged(clikedFoodItemModel.ItemId,itemCost,itemCount,plus);
+        foodItemCountChange.onFoodItemCountChanged(clikedFoodItemModel.ItemId, itemCost, itemCount, plus);
     }
 
     @Override

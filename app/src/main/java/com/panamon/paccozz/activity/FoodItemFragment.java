@@ -18,6 +18,7 @@ import com.panamon.paccozz.adapter.AddOnItemAdapter;
 import com.panamon.paccozz.adapter.AddOnSubItemAdapter;
 import com.panamon.paccozz.adapter.FoodItemAdapter;
 import com.panamon.paccozz.common.Singleton;
+import com.panamon.paccozz.common.Utilities;
 import com.panamon.paccozz.dbadater.AddOnDBAdapter;
 import com.panamon.paccozz.dbadater.FoodItemDBAdapter;
 import com.panamon.paccozz.interfaces.AddonItemClicked;
@@ -110,8 +111,8 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
 
     private void displayFoodItems() {
         foodItemModels = foodItemDBAdapter.getFoodItems(categoryId);
-        foodItemAdapter = new FoodItemAdapter(Singleton.getInstance().context, foodItemModels, this);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
+        foodItemAdapter = new FoodItemAdapter(this.getActivity(), foodItemModels, this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().Context, LinearLayoutManager.VERTICAL, false);
         vendorFoodLists.setLayoutManager(mLayoutManager);
         vendorFoodLists.setAdapter(foodItemAdapter);
         noDataTxt.setVisibility(View.GONE);
@@ -123,8 +124,8 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
 
     private void displayFoodItems(String itemType) {
         foodItemModels = foodItemDBAdapter.getFoodItems(categoryId, itemType);
-        foodItemAdapter = new FoodItemAdapter(Singleton.getInstance().context, foodItemModels, this);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
+        foodItemAdapter = new FoodItemAdapter(this.getActivity(), foodItemModels, this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().Context, LinearLayoutManager.VERTICAL, false);
         vendorFoodLists.setLayoutManager(mLayoutManager);
         vendorFoodLists.setAdapter(foodItemAdapter);
         noDataTxt.setVisibility(View.GONE);
@@ -136,6 +137,7 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
     @Override
     public void onFoodItemCountChanged(String itemId, int itemCost, int itemCount, boolean plus) {
         if (itemCount == 1 && plus) {
+            foodItemDBAdapter.insertCartItem(Singleton.getInstance().VendorId);
             if (Singleton.getInstance().AddOns.equalsIgnoreCase("1")) {
                 AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
                 ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(itemId);
@@ -145,8 +147,8 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
                     itemPriceTxt.setText("Item price : ₹" + itemCost);
                     bottomSheetLayout.setVisibility(View.VISIBLE);
                     vendorFoodLists.setVisibility(View.GONE);
-                    AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().context, addOnItemModels, this);
-                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
+                    AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().Context, addOnItemModels, this);
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().Context, LinearLayoutManager.VERTICAL, false);
                     addOnsItemLists.setLayoutManager(mLayoutManager);
                     addOnsItemLists.setAdapter(addOnItemAdapter);
                     doneTxt.setText("Done");
@@ -166,8 +168,8 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
                     vendorFoodLists.setVisibility(View.GONE);
                     AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
                     ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(itemId);
-                    AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().context, addOnItemModels, FoodItemFragment.this);
-                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
+                    AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().Context, addOnItemModels, FoodItemFragment.this);
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().Context, LinearLayoutManager.VERTICAL, false);
                     addOnsItemLists.setLayoutManager(mLayoutManager);
                     addOnsItemLists.setAdapter(addOnItemAdapter);
                     doneTxt.setText("Done");
@@ -190,8 +192,8 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
         itemPriceTxt.setText("Item price : ₹" + itemCost);
         AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
         ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(itemId);
-        AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().context, addOnItemModels, this);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
+        AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().Context, addOnItemModels, this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().Context, LinearLayoutManager.VERTICAL, false);
         addOnsItemLists.setLayoutManager(mLayoutManager);
         addOnsItemLists.setAdapter(addOnItemAdapter);
         HotelDetailsActivity.fab.setVisibility(View.GONE);
@@ -208,8 +210,8 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
     public void onAddonItemClicked(String addonId) {
         AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
         ArrayList<AddOnSubItemModel> addOnSubItemModels = addOnDBAdapter.getAddOnSubItems(addonId);
-        AddOnSubItemAdapter addOnSubItemAdapter = new AddOnSubItemAdapter(Singleton.getInstance().context, addOnSubItemModels, this);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
+        AddOnSubItemAdapter addOnSubItemAdapter = new AddOnSubItemAdapter(Singleton.getInstance().Context, addOnSubItemModels, this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().Context, LinearLayoutManager.VERTICAL, false);
         addOnsItemLists.setLayoutManager(mLayoutManager);
         addOnsItemLists.setAdapter(addOnSubItemAdapter);
         doneTxt.setText("Apply");
@@ -217,9 +219,9 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
 
     @Override
     public void onAddonSubItemClicked(String subItemCost, String addOnId, String cost, boolean isChecked) {
-        if(isChecked) {
+        if (isChecked) {
             itemCost = itemCost + Double.parseDouble(subItemCost);
-        }else{
+        } else {
             itemCost = itemCost - Double.parseDouble(cost);
         }
         int itemCostInt = (int) itemCost;

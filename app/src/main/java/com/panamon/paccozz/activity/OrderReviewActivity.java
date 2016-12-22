@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -150,8 +149,8 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         itemPriceTxt.setText("Item price : ₹" + itemCost);
         AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
         ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(itemId);
-        AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().context, addOnItemModels, this);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
+        AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().Context, addOnItemModels, this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().Context, LinearLayoutManager.VERTICAL, false);
         addOnsItemLists.setLayoutManager(mLayoutManager);
         addOnsItemLists.setAdapter(addOnItemAdapter);
         doneTxt.setText("Done");
@@ -166,8 +165,8 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
                     bottomSheetLayout.setVisibility(View.VISIBLE);
                     AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
                     ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(itemId);
-                    AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().context, addOnItemModels, OrderReviewActivity.this);
-                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
+                    AddOnItemAdapter addOnItemAdapter = new AddOnItemAdapter(Singleton.getInstance().Context, addOnItemModels, OrderReviewActivity.this);
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().Context, LinearLayoutManager.VERTICAL, false);
                     addOnsItemLists.setLayoutManager(mLayoutManager);
                     addOnsItemLists.setAdapter(addOnItemAdapter);
                     doneTxt.setText("Done");
@@ -255,8 +254,8 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
     public void onAddonItemClicked(String addonId) {
         AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
         ArrayList<AddOnSubItemModel> addOnSubItemModels = addOnDBAdapter.getAddOnSubItems(addonId);
-        AddOnSubItemAdapter addOnSubItemAdapter = new AddOnSubItemAdapter(Singleton.getInstance().context, addOnSubItemModels, this);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().context, LinearLayoutManager.VERTICAL, false);
+        AddOnSubItemAdapter addOnSubItemAdapter = new AddOnSubItemAdapter(Singleton.getInstance().Context, addOnSubItemModels, this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().Context, LinearLayoutManager.VERTICAL, false);
         addOnsItemLists.setLayoutManager(mLayoutManager);
         addOnsItemLists.setAdapter(addOnSubItemAdapter);
         doneTxt.setText("Apply");

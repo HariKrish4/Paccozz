@@ -3,6 +3,7 @@ package com.panamon.paccozz.dbadater;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import com.panamon.paccozz.model.AddOnItemModel;
 import com.panamon.paccozz.model.FoodItemModel;
 
 import java.util.ArrayList;
@@ -69,6 +70,7 @@ public class FoodItemDBAdapter implements TableConstants {
                 foodItemModel.ItemName = cursor.getString(2);
                 foodItemModel.ItemCost = cursor.getString(3);
                 foodItemModel.ItemCount = cursor.getString(4);
+                foodItemModel.ItemCategoryId = cursor.getString(5);
                 foodItemModel.TotalCost = cursor.getString(8);
                 foodItemModel.ItemTotalCost = cursor.getString(10);
                 foodItemModels.add(foodItemModel);
@@ -96,7 +98,7 @@ public class FoodItemDBAdapter implements TableConstants {
     public boolean checkFoodRecordExists(String itemId) {
         CommonDBHelper.getInstance().open();
         //String Query = "SELECT TOP 1 " + ITEM_VENDOR_ID + " FROM "+ FOOD_ITEM_TABLE + " WHERE " + ITEM_VENDOR_ID + " = " + vendorId;
-        String Query = "SELECT * FROM " + FOOD_ITEM_TABLE + " WHERE " + ITEM_ID + " = " + ITEM_ID;
+        String Query = "SELECT * FROM " + FOOD_ITEM_TABLE + " WHERE " + ITEM_ID + " = " + itemId;
         Cursor cursor = CommonDBHelper.getInstance().getDb().rawQuery(Query, null);
         if (cursor.getCount() <= 0) {
             cursor.close();
@@ -108,17 +110,17 @@ public class FoodItemDBAdapter implements TableConstants {
     }
 
     //updating fooditem
-    public void updateFoodItem(String itemId) {
+    public void updateFoodItem(String itemId, FoodItemModel foodItemOnlineModel) {
         FoodItemModel foodItemModel = getFoodItem(itemId);
         CommonDBHelper.getInstance().open();
         ContentValues values = new ContentValues();
-        values.put(ITEM_NAME, foodItemModel.ItemName);
-        values.put(ITEM_COST, foodItemModel.ItemCost);
+        values.put(ITEM_NAME, foodItemOnlineModel.ItemName);
+        values.put(ITEM_COST, foodItemOnlineModel.ItemCost);
         values.put(ITEM_COUNT, foodItemModel.ItemCount);
-        values.put(ITEM_CATEGORY_ID, foodItemModel.ItemCategoryId);
+        values.put(ITEM_CATEGORY_ID, foodItemOnlineModel.ItemCategoryId);
         values.put(IS_ITEM_SELECTED, foodItemModel.IsItemSelected);
-        values.put(TOTAL_COST, foodItemModel.ItemCost);
-        values.put(ITEM_TYPE, foodItemModel.ItemType);
+        values.put(TOTAL_COST, foodItemModel.TotalCost);
+        values.put(ITEM_TYPE, foodItemOnlineModel.ItemType);
         values.put(ITEM_TOTAL_COST, foodItemModel.ItemTotalCost);
         CommonDBHelper.getInstance().getDb().update(FOOD_ITEM_TABLE, values, ITEM_ID + " = ?",
                 new String[]{String.valueOf(itemId)});
@@ -315,6 +317,32 @@ public class FoodItemDBAdapter implements TableConstants {
         }
         CommonDBHelper.getInstance().close();
         return totalItems;
+    }
+
+    //insert cart items
+    public void insertCartItem(String vendorId) {
+        CommonDBHelper.getInstance().open();
+        ContentValues values = new ContentValues();
+        values.put(ITEM_VENDOR_ID, vendorId);
+        CommonDBHelper.getInstance().getDb().insert(CART_TABLE, null, values);
+        CommonDBHelper.getInstance().close();
+    }
+
+    //get cart items
+    public String getCartItem(){
+        CommonDBHelper.getInstance().open();
+        String query = "SELECT * FROM " + CART_TABLE;
+        Cursor cursor = CommonDBHelper.getInstance().getDb().rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                String itemcount = cursor.getString(1);
+                CommonDBHelper.getInstance().close();
+                return itemcount;
+            } while (cursor.moveToNext());
+        } else {
+            CommonDBHelper.getInstance().close();
+            return "0";
+        }
     }
 }
 
