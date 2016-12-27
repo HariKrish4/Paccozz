@@ -24,7 +24,7 @@
         android:textColor="@color/colorGreen"
         android:text="Veggies" />
 
-    <RadioButton
+    <CheckBox
         android:id="@+id/radio_selected"
         android:layout_width="30dp"
         android:layout_height="28dp"

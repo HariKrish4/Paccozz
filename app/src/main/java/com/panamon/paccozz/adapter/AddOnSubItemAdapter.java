@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,7 +30,7 @@ public class AddOnSubItemAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<AddOnSubItemModel> addOnSubItemModels;
     private AddonItemClicked addonItemClicked;
-    private int clickCount = 0;
+    private int clickCount = 0, checkClickCount = 0;
     private AddOnDBAdapter addOnDBAdapter;
 
     public AddOnSubItemAdapter(Context context, List<AddOnSubItemModel> addOnSubItemModels, AddonItemClicked addonItemClicked) {
@@ -54,7 +55,6 @@ public class AddOnSubItemAdapter extends RecyclerView.Adapter {
         myViewHolder.PriceTxt.setText("₹ " + addOnSubItemModel.AddOnPrice);
         myViewHolder.SelectedBtn.setTag(position);
         myViewHolder.SubItemLL.setTag(position);
-        myViewHolder.SelectedBtn.setOnCheckedChangeListener(onCheckedChangeListener);
 
         myViewHolder.SubItemLL.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +79,21 @@ public class AddOnSubItemAdapter extends RecyclerView.Adapter {
             myViewHolder.SelectedBtn.setChecked(true);
         }
         myViewHolder.SelectedBtn.setOnCheckedChangeListener(onCheckedChangeListener);
+        /*myViewHolder.SelectedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myViewHolder.SelectedBtn.setOnCheckedChangeListener(onCheckedChangeListener);
+                if (checkClickCount == 0) {
+                    checkClickCount = 1;
+                    myViewHolder.SelectedBtn.setChecked(true);
+
+                } else {
+                    myViewHolder.SelectedBtn.setChecked(false);
+                    checkClickCount = 0;
+
+                }
+            }
+        });*/
     }
 
     private CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
@@ -108,13 +123,13 @@ public class AddOnSubItemAdapter extends RecyclerView.Adapter {
 
         public TextView HeaderTxt, PriceTxt;
         public RelativeLayout SubItemLL;
-        public RadioButton SelectedBtn;
+        public CheckBox SelectedBtn;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             HeaderTxt = (TextView) itemView.findViewById(R.id.headerTxt);
             PriceTxt = (TextView) itemView.findViewById(R.id.priceTxt);
-            SelectedBtn = (RadioButton) itemView.findViewById(R.id.radio_selected);
+            SelectedBtn = (CheckBox) itemView.findViewById(R.id.radio_selected);
             SubItemLL = (RelativeLayout) itemView.findViewById(R.id.subitemLL);
         }
     }
