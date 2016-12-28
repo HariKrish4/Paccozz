@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -18,7 +17,8 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="@dimen/five"
             android:gravity="end"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <RadioButton
                 android:id="@+id/radio_veg"
@@ -28,6 +28,7 @@
                 android:paddingLeft="10dp"
                 android:paddingStart="10dp"
                 android:paddingTop="5dp"
+                android:text="Veg"
                 android:textSize="15sp" />
 
             <RadioButton
@@ -40,8 +41,43 @@
                 android:paddingLeft="10dp"
                 android:paddingStart="10dp"
                 android:paddingTop="5dp"
+                android:text="Non Veg"
                 android:textSize="15sp" />
         </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/ten"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            android:weightSum="3">
+
+            <ImageView
+                android:id="@+id/nonBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:scaleType="fitXY"
+                android:src="@drawable/nv1" />
+
+            <ImageView
+                android:id="@+id/allBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:scaleType="fitXY"
+                android:src="@drawable/all2" />
+
+            <ImageView
+                android:id="@+id/vegBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:scaleType="fitXY"
+                android:src="@drawable/veg1" />
+        </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/vendor_item_lists"
@@ -58,6 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="@dimen/twentyfive"
             android:text="No Food Items Available"
             android:textSize="@dimen/text_22" />
     </LinearLayout>
@@ -67,7 +104,7 @@
         layout="@layout/content_bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 
 </RelativeLayout>

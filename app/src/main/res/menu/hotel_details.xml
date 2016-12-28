@@ -7,11 +7,11 @@
         android:icon="@drawable/ic_favorite_border_black_24dp"
         android:title="Favorite"
         app:showAsAction="always" />
-    <item
+  <!--  <item
         android:id="@+id/search"
         android:orderInCategory="100"
         android:icon="@drawable/ic_zoom_out_black_24dp"
         android:title="Search"
-        app:showAsAction="always" />
+        app:showAsAction="never" />-->
 
 </menu>

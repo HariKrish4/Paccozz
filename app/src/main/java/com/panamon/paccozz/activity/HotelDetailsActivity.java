@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -115,6 +116,8 @@ public class HotelDetailsActivity extends AppCompatActivity {
 
     private void getVendorDetails() {
         progressBar.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         Singleton.getInstance().categories.clear();
         //CommonDBHelper.getInstance().deleteTableValues(TableConstants.ADDON_SUBITEM_TABLE);
         //CommonDBHelper.getInstance().deleteTableValues(TableConstants.ADDON_ITEM_TABLE);
@@ -210,6 +213,7 @@ public class HotelDetailsActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressBar.setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 Toast.makeText(HotelDetailsActivity.this, error.toString(), Toast.LENGTH_LONG).show();
             }
         }) {
@@ -315,6 +319,7 @@ public class HotelDetailsActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             progressBar.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             setupViewPager();
         }
     }

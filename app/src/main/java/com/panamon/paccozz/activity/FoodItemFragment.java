@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,13 +35,14 @@ import java.util.List;
  * Created by Hari on 11/18/2016.
  */
 
-public class FoodItemFragment extends Fragment implements FoodItemChanged, AddonItemClicked {
+public class FoodItemFragment extends Fragment implements FoodItemChanged, AddonItemClicked, View.OnClickListener {
 
     private RecyclerView vendorFoodLists, addOnsItemLists;
     private FoodItemAdapter foodItemAdapter;
     private FoodItemDBAdapter foodItemDBAdapter;
     private List<FoodItemModel> foodItemModels;
     private RadioButton radioVeg, radioNonVeg;
+    private ImageView allBtn, nonBtn, vegBtn;
     private TextView noDataTxt;
     private String categoryId;
     private RelativeLayout bottomSheetLayout;
@@ -72,6 +74,9 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
         vendorFoodLists = (RecyclerView) rootView.findViewById(R.id.vendor_item_lists);
         radioVeg = (RadioButton) rootView.findViewById(R.id.radio_veg);
         radioNonVeg = (RadioButton) rootView.findViewById(R.id.radio_nonveg);
+        allBtn = (ImageView) rootView.findViewById(R.id.allBtn);
+        nonBtn = (ImageView) rootView.findViewById(R.id.nonBtn);
+        vegBtn = (ImageView) rootView.findViewById(R.id.vegBtn);
         noDataTxt = (TextView) rootView.findViewById(R.id.no_data_txt);
 
         categoryId = getArguments().getString("categoryid");
@@ -99,6 +104,9 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
         doneTxt = (TextView) rootView.findViewById(R.id.doneTxt);
         itemPriceTxt = (TextView) rootView.findViewById(R.id.main_price);
 
+        nonBtn.setOnClickListener(this);
+        vegBtn.setOnClickListener(this);
+        allBtn.setOnClickListener(this);
         return rootView;
     }
 
@@ -228,5 +236,29 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
         itemPriceTxt.setText("Item price : ₹" + itemCostInt);
         foodItemDBAdapter.updateTotalCost(itemCostInt + "", addOnId);
         foodItemDBAdapter.updateItemTotalCost(itemCostInt + "", addOnId);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.nonBtn:
+                nonBtn.setImageResource(R.drawable.nv2);
+                vegBtn.setImageResource(R.drawable.veg1);
+                allBtn.setImageResource(R.drawable.all1);
+                displayFoodItems("2");
+                break;
+            case R.id.vegBtn:
+                nonBtn.setImageResource(R.drawable.nv1);
+                vegBtn.setImageResource(R.drawable.veg2);
+                allBtn.setImageResource(R.drawable.all1);
+                displayFoodItems("1");
+                break;
+            case R.id.allBtn:
+                nonBtn.setImageResource(R.drawable.nv1);
+                vegBtn.setImageResource(R.drawable.veg1);
+                allBtn.setImageResource(R.drawable.all2);
+                displayFoodItems();
+                break;
+        }
     }
 }

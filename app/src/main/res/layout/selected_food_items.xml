@@ -54,16 +54,17 @@
                 android:layout_weight="5"
                 android:text="@string/rs" />
 
-            <TextView
+            <ImageView
                 android:id="@+id/minus"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginStart="30dp"
                 android:layout_weight="1"
-                android:background="@drawable/add_cart"
                 android:gravity="center"
                 android:text="-"
+                android:scaleType="fitStart"
+                android:src="@drawable/minus"
                 android:textSize="18sp" />
 
             <TextView
@@ -74,21 +75,23 @@
                 android:layout_marginStart="20dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="@color/colorPrimary"
+                android:textColor="#000"
+                android:text="5"
                 android:textSize="18sp" />
 
-            <TextView
+            <ImageView
                 android:id="@+id/plus"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/add_cart"
                 android:gravity="center"
                 android:text="+"
+                android:src="@drawable/plus"
+                android:scaleType="fitStart"
                 android:textSize="18sp" />
 
         </LinearLayout>

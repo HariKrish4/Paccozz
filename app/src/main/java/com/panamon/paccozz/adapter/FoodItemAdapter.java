@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.panamon.paccozz.R;
@@ -150,8 +151,8 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
         public TextView ItemTitle;
         public TextView ItemRate;
         public TextView ItemCount;
-        public TextView TxtPlus;
-        public TextView TxtMinus;
+        public ImageView TxtPlus;
+        public ImageView TxtMinus;
         public TextView TxtCustomization;
         public View ViewCustomization;
 
@@ -160,8 +161,8 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
             ItemTitle = (TextView) itemView.findViewById(R.id.item_title_txt);
             ItemRate = (TextView) itemView.findViewById(R.id.item_price_txt);
             ItemCount = (TextView) itemView.findViewById(R.id.item_count_txt);
-            TxtMinus = (TextView) itemView.findViewById(R.id.minus);
-            TxtPlus = (TextView) itemView.findViewById(R.id.plus);
+            TxtMinus = (ImageView) itemView.findViewById(R.id.minus);
+            TxtPlus = (ImageView) itemView.findViewById(R.id.plus);
             TxtCustomization = (TextView) itemView.findViewById(R.id.customization_txt);
             ViewCustomization = itemView.findViewById(R.id.customization_view);
         }

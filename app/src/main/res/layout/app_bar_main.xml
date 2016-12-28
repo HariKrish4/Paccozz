@@ -21,7 +21,7 @@
 
             <RelativeLayout
                 android:id="@+id/linear_cityselect"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -29,18 +29,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/seventy"
-                    android:text=""
+                    android:text="Test"
                     android:textColor="#000"
-                    android:textSize="@dimen/text_18"
+                    android:textSize="@dimen/text_20"
                     android:visibility="visible" />
 
                 <ImageView
                     android:id="@+id/choose_place_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginRight="@dimen/fifteen"
+                    android:layout_alignParentRight="true"
                     android:contentDescription="@string/app_name"
                     android:src="@drawable/select_parl_list_small"
                     android:visibility="visible" />

@@ -16,13 +16,13 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorGray"
+            android:background="#FFF"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <ImageView
                 android:id="@+id/arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:src="@drawable/ic_arrow_back_black_24dp" />
 
             <TextView
