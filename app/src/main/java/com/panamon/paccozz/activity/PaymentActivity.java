@@ -35,6 +35,9 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
 
     private ProgressBar progressBar;
     private ArrayList<FoodItemModel> foodItemModels;
+    private ArrayList<String> addOnsId;
+    private ArrayList<String> itemsCount;
+    private ArrayList<String> itemsCost;
     private ArrayList<String> itemsId;
 
     @Override
@@ -44,16 +47,25 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+        itemsId = new ArrayList<>();
+        itemsCount = new ArrayList<>();
+        itemsCost = new ArrayList<>();
+        addOnsId = new ArrayList<>();
         FoodItemDBAdapter foodItemDBAdapter = new FoodItemDBAdapter();
         foodItemModels = foodItemDBAdapter.getSelectedFoodItems();
-        getPurchaseInfo();
+        //getOrderData();
         //createOrder();
         startPayment();
     }
 
-    private void getPurchaseInfo() {
-
+    private void getOrderData() {
+        for(int i = 0; i<foodItemModels.size();i++){
+            itemsId.add(foodItemModels.get(i).ItemId);
+            itemsCount.add(foodItemModels.get(i).ItemCount);
+            itemsCost.add(foodItemModels.get(i).ItemCost);
+        }
     }
+
 
     @Override
     public void onPaymentSuccess(String s) {
@@ -101,7 +113,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("uid", Singleton.getInstance().UserId);
-                //params.put("itemid", editText_otp.getText().toString());
+                params.put("itemid", itemsId+"");
                 return params;
             }
         };

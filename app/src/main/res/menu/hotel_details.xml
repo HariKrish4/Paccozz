@@ -12,6 +12,6 @@
         android:icon="@drawable/ic_zoom_out_black_24dp"
         android:orderInCategory="100"
         android:title="Search"
-        app:showAsAction="never" />
+        app:showAsAction="always" />
 
 </menu>
