@@ -14,10 +14,10 @@
             android:id="@+id/nav_wallet"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Wallet" />
-        <item
+      <!--  <item
             android:id="@+id/nav_fav"
             android:icon="@drawable/ic_favorite_black_24dp"
-            android:title="Favourites" />
+            android:title="Favourites" />-->
         <item
             android:id="@+id/nav_help"
             android:icon="@drawable/ic_menu_manage"

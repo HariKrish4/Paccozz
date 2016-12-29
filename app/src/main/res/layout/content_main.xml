@@ -22,13 +22,17 @@
                 android:id="@+id/searchEdt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/five"
+                android:layout_marginLeft="@dimen/five"
+                android:layout_marginRight="@dimen/five"
+                android:layout_marginTop="@dimen/ten"
                 android:background="@android:color/white"
-                android:drawableLeft="@drawable/ic_search"
                 android:cursorVisible="false"
-                android:paddingBottom="@dimen/ten"
-                android:paddingLeft="@dimen/ten"
-                android:paddingRight="@dimen/ten"
-                android:paddingTop="@dimen/ten"></EditText>
+                android:drawableLeft="@drawable/ic_search"
+                android:paddingBottom="@dimen/five"
+                android:paddingLeft="@dimen/five"
+                android:paddingRight="@dimen/five"
+                android:paddingTop="@dimen/five"></EditText>
 
             <ImageView
                 android:id="@+id/imageView_list"
