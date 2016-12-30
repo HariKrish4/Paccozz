@@ -40,78 +40,6 @@
 
     </RelativeLayout>
 
-    <!-- Bottom Sheet Content -->
-    <LinearLayout
-        android:id="@+id/bottomSheetLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:id="@+id/titleLL"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#DDD"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/five"
-            android:paddingLeft="@dimen/twentyfive"
-            android:paddingTop="@dimen/five">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Add ons"
-                    android:textColor="#000"
-                    android:textSize="@dimen/text_18" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/main_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/five"
-                        android:text="Item price : ₹ 0"
-                        android:textColor="@android:color/holo_green_dark" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/doneTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/ten"
-                android:text="Done"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_18" />
-        </LinearLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/addon_lists"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_below="@+id/titleLL"
-            android:background="#FFF"
-            android:paddingLeft="@dimen/twentyfive"
-            android:paddingRight="@dimen/ten"
-            android:paddingTop="@dimen/ten"
-            android:scrollbars="none"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v7.widget.RecyclerView>
-    </LinearLayout>
-
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
@@ -342,4 +270,76 @@
             </android.support.v7.widget.CardView>
         </LinearLayout>
     </ScrollView>
+    <!-- Bottom Sheet Content -->
+    <LinearLayout
+        android:id="@+id/bottomSheetLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/titleLL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#DDD"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/five"
+            android:paddingLeft="@dimen/twentyfive"
+            android:paddingTop="@dimen/five">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add ons"
+                    android:textColor="#000"
+                    android:textSize="@dimen/text_18" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/main_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/five"
+                        android:text="Item price : ₹ 0"
+                        android:textColor="@android:color/holo_green_dark" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/doneTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/ten"
+                android:text="Done"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_18" />
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/addon_lists"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_below="@+id/titleLL"
+            android:background="#FFF"
+            android:paddingLeft="@dimen/twentyfive"
+            android:paddingRight="@dimen/ten"
+            android:paddingTop="@dimen/ten"
+            android:scrollbars="none"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
 </RelativeLayout>

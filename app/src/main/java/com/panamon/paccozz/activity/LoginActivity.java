@@ -3,6 +3,7 @@ package com.panamon.paccozz.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -58,7 +59,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (editText_otp.isShown()) {
                     if (editText_otp.getText().toString().trim().length() > 0) {
-                        loginUser();
+                        if(editText_otp.getHint().toString().equalsIgnoreCase("Enter password")) {
+                            loginUser();
+                        }else{
+                            registerUser();
+                        }
                     }
                 } else {
                     getOtp();
@@ -86,6 +91,11 @@ public class LoginActivity extends AppCompatActivity {
                             String succcess = jsonObject.getString("success");
                             if (succcess.equalsIgnoreCase(String.valueOf(1))) {
                                 editText_otp.setVisibility(View.VISIBLE);
+                                editText_otp.setHint("Enter password");
+                                editText_otp.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                            }
+                            if (succcess.equalsIgnoreCase(String.valueOf(2))) {
+                                editText_otp.setVisibility(View.VISIBLE);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -102,6 +112,8 @@ public class LoginActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("usermobile", editText_phonenumber.getText().toString());
+                params.put("deviceid", "0");
+                params.put("devicetype","2");
                 return params;
             }
         };
@@ -114,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = Constants.LOGIN_URL;
+        String url = Constants.PASSWORD_URL;
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -129,12 +141,63 @@ public class LoginActivity extends AppCompatActivity {
                             if (succcess.equalsIgnoreCase("1")) {
                                 Singleton.getInstance().UserId = jsonObject.getString("uid");
                                 getUserDetails();
-                            } else if (succcess.equalsIgnoreCase("2")) {
+                            } /*else if (succcess.equalsIgnoreCase("2")) {
                                 Intent tw = new Intent(LoginActivity.this, RegistrationActivity.class);
                                 startActivity(tw);
                                 finish();
-                            } else if (succcess.equalsIgnoreCase("0")) {
-                                Toast.makeText(LoginActivity.this, "Invalid OTP or Password", Toast.LENGTH_LONG).show();
+                            }*/ else if (succcess.equalsIgnoreCase("0")) {
+                                Toast.makeText(LoginActivity.this, "Invalid Password", Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("umobile", editText_phonenumber.getText().toString());
+                params.put("pass", editText_otp.getText().toString());
+                return params;
+            }
+        };
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+    }
+
+    private void registerUser() {
+        progressBar.setVisibility(View.VISIBLE);
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = Constants.OTPCHECK_URL;
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            progressBar.setVisibility(View.GONE);
+                            Log.e("response", response);
+                            JSONObject jsonObject = new JSONObject(response);
+                            String succcess = jsonObject.getString("success");
+                            if (succcess.equalsIgnoreCase("1")) {
+                                Intent tw = new Intent(LoginActivity.this, RegistrationActivity.class);
+                                startActivity(tw);
+                                finish();
+                            } /*else if (succcess.equalsIgnoreCase("2")) {
+                                Intent tw = new Intent(LoginActivity.this, RegistrationActivity.class);
+                                startActivity(tw);
+                                finish();
+                            }*/ else if (succcess.equalsIgnoreCase("0")) {
+                                Toast.makeText(LoginActivity.this, "Invalid Password", Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

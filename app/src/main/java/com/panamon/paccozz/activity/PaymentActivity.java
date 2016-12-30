@@ -79,7 +79,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = Constants.LOGIN_URL;
+        String url = Constants.CREATEORDER_URL;
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,

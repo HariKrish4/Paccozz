@@ -6,9 +6,10 @@ package com.panamon.paccozz.common;
 
 public class Constants {
     public static String BASE_URL = "http://paccozz.com/api/userapi.php?services=";
-    public static String LOGIN_URL = BASE_URL + "otpcheck";
+    public static String OTPCHECK_URL = BASE_URL + "otpcheck";
     public static String REGISTER_URL = BASE_URL + "register";
     public static String OTP_URL = BASE_URL + "otp";
+    public static String PASSWORD_URL = BASE_URL + "passcheck";
     public static String USERDETAILS_URL = BASE_URL + "userdetails";
     public static String PLACE_URL = BASE_URL + "itparklist";
     public static String HOTELLIST_URL = BASE_URL + "vendorlist";
