@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -19,7 +20,9 @@ import com.android.volley.toolbox.Volley;
 import com.panamon.paccozz.R;
 import com.panamon.paccozz.common.Constants;
 import com.panamon.paccozz.common.Singleton;
+import com.panamon.paccozz.dbadater.AddOnDBAdapter;
 import com.panamon.paccozz.dbadater.FoodItemDBAdapter;
+import com.panamon.paccozz.model.AddOnSubItemModel;
 import com.panamon.paccozz.model.FoodItemModel;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
@@ -39,6 +42,12 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     private ArrayList<String> itemsCount;
     private ArrayList<String> itemsCost;
     private ArrayList<String> itemsId;
+    private double totcost;
+    private String transactionId;
+    private String item_id;
+    private String item_count;
+    private String item_cost;
+    private String addOn_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,26 +60,40 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         itemsCount = new ArrayList<>();
         itemsCost = new ArrayList<>();
         addOnsId = new ArrayList<>();
+        totcost = getIntent().getDoubleExtra("amount", 0);
         FoodItemDBAdapter foodItemDBAdapter = new FoodItemDBAdapter();
         foodItemModels = foodItemDBAdapter.getSelectedFoodItems();
         //getOrderData();
-        //createOrder();
+
         startPayment();
     }
 
     private void getOrderData() {
-        for(int i = 0; i<foodItemModels.size();i++){
+        AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
+        for (int i = 0; i < foodItemModels.size(); i++) {
             itemsId.add(foodItemModels.get(i).ItemId);
             itemsCount.add(foodItemModels.get(i).ItemCount);
             itemsCost.add(foodItemModels.get(i).ItemCost);
         }
+        ArrayList<AddOnSubItemModel> selectedAddOns = addOnDBAdapter.getAddOnSelectedSubItems();
+        for (int i = 0; i < selectedAddOns.size(); i++) {
+            addOnsId.add(selectedAddOns.get(i).AddOnSubItemId);
+        }
+        item_id = TextUtils.join(",", itemsId);
+        item_count = TextUtils.join(",", itemsCount);
+        item_cost = TextUtils.join(",", itemsCost);
+        addOn_id = TextUtils.join(",", addOnsId);
+        createOrder();
     }
 
 
     @Override
     public void onPaymentSuccess(String s) {
+
         Snackbar.make(progressBar, "Payment Success: " + s, Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
+        transactionId = s;
+        getOrderData();
         //createOrder();
     }
 
@@ -113,7 +136,22 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("uid", Singleton.getInstance().UserId);
-                params.put("itemid", itemsId+"");
+                params.put("itemid", item_id);
+                params.put("venid", foodItemModels.get(0).ItemVendorId);
+                params.put("count", item_count);
+                params.put("cost", item_cost);
+                params.put("totcost", totcost + "");
+                params.put("addons", addOn_id);
+                params.put("orgamount", totcost + "");
+                params.put("servicetax", totcost + "");
+                params.put("discount", totcost + "");
+                params.put("transid", transactionId);
+               // params.put("transid", "100");
+                params.put("tranamount", totcost + "");
+                params.put("transtatus", "1");
+                params.put("tranpaytype", "card");
+
+                Log.e("params", params + "");
                 return params;
             }
         };
@@ -176,7 +214,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
 
             JSONObject preFill = new JSONObject();
             preFill.put("email", Singleton.getInstance().UserEmail);
-            preFill.put("contact",  Singleton.getInstance().UserMobile);
+            preFill.put("contact", Singleton.getInstance().UserMobile);
 
             options.put("prefill", preFill);
 

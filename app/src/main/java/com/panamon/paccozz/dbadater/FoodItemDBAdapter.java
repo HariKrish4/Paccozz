@@ -266,6 +266,7 @@ public class FoodItemDBAdapter implements TableConstants {
         if (cursor.moveToFirst()) {
             do {
                 foodItemModel = new FoodItemModel();
+                foodItemModel.ItemVendorId = cursor.getString(6);
                 foodItemModel.ItemId = cursor.getString(1);
                 foodItemModel.ItemName = cursor.getString(2);
                 foodItemModel.ItemCost = cursor.getString(3);
