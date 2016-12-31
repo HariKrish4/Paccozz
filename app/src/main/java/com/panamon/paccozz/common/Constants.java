@@ -18,4 +18,6 @@ public class Constants {
     public static String COUPON_URL = BASE_URL + "coupon";
     public static String ORDERHISTORY_URL = BASE_URL + "myorders";
     public static String CREATEORDER_URL = BASE_URL + "userorder";
+    public static String ADDFAV_URL = BASE_URL + "favourite";
+    public static String LISTFAV_URL = BASE_URL + "favouritelist";
 }

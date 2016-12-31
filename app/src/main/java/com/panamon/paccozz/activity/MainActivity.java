@@ -341,9 +341,10 @@ public class MainActivity extends AppCompatActivity
             startActivity(order);
         } else if (id == R.id.nav_wallet) {
 
-        } /*else if (id == R.id.nav_fav) {
-
-        }*/ else if (id == R.id.nav_logout) {
+        } else if (id == R.id.nav_fav) {
+            Intent fav = new Intent(this, FavoritesActivity.class);
+            startActivity(fav);
+        } else if (id == R.id.nav_logout) {
             new AlertDialog.Builder(MainActivity.this)
                     .setTitle("Alert!")
                     .setMessage("Are you sure you want to logout?")

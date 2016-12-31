@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OrderActivity extends AppCompatActivity {
+public class FavoritesActivity extends AppCompatActivity {
 
     private RecyclerView orderListView;
     private TextView noDataTxt;
@@ -44,7 +44,7 @@ public class OrderActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order);
+        setContentView(R.layout.activity_favorites);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -58,23 +58,22 @@ public class OrderActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        orderListView = (RecyclerView) findViewById(R.id.orderLists);
+        orderListView = (RecyclerView) findViewById(R.id.favLists);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         noDataTxt = (TextView) findViewById(R.id.no_data_txt);
-        getOrderLists();
+        getFavorites();
     }
 
     /**
      * Showing Hotel List from api using volley
      */
-    private void getOrderLists() {
+    private void getFavorites() {
         progressBar.setVisibility(View.VISIBLE);
-        final ArrayList<OrderHistoryModel> orderHistoryModels = new ArrayList<>();
+        final ArrayList<HotelListModel> orderHistoryModels = new ArrayList<>();
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = Constants.ORDERHISTORY_URL;
+        String url = Constants.LISTFAV_URL;
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -87,24 +86,27 @@ public class OrderActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
                             if (success.equalsIgnoreCase("1")) {
-                                JSONArray jsonArray = jsonObject.getJSONArray("order");
+                                JSONArray jsonArray = jsonObject.getJSONArray("vendor");
                                 for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject dataObject = jsonArray.getJSONObject(i);
-                                    OrderHistoryModel orderHistoryModel = new OrderHistoryModel();
-                                    orderHistoryModel.OrderId = dataObject.getString("orderid");
-                                    orderHistoryModel.VendorName = dataObject.getString("vendorname");
-                                    orderHistoryModel.TotalCost = dataObject.getString("totcost");
-                                    orderHistoryModel.OrderStatus = dataObject.getString("status");
-                                    orderHistoryModel.OrderTime = dataObject.getString("pushtime");
-                                    orderHistoryModels.add(orderHistoryModel);
+                                    HotelListModel hotelListModel = new HotelListModel();
+                                    JSONObject js = jsonArray.getJSONObject(i);
+                                    hotelListModel.HotelId = js.getString("venid");
+                                    hotelListModel.HotelName = js.getString("venname");
+                                    hotelListModel.HotelRate = js.getString("venrate");
+                                    hotelListModel.HotelType = js.getString("fctype");
+                                    hotelListModel.HotelRecipe = js.getString("recipe");
+                                    hotelListModel.HotelTime = js.getString("time");
+                                    hotelListModel.HotelExpensive = js.getString("expensive");
+                                    hotelListModel.HotelImage = js.getString("img");
+
+                                    orderHistoryModels.add(hotelListModel);
                                 }
-                                OrderAdapter orderAdapter = new OrderAdapter(OrderActivity.this, orderHistoryModels);
-                                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(OrderActivity.this, LinearLayoutManager.VERTICAL, false);
+                                HotelListAdapter hotelListAdapter = new HotelListAdapter(FavoritesActivity.this, orderHistoryModels);
+                                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(FavoritesActivity.this, LinearLayoutManager.VERTICAL, false);
                                 orderListView.setLayoutManager(mLayoutManager);
-                                orderListView.setAdapter(orderAdapter);
-                                noDataTxt.setVisibility(View.GONE);
+                                orderListView.setAdapter(hotelListAdapter);
                             } else if (success.equalsIgnoreCase("0")) {
-                                noDataTxt.setVisibility(View.VISIBLE);
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -114,19 +116,18 @@ public class OrderActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(OrderActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(FavoritesActivity.this, error.toString(), Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("userid", Singleton.getInstance().UserId);
-                params.put("ostatus", "5");
+
                 return params;
             }
         };
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
-
 }

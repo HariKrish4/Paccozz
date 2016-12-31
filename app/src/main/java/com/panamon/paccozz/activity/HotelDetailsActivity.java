@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -38,6 +39,7 @@ import com.panamon.paccozz.model.FoodItemModel;
 import com.panamon.paccozz.R;
 import com.panamon.paccozz.adapter.ViewPagerAdapter;
 import com.panamon.paccozz.common.Constants;
+import com.panamon.paccozz.model.HotelListModel;
 import com.panamon.paccozz.model.VendorDetailsModel;
 import com.squareup.picasso.Picasso;
 
@@ -102,6 +104,64 @@ public class HotelDetailsActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.hotel_details, menu);//Menu Resource, Menu
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.fav:
+                addFav();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void addFav() {
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = Constants.ADDFAV_URL;
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            progressBar.setVisibility(View.GONE);
+                            Log.e("response", response);
+                            JSONObject jsonObject = new JSONObject(response);
+                            String succcess = jsonObject.getString("success");
+                            if (succcess.equalsIgnoreCase("1")) {
+                                Toast.makeText(HotelDetailsActivity.this, "Favorite added successfully", Toast.LENGTH_LONG).show();
+                            } else if (succcess.equalsIgnoreCase("0")) {
+                                Toast.makeText(HotelDetailsActivity.this, "Internal server error", Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(HotelDetailsActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("userid", Singleton.getInstance().UserId);
+                params.put("venid", Singleton.getInstance().VendorId);
+                Log.e("params", params + "");
+                return params;
+            }
+        };
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
     }
 
     private void setupViewPager() {

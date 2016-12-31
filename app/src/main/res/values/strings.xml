@@ -9,4 +9,5 @@
     <string name="rs">\u20B9</string>
     <string name="title_activity_order_review">OrderReviewActivity</string>
     <string name="title_activity_order">OrderActivity</string>
+    <string name="title_activity_favorites">FavoritesActivity</string>
 </resources>

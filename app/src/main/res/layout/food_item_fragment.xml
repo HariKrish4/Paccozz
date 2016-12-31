@@ -49,6 +49,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/ten"
+            android:layout_marginLeft="@dimen/fifteen"
+            android:layout_marginRight="@dimen/fifteen"
             android:layout_marginTop="@dimen/ten"
             android:orientation="horizontal"
             android:visibility="visible"
@@ -65,7 +68,7 @@
             <ImageView
                 android:id="@+id/allBtn"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_weight="1"
                 android:scaleType="fitXY"
                 android:src="@drawable/all2" />

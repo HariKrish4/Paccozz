@@ -27,7 +27,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.LoginActivity"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.RegistrationActivity"
             android:windowSoftInputMode="stateHidden" />
@@ -59,6 +59,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.panamon.paccozz.activity.MainActivity" />
         </activity>
+        <activity
+            android:name=".activity.FavoritesActivity"
+            android:label="@string/title_activity_favorites"
+            android:parentActivityName=".activity.MainActivity"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
