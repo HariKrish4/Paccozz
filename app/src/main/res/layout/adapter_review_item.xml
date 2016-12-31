@@ -15,7 +15,8 @@
         android:layout_marginBottom="3dp"
         android:layout_marginTop="5dp"
         app:cardCornerRadius="3dp"
-        app:cardElevation="@dimen/five">
+        app:cardElevation="@dimen/five"
+        cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"

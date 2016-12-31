@@ -14,7 +14,8 @@
         android:layout_marginBottom="3dp"
         android:layout_marginTop="5dp"
         app:cardCornerRadius="3dp"
-        app:cardElevation="@dimen/five">
+        app:cardElevation="@dimen/five"
+        cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,22 +23,32 @@
             android:orientation="vertical"
             android:padding="@dimen/ten">
 
-            <TextView
-                android:id="@+id/vandorNameTxt"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Zaitoon"
-                android:textColor="#000"
-                android:textSize="@dimen/text_18" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/totalAmountTxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/five"
-                android:text="₹ 180"
-                android:textColor="#000"
-                android:textSize="@dimen/text_16" />
+                <TextView
+                    android:id="@+id/vandorNameTxt"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Zaitoon"
+                    android:textColor="#000"
+                    android:textSize="@dimen/text_18"
+                    />
+
+                <TextView
+                    android:id="@+id/totalAmountTxt"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.3"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five"
+                    android:text="₹ 180"
+                    android:textColor="#000"
+                    android:textSize="@dimen/text_16"
+                    android:gravity="right"/>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/dateTxt"

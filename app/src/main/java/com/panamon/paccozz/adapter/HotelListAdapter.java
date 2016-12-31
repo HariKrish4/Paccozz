@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.panamon.paccozz.activity.HotelDetailsActivity;
+import com.panamon.paccozz.common.RoundRectCornerImageView;
 import com.panamon.paccozz.common.Singleton;
 import com.panamon.paccozz.model.HotelListModel;
 import com.panamon.paccozz.R;
@@ -64,13 +65,13 @@ public class HotelListAdapter extends RecyclerView.Adapter {
     private class MyViewHolder extends RecyclerView.ViewHolder {
 
         public TextView HotelNameTxt;
-        public ImageView HotelImage;
+        public RoundRectCornerImageView HotelImage;
         public RelativeLayout VendorListItemLL;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             HotelNameTxt = (TextView) itemView.findViewById(R.id.hotel_name_txt);
-            HotelImage = (ImageView) itemView.findViewById(R.id.hotel_image);
+            HotelImage = (RoundRectCornerImageView) itemView.findViewById(R.id.hotel_image);
             VendorListItemLL = (RelativeLayout) itemView.findViewById(R.id.vendor_item_ll);
         }
     }

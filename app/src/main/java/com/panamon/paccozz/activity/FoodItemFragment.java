@@ -242,14 +242,14 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.nonBtn:
-                nonBtn.setImageResource(R.drawable.nv2);
+                nonBtn.setImageResource(R.drawable.nonveg_red);
                 vegBtn.setImageResource(R.drawable.veg1);
                 allBtn.setImageResource(R.drawable.all1);
                 displayFoodItems("2");
                 break;
             case R.id.vegBtn:
                 nonBtn.setImageResource(R.drawable.nv1);
-                vegBtn.setImageResource(R.drawable.veg2);
+                vegBtn.setImageResource(R.drawable.veg_red);
                 allBtn.setImageResource(R.drawable.all1);
                 displayFoodItems("1");
                 break;

@@ -19,23 +19,23 @@
         android:gravity="center">
 
 
-       <!-- <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="#FFF"
-            app:popupTheme="@style/AppTheme.PopupOverlay">-->
+        <!-- <android.support.v7.widget.Toolbar
+             android:id="@+id/toolbar"
+             android:layout_width="match_parent"
+             android:layout_height="?attr/actionBarSize"
+             android:background="#FFF"
+             app:popupTheme="@style/AppTheme.PopupOverlay">-->
 
-            <TextView
-                android:id="@+id/textView_proceed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:drawableLeft="@drawable/proceed"
-                android:gravity="center"
-                android:text="Proceed"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_20" />
+        <TextView
+            android:id="@+id/textView_proceed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/proceed"
+            android:gravity="center"
+            android:text="Proceed"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_20" />
         <!--</android.support.v7.widget.Toolbar>-->
 
     </RelativeLayout>
@@ -51,8 +51,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_above="@+id/relative_bottom">
+        android:layout_above="@+id/relative_bottom"
+        android:layout_alignParentTop="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,7 +73,7 @@
                     android:gravity="center"
                     android:text="AASifE"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/text_18" />
+                    android:textSize="@dimen/text_20" />
 
             </LinearLayout>
 
@@ -81,10 +81,14 @@
                 android:id="@+id/card_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/ten"
+                android:layout_marginBottom="@dimen/five"
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_marginRight="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
                 android:elevation="5dp"
                 android:padding="@dimen/five"
-                card_view:cardCornerRadius="5dp">
+                card_view:cardCornerRadius="5dp"
+                card_view:cardUseCompatPadding="true">
 
 
                 <android.support.v7.widget.RecyclerView
@@ -101,10 +105,14 @@
                 android:id="@+id/card_view1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/ten"
+                android:layout_marginBottom="@dimen/ten"
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_marginRight="@dimen/ten"
+                android:layout_marginTop="@dimen/five"
                 android:elevation="5dp"
                 android:padding="@dimen/five"
-                card_view:cardCornerRadius="10dp">
+                card_view:cardCornerRadius="10dp"
+                card_view:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
