@@ -7,6 +7,6 @@ import java.util.ArrayList;
  */
 
 public class AddOnItemModel {
-    public String AddOnId,AddOnCateroryId,AddOnName;
+    public String AddOnId,AddOnCateroryId,AddOnName,AddOnLimits;
     public ArrayList<AddOnSubItemModel> addOnSubItemModels = new ArrayList<>();
 }

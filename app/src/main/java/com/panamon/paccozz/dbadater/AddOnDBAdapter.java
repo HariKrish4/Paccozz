@@ -22,6 +22,7 @@ public class AddOnDBAdapter implements TableConstants {
         values.put(ITEM_CATEGORY_ID, addOnItemModel.AddOnCateroryId);
         values.put(ADDON_ID, addOnItemModel.AddOnId);
         values.put(ADDON_NAME, addOnItemModel.AddOnName);
+        values.put(ADDON_LIMITS, addOnItemModel.AddOnLimits);
         CommonDBHelper.getInstance().getDb().insert(ADDON_ITEM_TABLE, null, values);
         CommonDBHelper.getInstance().close();
     }
@@ -34,7 +35,7 @@ public class AddOnDBAdapter implements TableConstants {
         values.put(ADDON_SUBITEM_ID, addOnSubItemModel.AddOnSubItemId);
         values.put(ADDON_SUBITEM_NAME, addOnSubItemModel.AddOnSubItemName);
         values.put(ADDON_SUBITEM_PRICE, addOnSubItemModel.AddOnPrice);
-        values.put(IS_ITEM_SELECTED,"0");
+        values.put(IS_ITEM_SELECTED, "0");
         CommonDBHelper.getInstance().getDb().insert(ADDON_SUBITEM_TABLE, null, values);
         CommonDBHelper.getInstance().close();
     }
@@ -99,11 +100,29 @@ public class AddOnDBAdapter implements TableConstants {
                 addOnItemModel = new AddOnItemModel();
                 addOnItemModel.AddOnId = cursor.getString(2);
                 addOnItemModel.AddOnName = cursor.getString(3);
+                addOnItemModel.AddOnLimits = cursor.getString(4);
                 addOnItemModels.add(addOnItemModel);
             } while (cursor.moveToNext());
         }
         CommonDBHelper.getInstance().close();
         return addOnItemModels;
+    }
+
+    //get AddOn limits with respect to addon id
+    public AddOnItemModel getAddOnLimits(String addon_id) {
+        CommonDBHelper.getInstance().open();
+        AddOnItemModel addOnItemModel = new AddOnItemModel();
+        String query = "SELECT * FROM " + ADDON_ITEM_TABLE + " WHERE " + ADDON_ID + " =" + addon_id + "";
+        Cursor cursor = CommonDBHelper.getInstance().getDb().rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+
+                addOnItemModel.AddOnName = cursor.getString(3);
+                addOnItemModel.AddOnLimits = cursor.getString(4);
+            } while (cursor.moveToNext());
+        }
+        CommonDBHelper.getInstance().close();
+        return addOnItemModel;
     }
 
     //get AddOn Sub items with respect to category id
@@ -193,7 +212,7 @@ public class AddOnDBAdapter implements TableConstants {
         values.put(ADDON_ID, addOnSubItemOnlineModel.AddOnId);
         values.put(ADDON_SUBITEM_NAME, addOnSubItemOnlineModel.AddOnSubItemName);
         values.put(ADDON_SUBITEM_PRICE, addOnSubItemOnlineModel.AddOnPrice);
-        values.put(IS_ITEM_SELECTED,addOnSubItemModel.IsItemSelected);
+        values.put(IS_ITEM_SELECTED, addOnSubItemModel.IsItemSelected);
         CommonDBHelper.getInstance().getDb().update(ADDON_SUBITEM_TABLE, values, ADDON_SUBITEM_ID + " = ?",
                 new String[]{String.valueOf(addOnSubItemId)});
         CommonDBHelper.getInstance().close();
@@ -215,13 +234,13 @@ public class AddOnDBAdapter implements TableConstants {
         CommonDBHelper.getInstance().open();
         Cursor sumCursor = null;
         try {
-            sumCursor = CommonDBHelper.getInstance().getDb().rawQuery(" SELECT SUM " + "(" + ADDON_SUBITEM_PRICE + ")" + " FROM " + ADDON_SUBITEM_TABLE + " WHERE " + IS_ITEM_SELECTED + " = '" + 1 + "'" + " AND " + ADDON_SUBITEM_ID + " = '" + subItemId +"'", null);
+            sumCursor = CommonDBHelper.getInstance().getDb().rawQuery(" SELECT SUM " + "(" + ADDON_SUBITEM_PRICE + ")" + " FROM " + ADDON_SUBITEM_TABLE + " WHERE " + IS_ITEM_SELECTED + " = '" + 1 + "'" + " AND " + ADDON_SUBITEM_ID + " = '" + subItemId + "'", null);
             if (sumCursor != null && sumCursor.getCount() > 0 && sumCursor.moveToFirst()) {
                 totalCost = String.format("%.2f", sumCursor.getDouble(0));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             if (!sumCursor.isClosed())
                 sumCursor.close();
         }

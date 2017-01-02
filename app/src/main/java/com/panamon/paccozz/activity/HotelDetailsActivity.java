@@ -240,6 +240,7 @@ public class HotelDetailsActivity extends AppCompatActivity {
                                         addOnItemModel.AddOnCateroryId = addOnArrayObject.getString("hitemid");
                                         addOnItemModel.AddOnId = addOnArrayObject.getString("headerid");
                                         addOnItemModel.AddOnName = addOnArrayObject.getString("addonheader");
+                                        addOnItemModel.AddOnLimits = addOnArrayObject.getString("limit");
                                         JSONArray addOnSubItemArray = addOnArrayObject.getJSONArray("subitemslist");
                                         for (int m = 0; m < addOnSubItemArray.length(); m++) {
                                             JSONObject addOnSubItemArrayObject = addOnSubItemArray.getJSONObject(m);
