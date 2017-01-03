@@ -29,7 +29,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/sixty"
+                    android:layout_marginLeft="@dimen/home_fifty"
                     android:background="@drawable/city_bg"
                     android:paddingBottom="3dp"
                     android:paddingLeft="10dp"

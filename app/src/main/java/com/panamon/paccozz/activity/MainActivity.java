@@ -220,7 +220,11 @@ public class MainActivity extends AppCompatActivity
                                 hotelListView.setLayoutManager(mLayoutManager);
                                 hotelListView.setAdapter(hotelListAdapter);
                             } else if (success.equalsIgnoreCase("0")) {
-
+                                hotelListModels.clear();
+                                HotelListAdapter hotelListAdapter = new HotelListAdapter(MainActivity.this, hotelListModels);
+                                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
+                                hotelListView.setLayoutManager(mLayoutManager);
+                                hotelListView.setAdapter(hotelListAdapter);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

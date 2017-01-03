@@ -59,7 +59,7 @@
     <dimen name="toolbar_resource_width">50dp</dimen>
     <dimen name="toolbar_resource_height">50dp</dimen>
     <dimen name="home_thirty">30dp</dimen>
-    <dimen name="home_fifty">50dp</dimen>
+    <dimen name="home_fifty">55dp</dimen>
     <dimen name="home_sixty">60dp</dimen>
     <dimen name="home_seventy">70dp</dimen>
     <dimen name="home_eighty">80dp</dimen>

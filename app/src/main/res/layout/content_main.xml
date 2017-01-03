@@ -29,6 +29,8 @@
                 android:background="@android:color/white"
                 android:cursorVisible="false"
                 android:drawableLeft="@drawable/ic_search"
+                android:drawablePadding="@dimen/five"
+                android:hint="Search restaurants"
                 android:paddingBottom="@dimen/five"
                 android:paddingLeft="@dimen/five"
                 android:paddingRight="@dimen/five"
