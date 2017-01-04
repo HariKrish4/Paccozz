@@ -59,25 +59,22 @@
 
             <ImageView
                 android:id="@+id/nonBtn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_width="80dp"
+                android:layout_height="25dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/nv1" />
 
             <ImageView
                 android:id="@+id/allBtn"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
+                android:layout_width="80dp"
+                android:layout_height="25dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/all2" />
 
             <ImageView
                 android:id="@+id/vegBtn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_width="80dp"
+                android:layout_height="25dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/veg1" />
         </LinearLayout>

@@ -43,6 +43,7 @@ import com.panamon.paccozz.common.SharedPref;
 import com.panamon.paccozz.common.Singleton;
 import com.panamon.paccozz.model.CitySpinnerModel;
 import com.panamon.paccozz.model.PlacesModel;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -173,20 +174,45 @@ public class RegistrationActivity extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (editText_name.getText().length() > 0 && editText_age.getText().length() > 0 && editText_emailid.getText().length() > 0 &&
-                        editText_mobile.getText().length() > 0 && editText_password.getText().length() > 0) {
-                    if (!placeId.equals("0") && placeId != null && !placeId.equalsIgnoreCase("null")) {
-                        new RegisterUser().execute();
+                if (getIntent().hasExtra("update")) {
+                    if (editText_name.getText().length() > 0 && editText_age.getText().length() > 0 && editText_emailid.getText().length() > 0 &&
+                            editText_mobile.getText().length() > 0) {
+                        if (!placeId.equals("0") && placeId != null && !placeId.equalsIgnoreCase("null")) {
+                            new UpdateUser().execute();
+                        } else {
+                            Snackbar.make(view, "Invalid city or place", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        }
                     } else {
-                        Snackbar.make(view, "Invalid city or place", Snackbar.LENGTH_LONG)
+                        Snackbar.make(view, "Please fill all the details", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                     }
                 } else {
-                    Snackbar.make(view, "Please fill all the details", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    if (editText_name.getText().length() > 0 && editText_age.getText().length() > 0 && editText_emailid.getText().length() > 0 &&
+                            editText_mobile.getText().length() > 0 && editText_password.getText().length() > 0) {
+                        if (!placeId.equals("0") && placeId != null && !placeId.equalsIgnoreCase("null")) {
+
+                            new RegisterUser().execute();
+
+                        } else {
+                            Snackbar.make(view, "Invalid city or place", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        }
+                    } else {
+                        Snackbar.make(view, "Please fill all the details", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
                 }
             }
         });
+
+        if (getIntent().hasExtra("update")) {
+            editText_password.setVisibility(View.GONE);
+            editText_mobile.setText(Singleton.getInstance().UserMobile);
+            editText_emailid.setText(Singleton.getInstance().UserEmail);
+            editText_name.setText(Singleton.getInstance().UserName);
+            Picasso.with(this).load(Singleton.getInstance().ProfileImage).placeholder(R.drawable.image_placeholder).into(imageView_register);
+        }
     }
 
     @Override
@@ -486,6 +512,97 @@ public class RegistrationActivity extends AppCompatActivity {
         }
     }
 
+    class UpdateUser extends AsyncTask<String, Void, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            // TODO Auto-generated method stub
+            progressBar.setVisibility(View.VISIBLE);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                HttpPost post = new HttpPost(Constants.UPDATEPROFILE_URL);
+                List<NameValuePair> params1 = new ArrayList<NameValuePair>();
+
+//                code password name age mobile sex
+//                emailid bloodgroup address city state country
+//                ecnumber diabetes hypertension heartcondition asthma ecname ecrelation allergies
+//                ailments medication cdname cdphone hospname hospnum
+                MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+                entity.addPart("uname", new StringBody(editText_name.getText().toString()));
+                entity.addPart("uage", new StringBody(editText_age.getText().toString()));
+                if (radio_male.isChecked()) {
+                    entity.addPart("usex", new StringBody("1"));
+                } else if (radio_female.isChecked()) {
+                    entity.addPart("usex", new StringBody("2"));
+                } else {
+                    entity.addPart("usex", new StringBody("3"));
+                }
+                entity.addPart("uemail", new StringBody(editText_emailid.getText().toString()));
+                entity.addPart("upass", new StringBody(Singleton.getInstance().UserPass));
+                entity.addPart("uphone", new StringBody(editText_mobile.getText().toString()));
+                entity.addPart("ucity", new StringBody(cityId));
+                entity.addPart("upark", new StringBody(placeId));
+
+                if (destination != null) {
+                    entity.addPart("fimage", new FileBody(new File(destination.getPath()), "image/jpg"));
+                }
+
+
+                // Log.e("imagepath", new FileBody(new File( MediaActivity.mFileTemp.getPath()), "image/jpg") + "");
+                HttpClient httpclient = new DefaultHttpClient();
+                post.setEntity(entity);
+                HttpResponse response = httpclient.execute(post);
+                HttpEntity entityres = response.getEntity();
+                Log.e("entity", entityres + "");
+                json = EntityUtils.toString(response.getEntity());
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String sResponse) {
+            super.onPostExecute(sResponse);
+            progressBar.setVisibility(View.GONE);
+
+            try {
+                Log.e("******RES_Register", json);
+
+                //{"success": 1,"message": "Registration Successfull"}
+                if (json != null) {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String succcess = jsonObject.getString("success");
+                    if (succcess.equalsIgnoreCase(String.valueOf(1))) {
+                        Snackbar.make(progressBar, "Profile Updated Successfully", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                        getUserDetails();
+                    } else {
+                        Snackbar.make(progressBar, "Internal server error", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+                }
+            } catch (JSONException js) {
+                js.printStackTrace();
+            } catch (Exception e) {
+                Snackbar.make(progressBar, "Please add a image", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                e.printStackTrace();
+            }
+
+        }
+    }
+
     private void getUserDetails() {
         progressBar.setVisibility(View.VISIBLE);
 
@@ -509,22 +626,24 @@ public class RegistrationActivity extends AppCompatActivity {
                                 Singleton.getInstance().ParkId = jsonObject.getString("uparkid");
                                 Singleton.getInstance().ParkName = jsonObject.getString("uparkname");
                                 String cityid = jsonObject.getString("ucityid");
-                                String cityname = jsonObject.getString("ucityname");
-                                String gender = jsonObject.getString("usex");
+                                Singleton.getInstance().UserCity = jsonObject.getString("ucityname");
+                                Singleton.getInstance().UserGender = jsonObject.getString("usex");
                                 Singleton.getInstance().UserName = jsonObject.getString("uname");
                                 Singleton.getInstance().UserEmail = jsonObject.getString("umail");
-                                String pass = jsonObject.getString("upass");
+                                Singleton.getInstance().UserPass = jsonObject.getString("upass");
                                 String dob = jsonObject.getString("udob");
                                 Singleton.getInstance().UserMobile = jsonObject.getString("umobile");
                                 Singleton.getInstance().WalletAmount = jsonObject.getString("uwallet");
+                                Singleton.getInstance().ProfileImage = jsonObject.getString("uimg");
                                 String message = jsonObject.getString("message");
-
-                                sharedPref.setIsLogged(true);
-                                sharedPref.setLoginData(Singleton.getInstance().UserId, Singleton.getInstance().UserName, Singleton.getInstance().UserMobile,
-                                        Singleton.getInstance().UserEmail, Singleton.getInstance().ParkId, Singleton.getInstance().ParkName, Singleton.getInstance().WalletAmount,"");
-                                Intent as = new Intent(RegistrationActivity.this, MainActivity.class);
-                                startActivity(as);
-                                finish();
+                                if (!getIntent().hasExtra("update")) {
+                                    sharedPref.setIsLogged(true);
+                                    sharedPref.setLoginData(Singleton.getInstance().UserId, Singleton.getInstance().UserName, Singleton.getInstance().UserMobile,
+                                            Singleton.getInstance().UserEmail, Singleton.getInstance().ParkId, Singleton.getInstance().ParkName, Singleton.getInstance().WalletAmount, Singleton.getInstance().ProfileImage, Singleton.getInstance().UserPass);
+                                    Intent as = new Intent(RegistrationActivity.this, MainActivity.class);
+                                    startActivity(as);
+                                    finish();
+                                }
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

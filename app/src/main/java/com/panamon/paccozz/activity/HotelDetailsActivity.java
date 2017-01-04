@@ -10,12 +10,17 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -27,6 +32,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.panamon.paccozz.adapter.HotelListAdapter;
 import com.panamon.paccozz.common.Singleton;
 import com.panamon.paccozz.dbadater.AddOnDBAdapter;
 import com.panamon.paccozz.dbadater.CommonDBHelper;
@@ -112,6 +118,8 @@ public class HotelDetailsActivity extends AppCompatActivity {
             case R.id.fav:
                 addFav();
                 return true;
+            /*case R.id.search:
+                return true;*/
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -338,6 +338,9 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_profile) {
             // Handle the camera action
+            Intent profile = new Intent(this, RegistrationActivity.class);
+            profile.putExtra("update", "update");
+            startActivity(profile);
         } else if (id == R.id.nav_help) {
 
         } else if (id == R.id.nav_order) {
