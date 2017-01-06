@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity
     private EditText searchEdt;
     private ArrayList<HotelListModel> hotelListModels;
     private FloatingActionButton fab;
+    private MenuItem nav_wallet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,10 +108,9 @@ public class MainActivity extends AppCompatActivity
         Menu menu = navigationView.getMenu();
 
         // find MenuItem you want to change
-        MenuItem nav_wallet = menu.findItem(R.id.nav_wallet);
+        nav_wallet = menu.findItem(R.id.nav_wallet);
 
-        // set new title to the MenuItem
-        nav_wallet.setTitle("Wallet                                  ₹" + Singleton.getInstance().WalletAmount);
+
         navigationView.setNavigationItemSelectedListener(this);
 
         //title bar codes
@@ -165,6 +165,7 @@ public class MainActivity extends AppCompatActivity
                 hotelListView.setAdapter(hotelListAdapter);
             }
         });
+        getUserDetails();
     }
 
     @Override
@@ -262,6 +263,64 @@ public class MainActivity extends AppCompatActivity
         placeMenu.clear();
         getPlaces(popup, placeMenu);
         popup.setOnMenuItemClickListener(new MyMenuItemClickListener());
+    }
+
+    private void getUserDetails() {
+        progressBar.setVisibility(View.VISIBLE);
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = Constants.USERDETAILS_URL;
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            progressBar.setVisibility(View.GONE);
+                            Log.e("response", response);
+                            JSONObject jsonObject = new JSONObject(response);
+                            String succcess = jsonObject.getString("success");
+                            if (succcess.equalsIgnoreCase(String.valueOf(1))) {
+                                // Singleton.getInstance().UserId = jsonObject.getString("uid");
+                                String code = jsonObject.getString("ucode");
+                                Singleton.getInstance().ParkId = jsonObject.getString("uparkid");
+                                Singleton.getInstance().ParkName = jsonObject.getString("uparkname");
+                                String cityid = jsonObject.getString("ucityid");
+                                Singleton.getInstance().UserCity = jsonObject.getString("ucityname");
+                                Singleton.getInstance().UserGender = jsonObject.getString("usex");
+                                Singleton.getInstance().UserName = jsonObject.getString("uname");
+                                Singleton.getInstance().UserEmail = jsonObject.getString("umail");
+                                Singleton.getInstance().UserPass = jsonObject.getString("upass");
+                                String dob = jsonObject.getString("udob");
+                                Singleton.getInstance().UserMobile = jsonObject.getString("umobile");
+                                Singleton.getInstance().WalletAmount = jsonObject.getString("uwallet");
+                                Singleton.getInstance().ProfileImage = jsonObject.getString("uimg");
+                                String message = jsonObject.getString("message");
+                                // set new title to the MenuItem
+                                nav_wallet.setTitle("Wallet                                  ₹" + Singleton.getInstance().WalletAmount);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("umobile", Singleton.getInstance().UserMobile);
+                return params;
+            }
+        };
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
     }
 
     private void getPlaces(final PopupMenu popup, final Menu placeMenu) {

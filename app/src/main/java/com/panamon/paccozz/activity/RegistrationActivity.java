@@ -102,7 +102,7 @@ public class RegistrationActivity extends AppCompatActivity {
         editText_name = (EditText) findViewById(R.id.edt_name);
         editText_age = (EditText) findViewById(R.id.edt_age);
         editText_emailid = (EditText) findViewById(R.id.edt_email);
-        editText_mobile = (EditText) findViewById(R.id.edt_email);
+        editText_mobile = (EditText) findViewById(R.id.edt_mobile);
         editText_password = (EditText) findViewById(R.id.edt_password);
         imageView_register = (ImageView) findViewById(R.id.profile_imageView);
         txt_male = (TextView) findViewById(R.id.radio_textone_sex);
@@ -238,6 +238,8 @@ public class RegistrationActivity extends AppCompatActivity {
                 imageView_register.setImageBitmap(bm);
             } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar.make(progressBar, "Invalid image format", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         }
     }
@@ -621,7 +623,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             String succcess = jsonObject.getString("success");
                             if (succcess.equalsIgnoreCase(String.valueOf(1))) {
-                                Singleton.getInstance().UserId = jsonObject.getString("uid");
+                               // Singleton.getInstance().UserId = jsonObject.getString("uid");
                                 String code = jsonObject.getString("ucode");
                                 Singleton.getInstance().ParkId = jsonObject.getString("uparkid");
                                 Singleton.getInstance().ParkName = jsonObject.getString("uparkname");
