@@ -19,6 +19,8 @@ public interface TableConstants {
     public String TOTAL_COST = "total_cost";
     public String ITEM_TYPE = "item_type";
     public String ITEM_TOTAL_COST = "item_total_cost";
+    public String ITEM_DISCOUNT = "item_discount";
+    public String ITEM_SERVICE_TAX = "item_service_tax";
 
     //addon item and addon sub item table columns
     public String ADDON_ID = "addon_id";
@@ -36,7 +38,7 @@ public interface TableConstants {
 
     //Create table queries
     public String CREATE_FOOD_ITEM_TABLE = "CREATE TABLE IF NOT EXISTS " + FOOD_ITEM_TABLE + "(" + KEY_ID + " INTEGER PRIMARY KEY," + ITEM_ID + " TEXT," + ITEM_NAME + " TEXT," + ITEM_COST + " TEXT," + ITEM_COUNT + " TEXT,"
-            + ITEM_CATEGORY_ID + " TEXT," + ITEM_VENDOR_ID + " TEXT," + IS_ITEM_SELECTED + " TEXT," + TOTAL_COST + " TEXT," + ITEM_TYPE + " TEXT," +  ITEM_TOTAL_COST + " TEXT" +")";
+            + ITEM_CATEGORY_ID + " TEXT," + ITEM_VENDOR_ID + " TEXT," + IS_ITEM_SELECTED + " TEXT," + TOTAL_COST + " TEXT," + ITEM_TYPE + " TEXT," +  ITEM_TOTAL_COST + " TEXT," + ITEM_DISCOUNT + " TEXT," + ITEM_SERVICE_TAX + " TEXT" + ")";
     public String CREATE_ADDON_ITEM_TABLE = "CREATE TABLE IF NOT EXISTS " + ADDON_ITEM_TABLE + "(" + KEY_ID + " INTEGER PRIMARY KEY," + ITEM_CATEGORY_ID + " TEXT," + ADDON_ID + " TEXT," + ADDON_NAME + " TEXT," + ADDON_LIMITS + " TEXT" + ")";
     public String CREATE_ADDON_SUBITEM_TABLE = "CREATE TABLE IF NOT EXISTS " + ADDON_SUBITEM_TABLE + "(" + KEY_ID + " INTEGER PRIMARY KEY," + ITEM_CATEGORY_ID + " TEXT," + ADDON_ID + " TEXT," + ADDON_SUBITEM_ID + " TEXT," + ADDON_SUBITEM_NAME + " TEXT," + ADDON_SUBITEM_PRICE + " TEXT," + IS_ITEM_SELECTED + " TEXT" + ")";
     public String CREATE_CART_TABLE = "CREATE TABLE IF NOT EXISTS " + CART_TABLE + "(" + KEY_ID + " INTEGER PRIMARY KEY," + ITEM_VENDOR_ID + " TEXT" + ")";

@@ -174,7 +174,32 @@
                             android:textSize="@dimen/text_16" />
 
                     </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/ten"
+                        android:layout_marginRight="@dimen/ten"
+                        android:layout_marginTop="@dimen/ten"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
+                        <TextView
+                            android:id="@+id/wallet_lable_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.5"
+                            android:text="Wallet Amount"
+                            android:textSize="@dimen/text_16" />
+
+                        <TextView
+                            android:id="@+id/wallet_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:text="50"
+                            android:textSize="@dimen/text_16" />
+
+                    </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

@@ -63,9 +63,17 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         totcost = getIntent().getDoubleExtra("amount", 0);
         FoodItemDBAdapter foodItemDBAdapter = new FoodItemDBAdapter();
         foodItemModels = foodItemDBAdapter.getSelectedFoodItems();
-        //getOrderData();
-
-        startPayment();
+        try {
+            double walletAmount = Double.parseDouble(Singleton.getInstance().WalletAmount);
+            if (walletAmount>=totcost) {
+                getOrderData();
+            }else{
+                startPayment();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            startPayment();
+        }
     }
 
     private void getOrderData() {
@@ -94,7 +102,6 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
                 .setAction("Action", null).show();
         transactionId = s;
         getOrderData();
-        //createOrder();
     }
 
     private void createOrder() {
@@ -150,6 +157,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
                 params.put("tranamount", totcost + "");
                 params.put("transtatus", "1");
                 params.put("tranpaytype", "card");
+                params.put("packtype", "1");
 
                 Log.e("params", params + "");
                 return params;

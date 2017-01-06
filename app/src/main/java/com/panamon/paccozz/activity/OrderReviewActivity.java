@@ -46,7 +46,7 @@ import java.util.Map;
 public class OrderReviewActivity extends AppCompatActivity implements FoodItemChanged, AddonItemClicked, View.OnClickListener {
 
     private RecyclerView selectedItemLists;
-    private TextView textView_item, textView_proceed, textView_discount, textView_taxprice, textView_totalprice, textView_vendor_name;
+    private TextView textView_wallet, textView_item, textView_proceed, textView_discount, textView_taxprice, textView_totalprice, textView_vendor_name;
     private EditText editText_applycoupon;
     private TextView textView_apply;
     private int discount = 10, tax = 12;
@@ -87,6 +87,7 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         editText_applycoupon = (EditText) findViewById(R.id.enter_coupon__txt);
         textView_apply = (TextView) findViewById(R.id.apply_img);
         textView_proceed = (TextView) findViewById(R.id.textView_proceed);
+        textView_wallet = (TextView) findViewById(R.id.wallet_txt);
         textView_proceed.setOnClickListener(this);
         textView_apply.setOnClickListener(this);
         arrow = (ImageView) findViewById(R.id.arrow);
@@ -107,10 +108,13 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         doneTxt = (TextView) findViewById(R.id.doneTxt);
         itemPriceTxt = (TextView) findViewById(R.id.main_price);
 
+        textView_wallet.setText( "₹" + Singleton.getInstance().WalletAmount);
     }
 
     private void showFoodItems() {
         foodItemModels = foodItemDBAdapter.getSelectedFoodItems();
+        discount = Integer.parseInt(foodItemModels.get(0).ItemDiscount);
+        tax = Integer.parseInt(foodItemModels.get(0).ItemServiceTax);
         SelectedFoodItemAdapter foodItemAdapter = new SelectedFoodItemAdapter(this, foodItemModels, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         selectedItemLists.setLayoutManager(mLayoutManager);
@@ -217,9 +221,10 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
                             JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
                             if (success.equalsIgnoreCase("1")) {
-                                int grnd_total = Integer.parseInt(jsonObject.getString("amount"));
+                                double grnd_total = Double.parseDouble(jsonObject.getString("amount"));
                                 String cupid = jsonObject.getString("couponid");
                                 String message = jsonObject.getString("message");
+                                totalCost = grnd_total;
                                 textView_totalprice.setText(grnd_total + "");
                             } else {
                                 Snackbar.make(editText_applycoupon, "Invalid Coupon", Snackbar.LENGTH_LONG)
@@ -263,9 +268,9 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
 
     @Override
     public void onAddonSubItemClicked(String subItemCost, String addOnItemId, String cost, boolean isChecked) {
-        if(isChecked) {
+        if (isChecked) {
             itemCost = itemCost + Double.parseDouble(subItemCost);
-        }else{
+        } else {
             itemCost = itemCost - Double.parseDouble(cost);
         }
         int itemCostInt = (int) itemCost;

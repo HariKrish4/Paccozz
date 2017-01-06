@@ -28,6 +28,8 @@ public class FoodItemDBAdapter implements TableConstants {
         values.put(TOTAL_COST, "0");
         values.put(ITEM_TYPE, foodItemModel.ItemType);
         values.put(ITEM_TOTAL_COST, foodItemModel.ItemCost);
+        values.put(ITEM_DISCOUNT, foodItemModel.ItemDiscount);
+        values.put(ITEM_SERVICE_TAX, foodItemModel.ItemServiceTax);
         CommonDBHelper.getInstance().getDb().insert(FOOD_ITEM_TABLE, null, values);
         CommonDBHelper.getInstance().close();
     }
@@ -250,6 +252,8 @@ public class FoodItemDBAdapter implements TableConstants {
                 foodItemModel.TotalCost = cursor.getString(8);
                 foodItemModel.ItemType = cursor.getString(9);
                 foodItemModel.ItemTotalCost = cursor.getString(10);
+                foodItemModel.ItemDiscount = cursor.getString(11);
+                foodItemModel.ItemServiceTax = cursor.getString(12);
             } while (cursor.moveToNext());
         }
         CommonDBHelper.getInstance().close();
@@ -272,6 +276,8 @@ public class FoodItemDBAdapter implements TableConstants {
                 foodItemModel.ItemCost = cursor.getString(3);
                 foodItemModel.ItemCount = cursor.getString(4);
                 foodItemModel.TotalCost = cursor.getString(8);
+                foodItemModel.ItemDiscount = cursor.getString(11);
+                foodItemModel.ItemServiceTax = cursor.getString(12);
                 foodItemModels.add(foodItemModel);
 
             } while (cursor.moveToNext());
