@@ -546,6 +546,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 } else {
                     entity.addPart("usex", new StringBody("3"));
                 }
+                entity.addPart("userid", new StringBody(Singleton.getInstance().UserId));
                 entity.addPart("uemail", new StringBody(editText_emailid.getText().toString()));
                 entity.addPart("upass", new StringBody(Singleton.getInstance().UserPass));
                 entity.addPart("uphone", new StringBody(editText_mobile.getText().toString()));
