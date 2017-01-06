@@ -48,6 +48,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     private String item_count;
     private String item_cost;
     private String addOn_id;
+    private boolean wallet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +68,10 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
             double walletAmount = Double.parseDouble(Singleton.getInstance().WalletAmount);
             if (walletAmount>=totcost) {
                 getOrderData();
+                wallet = true;
             }else{
                 startPayment();
+                wallet = false;
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -152,11 +155,18 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
                 params.put("orgamount", totcost + "");
                 params.put("servicetax", totcost + "");
                 params.put("discount", totcost + "");
-                params.put("transid", transactionId);
                // params.put("transid", "100");
-                params.put("tranamount", totcost + "");
-                params.put("transtatus", "1");
-                params.put("tranpaytype", "card");
+                if(!wallet) {
+                    params.put("transid", transactionId);
+                    params.put("tranamount", totcost + "");
+                    params.put("transtatus", "1");
+                    params.put("tranpaytype", "card");
+                }else{
+                    params.put("transid", "wallet");
+                    params.put("tranamount", totcost + "");
+                    params.put("transtatus", "1");
+                    params.put("tranpaytype", "wallet");
+                }
                 params.put("packtype", "1");
 
                 Log.e("params", params + "");
