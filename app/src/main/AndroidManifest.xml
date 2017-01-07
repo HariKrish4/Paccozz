@@ -7,6 +7,11 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="com.panamon.paccozz.permission.C2D_MESSAGE" />
+
+    <permission
+        android:name="com.panamon.paccozz.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
 
     <application
         android:allowBackup="true"
@@ -63,7 +68,8 @@
             android:name=".activity.FavoritesActivity"
             android:label="@string/title_activity_favorites"
             android:parentActivityName=".activity.MainActivity"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activity.HelpActivity"></activity>
     </application>
 
 </manifest>

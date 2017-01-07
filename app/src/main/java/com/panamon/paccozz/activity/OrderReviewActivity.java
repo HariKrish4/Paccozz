@@ -46,7 +46,7 @@ import java.util.Map;
 public class OrderReviewActivity extends AppCompatActivity implements FoodItemChanged, AddonItemClicked, View.OnClickListener {
 
     private RecyclerView selectedItemLists;
-    private TextView textView_wallet, textView_item, textView_proceed, textView_discount, textView_taxprice, textView_totalprice, textView_vendor_name;
+    private TextView textView_itemTotal, textView_wallet, textView_item, textView_proceed, textView_discount, textView_taxprice, textView_totalprice, textView_vendor_name;
     private EditText editText_applycoupon;
     private TextView textView_apply;
     private int discount = 10, tax = 12;
@@ -81,6 +81,7 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         textView_vendor_name = (TextView) findViewById(R.id.vendor_name_txt);
         textView_item = (TextView) findViewById(R.id.item_txt);
+        textView_itemTotal = (TextView) findViewById(R.id.item_total_txt);
         textView_discount = (TextView) findViewById(R.id.discount_txt);
         textView_taxprice = (TextView) findViewById(R.id.tax_txt);
         textView_totalprice = (TextView) findViewById(R.id.total_txt);
@@ -113,18 +114,21 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
 
     private void showFoodItems() {
         foodItemModels = foodItemDBAdapter.getSelectedFoodItems();
-        discount = Integer.parseInt(foodItemModels.get(0).ItemDiscount);
-        tax = Integer.parseInt(foodItemModels.get(0).ItemServiceTax);
-        SelectedFoodItemAdapter foodItemAdapter = new SelectedFoodItemAdapter(this, foodItemModels, this);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        selectedItemLists.setLayoutManager(mLayoutManager);
-        selectedItemLists.setAdapter(foodItemAdapter);
-        calculateTotalCost();
+        if(foodItemModels.size()>0) {
+            discount = Integer.parseInt(foodItemModels.get(0).ItemDiscount);
+            tax = Integer.parseInt(foodItemModels.get(0).ItemServiceTax);
+            SelectedFoodItemAdapter foodItemAdapter = new SelectedFoodItemAdapter(this, foodItemModels, this);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+            selectedItemLists.setLayoutManager(mLayoutManager);
+            selectedItemLists.setAdapter(foodItemAdapter);
+            calculateTotalCost();
+        }
     }
 
     private void calculateTotalCost() {
         double totalItems = Double.parseDouble(foodItemDBAdapter.getTotalItems());
         totalCost = Double.parseDouble(foodItemDBAdapter.getTotalCost());
+        textView_itemTotal.setText("₹ " +totalCost);
         int totalInt = (int) totalItems;
         double discountCost = (discount * totalCost / 100);
         double taxCost = (tax * totalCost / 100);

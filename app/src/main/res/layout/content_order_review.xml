@@ -156,6 +156,33 @@
                         android:weightSum="2">
 
                         <TextView
+                            android:id="@+id/item_total_lable_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.5"
+                            android:text="Item Total"
+                            android:textSize="@dimen/text_16" />
+
+                        <TextView
+                            android:id="@+id/item_total_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:text="0"
+                            android:textSize="@dimen/text_16" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/ten"
+                        android:layout_marginRight="@dimen/ten"
+                        android:layout_marginTop="@dimen/ten"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
                             android:id="@+id/discount_lable_txt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -169,11 +196,12 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".5"
-                            android:text="10%"
+                            android:text="0%"
                             android:textColor="@android:color/holo_green_light"
                             android:textSize="@dimen/text_16" />
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -196,10 +224,11 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".5"
-                            android:text="50"
+                            android:text="0"
                             android:textSize="@dimen/text_16" />
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -222,7 +251,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".5"
-                            android:text="12%"
+                            android:text="0%"
                             android:textSize="@dimen/text_16" />
 
                     </LinearLayout>

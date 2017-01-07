@@ -34,6 +34,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.facebook.stetho.Stetho;
+import com.freshdesk.hotline.Hotline;
 import com.panamon.paccozz.common.SharedPref;
 import com.panamon.paccozz.common.Singleton;
 import com.panamon.paccozz.dbadater.CommonDBHelper;
@@ -401,7 +402,8 @@ public class MainActivity extends AppCompatActivity
             profile.putExtra("update", "update");
             startActivity(profile);
         } else if (id == R.id.nav_help) {
-
+            Intent help = new Intent(this, HelpActivity.class);
+            startActivity(help);
         } else if (id == R.id.nav_order) {
             Intent order = new Intent(this, OrderActivity.class);
             startActivity(order);
@@ -421,6 +423,7 @@ public class MainActivity extends AppCompatActivity
                             startActivity(intent);
                             finish();
                             sharedPref.setIsLogged(false);
+                            Hotline.clearUserData(getApplicationContext());
                         }
                     })
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {

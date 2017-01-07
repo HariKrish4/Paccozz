@@ -1,6 +1,8 @@
 package com.panamon.paccozz.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +22,9 @@ import com.android.volley.toolbox.Volley;
 import com.panamon.paccozz.R;
 import com.panamon.paccozz.common.Constants;
 import com.panamon.paccozz.common.Singleton;
+import com.panamon.paccozz.common.Utilities;
 import com.panamon.paccozz.dbadater.AddOnDBAdapter;
+import com.panamon.paccozz.dbadater.CommonDBHelper;
 import com.panamon.paccozz.dbadater.FoodItemDBAdapter;
 import com.panamon.paccozz.model.AddOnSubItemModel;
 import com.panamon.paccozz.model.FoodItemModel;
@@ -66,14 +70,14 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         foodItemModels = foodItemDBAdapter.getSelectedFoodItems();
         try {
             double walletAmount = Double.parseDouble(Singleton.getInstance().WalletAmount);
-            if (walletAmount>=totcost) {
+            if (walletAmount >= totcost) {
                 getOrderData();
                 wallet = true;
-            }else{
+            } else {
                 startPayment();
                 wallet = false;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             startPayment();
         }
@@ -125,11 +129,59 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
                             JSONObject jsonObject = new JSONObject(response);
                             String succcess = jsonObject.getString("success");
                             if (succcess.equalsIgnoreCase("1")) {
+                                CommonDBHelper.getInstance().truncateAllTables();
+                                if (wallet) {
+                                   /* new AlertDialog.Builder(PaymentActivity.this)
+                                            .setTitle("Payment through wallet is successfull")
+                                            .setMessage("Your order has been placed")
+                                            .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                            })
+                                            .show();*/
+                                    Utilities.orderAlert(PaymentActivity.this,"Payment through wallet is successfull. Your order has been placed");
+                                } else {
+                                    /*new AlertDialog.Builder(PaymentActivity.this)
+                                            .setTitle("Payment successfull")
+                                            .setMessage("Your order has been placed")
+                                            .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                            })
+                                            .show();*/
+                                    Utilities.orderAlert(PaymentActivity.this,"Payment successfull. Your order has been placed");
+                                }
 
                             } else if (succcess.equalsIgnoreCase("2")) {
-
+                               /* new AlertDialog.Builder(PaymentActivity.this)
+                                        .setTitle("Payment Error")
+                                        .setMessage("Please try again")
+                                        .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                finish();
+                                            }
+                                        })
+                                        .show();*/
+                                Utilities.orderAlert(PaymentActivity.this,"Payment Error. Please try again");
                             } else if (succcess.equalsIgnoreCase("0")) {
-
+                               /* new AlertDialog.Builder(PaymentActivity.this)
+                                        .setTitle("Payment Error")
+                                        .setMessage("Please try again")
+                                        .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                finish();
+                                            }
+                                        })
+                                        .show();*/
+                                Utilities.orderAlert(PaymentActivity.this,"Payment Error. Please try again");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -155,13 +207,12 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
                 params.put("orgamount", totcost + "");
                 params.put("servicetax", totcost + "");
                 params.put("discount", totcost + "");
-               // params.put("transid", "100");
-                if(!wallet) {
+                if (!wallet) {
                     params.put("transid", transactionId);
                     params.put("tranamount", totcost + "");
                     params.put("transtatus", "1");
                     params.put("tranpaytype", "card");
-                }else{
+                } else {
                     params.put("transid", "wallet");
                     params.put("tranamount", totcost + "");
                     params.put("transtatus", "1");
