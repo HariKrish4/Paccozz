@@ -21,7 +21,7 @@
         <item
             android:id="@+id/nav_help"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Help and Support" />
+            android:title="FAQ" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_assignment_ind_black_24dp"

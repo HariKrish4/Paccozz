@@ -402,7 +402,7 @@ public class MainActivity extends AppCompatActivity
             profile.putExtra("update", "update");
             startActivity(profile);
         } else if (id == R.id.nav_help) {
-            Intent help = new Intent(this, HelpActivity.class);
+            Intent help = new Intent(this, FaqActivity.class);
             startActivity(help);
         } else if (id == R.id.nav_order) {
             Intent order = new Intent(this, OrderActivity.class);

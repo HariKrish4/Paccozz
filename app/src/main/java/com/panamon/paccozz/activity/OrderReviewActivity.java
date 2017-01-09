@@ -59,6 +59,10 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
     private RecyclerView addOnsItemLists;
     private double itemCost = 0;
     private ArrayList<FoodItemModel> foodItemModels;
+    private LinearLayout dineInll, takeAwayll;
+    private String packType = "1";
+    private double taxCost,discountCost;
+    private int orgAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,9 +93,13 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         textView_apply = (TextView) findViewById(R.id.apply_img);
         textView_proceed = (TextView) findViewById(R.id.textView_proceed);
         textView_wallet = (TextView) findViewById(R.id.wallet_txt);
+        dineInll = (LinearLayout) findViewById(R.id.dineinll);
+        takeAwayll = (LinearLayout) findViewById(R.id.takeawayll);
+        arrow = (ImageView) findViewById(R.id.arrow);
         textView_proceed.setOnClickListener(this);
         textView_apply.setOnClickListener(this);
-        arrow = (ImageView) findViewById(R.id.arrow);
+        dineInll.setOnClickListener(this);
+        takeAwayll.setOnClickListener(this);
         arrow.setOnClickListener(this);
         textView_apply.setOnClickListener(this);
 
@@ -109,12 +117,12 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         doneTxt = (TextView) findViewById(R.id.doneTxt);
         itemPriceTxt = (TextView) findViewById(R.id.main_price);
 
-        textView_wallet.setText( "₹" + Singleton.getInstance().WalletAmount);
+        textView_wallet.setText("₹" + Singleton.getInstance().WalletAmount);
     }
 
     private void showFoodItems() {
         foodItemModels = foodItemDBAdapter.getSelectedFoodItems();
-        if(foodItemModels.size()>0) {
+        if (foodItemModels.size() > 0) {
             discount = Integer.parseInt(foodItemModels.get(0).ItemDiscount);
             tax = Integer.parseInt(foodItemModels.get(0).ItemServiceTax);
             SelectedFoodItemAdapter foodItemAdapter = new SelectedFoodItemAdapter(this, foodItemModels, this);
@@ -128,10 +136,11 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
     private void calculateTotalCost() {
         double totalItems = Double.parseDouble(foodItemDBAdapter.getTotalItems());
         totalCost = Double.parseDouble(foodItemDBAdapter.getTotalCost());
-        textView_itemTotal.setText("₹ " +totalCost);
+        orgAmount = (int) totalCost;
+        textView_itemTotal.setText("₹ " + totalCost);
         int totalInt = (int) totalItems;
-        double discountCost = (discount * totalCost / 100);
-        double taxCost = (tax * totalCost / 100);
+        discountCost = (discount * totalCost / 100);
+        taxCost = (tax * totalCost / 100);
         textView_discount.setText("₹ " + String.format("%.2f", discountCost));
         textView_taxprice.setText("₹ " + String.format("%.2f", taxCost));
         totalCost = totalCost + taxCost;
@@ -192,6 +201,10 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
             case R.id.textView_proceed:
                 Intent payment = new Intent(this, PaymentActivity.class);
                 payment.putExtra("amount", totalCost);
+                payment.putExtra("discount",discountCost);
+                payment.putExtra("tax",taxCost);
+                payment.putExtra("packtype",packType);
+                payment.putExtra("orgamount",orgAmount);
                 startActivity(payment);
                 break;
             case R.id.apply_img:
@@ -204,6 +217,16 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
                 break;
             case R.id.arrow:
                 onBackPressed();
+                break;
+            case R.id.dineinll:
+                packType = "1";
+                dineInll.setAlpha(1);
+                takeAwayll.setAlpha(0.5f);
+                break;
+            case R.id.takeawayll:
+                packType = "2";
+                dineInll.setAlpha(0.5f);
+                takeAwayll.setAlpha(1);
                 break;
         }
     }

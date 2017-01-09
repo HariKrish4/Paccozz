@@ -10,4 +10,7 @@
     <string name="title_activity_order_review">OrderReviewActivity</string>
     <string name="title_activity_order">OrderActivity</string>
     <string name="title_activity_favorites">FavoritesActivity</string>
+    <string name="faq_text18">You can mail us to <u>support@paccozz.com</u></string>
+    <string name="faq_text5">Yes. You can login to our website, <u>www.paccozz.com</u> and order food</string>
+
 </resources>

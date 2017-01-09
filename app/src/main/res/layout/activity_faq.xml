@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_faq"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.panamon.paccozz.activity.FaqActivity">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <TextView
+                android:id="@+id/place_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="FAQ"
+                android:textSize="@dimen/text_18"
+                android:textColor="#FFF"
+                android:visibility="visible" />
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:layout_below="@+id/appbar">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/ten">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1.	Who are we?"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:layout_marginLeft="@dimen/five"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="We are Paccozz, a food ordering app, that ensures a quick way to cut through queues at food courts in IT Parks by ordering from your workstations."
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:padding="@dimen/five"
+                android:lineSpacingMultiplier="1.2"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2.	How does Paccozz work?"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:layout_marginLeft="@dimen/five"
+                android:layout_marginTop="@dimen/ten"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Users can download the app from the Play Store for Android devices and from the App Store for iOS devices and register. Users can also register from the website which is http://www.paccozz.com . Choose the food court you want to eat from and order away. Also, we don’t deal in cash. The entire payment is online. So what are you waiting for? Order away!"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:padding="@dimen/five"
+                android:lineSpacingMultiplier="1.2"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3.	Is the app available in all mobile platforms?"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:layout_marginLeft="@dimen/five"
+                android:layout_marginTop="@dimen/ten" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Yes, the app is available for download on the Play Store for Android users and App Store for iOS Users. Windows phone users, well, are there any?"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:padding="@dimen/five"
+                android:lineSpacingMultiplier="1.2"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4.	How do I register?"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:layout_marginLeft="@dimen/five"
+                android:layout_marginTop="@dimen/ten"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Download the app and register with your mobile number or register through the website and enter the OTP and fill up your details. After registering, you can login anytime, through any device with your phone number and password."
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:padding="@dimen/five"
+                android:lineSpacingMultiplier="1.2"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="5.	Can I order through website"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:layout_marginLeft="@dimen/five"
+                android:layout_marginTop="@dimen/ten" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/faq_text5"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:padding="@dimen/five"
+                android:lineSpacingMultiplier="1.2"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="6.	How can I place my food order?"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:layout_marginLeft="@dimen/five"
+                android:layout_marginTop="@dimen/ten" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1.	Choose your IT Park. \n2.	Select your choice of restaurant.\n3.	Select your choice of food.\n4.	Make your payment through the payment gateway."
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:padding="@dimen/five"
+                android:lineSpacingMultiplier="1.2"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="7.	Will I get response when my food is ready?"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:layout_marginLeft="@dimen/five"
+                android:layout_marginTop="@dimen/ten"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Yes.  You will be notified when your food order is ready after which you can pick your order."
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:padding="@dimen/five"
+                android:lineSpacingMultiplier="1.2"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="8.	Can I cancel an order?"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:layout_marginLeft="@dimen/five"
+                android:layout_marginTop="@dimen/ten" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Once placed, you shall not be allowed to cancel your order."
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:padding="@dimen/five"
+                android:lineSpacingMultiplier="1.2"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="9.	Can I modify an order?"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:layout_marginLeft="@dimen/five"
+                android:layout_marginTop="@dimen/ten"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Once the restaurant accepts the order, you wouldn’t be able to modify it. "
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:padding="@dimen/five"
+                android:lineSpacingMultiplier="1.2"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="10.	If the restaurant cancel the order what happens to my money?"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:layout_marginLeft="@dimen/five"
+                android:layout_marginTop="@dimen/ten" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="If the vendor cancels, your money will be added to your wallet within 24 hours and it gets automatically deducted from your total amount during your next order through this app or site."
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:padding="@dimen/five"
+                android:lineSpacingMultiplier="1.2"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="11.	If I want to switch to another IT Park, is it possible?"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:layout_marginLeft="@dimen/five"
+                android:layout_marginTop="@dimen/ten"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Of course! Choose the IT Park from the dropdown on top of the app after logging in or on the home page in case of the website."
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:padding="@dimen/five"
+                android:lineSpacingMultiplier="1.2"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="12.	What is the refund policy for orders made online?"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:layout_marginLeft="@dimen/five"
+                android:layout_marginTop="@dimen/ten" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="If an order is cancelled by the vendor, the refund for full order amount will be done within 24 hours to the Paccozz wallet. "
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:padding="@dimen/five"
+                android:lineSpacingMultiplier="1.2"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="13.	Is there an option for customization?"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:layout_marginLeft="@dimen/five"
+                android:layout_marginTop="@dimen/ten" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Yes.  The customization option is available while the food is being ordered."
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:padding="@dimen/five"
+                android:lineSpacingMultiplier="1.2"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="14.	Is your site secure? "
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:layout_marginLeft="@dimen/five"
+                android:layout_marginTop="@dimen/ten" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Duh! Wanna try messing with us?"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:padding="@dimen/five"
+                android:lineSpacingMultiplier="1.2"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="15.	Do you accept meal vouchers?"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:layout_marginLeft="@dimen/five"
+                android:layout_marginTop="@dimen/ten"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="As of now, no. We don’t. "
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:padding="@dimen/five"
+                android:lineSpacingMultiplier="1.2"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="16.	Is there a way I can change my communication number?"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:layout_marginLeft="@dimen/five"
+                android:layout_marginTop="@dimen/ten" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Yes.  You can always edit your details through profile page."
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:padding="@dimen/five"
+                android:lineSpacingMultiplier="1.2"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="17.	Will Paccozz take responsibility for the quality of the food ordered?"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:layout_marginLeft="@dimen/five"
+                android:layout_marginTop="@dimen/ten" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Unfortunately, we are aggregators and therefore have no hold over the food that is being served. However, each customer is valuable for us and your grievances shall be taken very seriously. We will escalate your issue with the restaurant and do our level best in ensuring they act upon it. "
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:padding="@dimen/five"
+                android:lineSpacingMultiplier="1.2"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="18.	For queries how to get in touch with you?"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:padding="@dimen/five"
+                android:layout_marginLeft="@dimen/five"
+                android:layout_marginTop="@dimen/ten"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/faq_text18"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                android:layout_marginBottom="10dp"
+                android:padding="@dimen/five"
+                android:lineSpacingMultiplier="1.2"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

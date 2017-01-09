@@ -46,12 +46,14 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     private ArrayList<String> itemsCount;
     private ArrayList<String> itemsCost;
     private ArrayList<String> itemsId;
-    private double totcost;
+    private double totcost,discountCost,taxCost;
+    private int orgAmount;
     private String transactionId;
     private String item_id;
     private String item_count;
     private String item_cost;
     private String addOn_id;
+    private String packType;
     private boolean wallet;
 
     @Override
@@ -66,6 +68,10 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         itemsCost = new ArrayList<>();
         addOnsId = new ArrayList<>();
         totcost = getIntent().getDoubleExtra("amount", 0);
+        discountCost = getIntent().getDoubleExtra("discount", 0);
+        taxCost = getIntent().getDoubleExtra("tax", 0);
+        packType = getIntent().getStringExtra("packtype");
+        orgAmount = getIntent().getIntExtra("orgamount",0);
         FoodItemDBAdapter foodItemDBAdapter = new FoodItemDBAdapter();
         foodItemModels = foodItemDBAdapter.getSelectedFoodItems();
         try {
@@ -204,9 +210,9 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
                 params.put("cost", item_cost);
                 params.put("totcost", totcost + "");
                 params.put("addons", addOn_id);
-                params.put("orgamount", totcost + "");
-                params.put("servicetax", totcost + "");
-                params.put("discount", totcost + "");
+                params.put("orgamount",  orgAmount + "");
+                params.put("servicetax", taxCost + "");
+                params.put("discount", discountCost + "");
                 if (!wallet) {
                     params.put("transid", transactionId);
                     params.put("tranamount", totcost + "");
@@ -218,7 +224,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
                     params.put("transtatus", "1");
                     params.put("tranpaytype", "wallet");
                 }
-                params.put("packtype", "1");
+                params.put("packtype", packType);
 
                 Log.e("params", params + "");
                 return params;

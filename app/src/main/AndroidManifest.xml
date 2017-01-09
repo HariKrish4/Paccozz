@@ -69,7 +69,8 @@
             android:label="@string/title_activity_favorites"
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activity.HelpActivity"></activity>
+        <activity android:name=".activity.HelpActivity" />
+        <activity android:name=".activity.FaqActivity"></activity>
     </application>
 
 </manifest>
