@@ -24,6 +24,7 @@ public class FoodItemDBAdapter implements TableConstants {
         values.put(ITEM_COUNT, foodItemModel.ItemCount);
         values.put(ITEM_CATEGORY_ID, foodItemModel.ItemCategoryId);
         values.put(ITEM_VENDOR_ID, foodItemModel.ItemVendorId);
+        values.put(ITEM_VENDOR_NAME, foodItemModel.ItemVendorName);
         values.put(IS_ITEM_SELECTED, foodItemModel.IsItemSelected);
         values.put(TOTAL_COST, "0");
         values.put(ITEM_TYPE, foodItemModel.ItemType);
@@ -50,6 +51,7 @@ public class FoodItemDBAdapter implements TableConstants {
                 foodItemModel.ItemCount = cursor.getString(4);
                 foodItemModel.TotalCost = cursor.getString(8);
                 foodItemModel.ItemTotalCost = cursor.getString(10);
+                foodItemModel.ItemVendorName = cursor.getString(13);
                 foodItemModels.add(foodItemModel);
 
             } while (cursor.moveToNext());
@@ -75,6 +77,7 @@ public class FoodItemDBAdapter implements TableConstants {
                 foodItemModel.ItemCategoryId = cursor.getString(5);
                 foodItemModel.TotalCost = cursor.getString(8);
                 foodItemModel.ItemTotalCost = cursor.getString(10);
+                foodItemModel.ItemVendorName = cursor.getString(13);
                 foodItemModels.add(foodItemModel);
 
             } while (cursor.moveToNext());
@@ -254,6 +257,7 @@ public class FoodItemDBAdapter implements TableConstants {
                 foodItemModel.ItemTotalCost = cursor.getString(10);
                 foodItemModel.ItemDiscount = cursor.getString(11);
                 foodItemModel.ItemServiceTax = cursor.getString(12);
+                foodItemModel.ItemVendorName = cursor.getString(13);
             } while (cursor.moveToNext());
         }
         CommonDBHelper.getInstance().close();
@@ -278,6 +282,7 @@ public class FoodItemDBAdapter implements TableConstants {
                 foodItemModel.TotalCost = cursor.getString(8);
                 foodItemModel.ItemDiscount = cursor.getString(11);
                 foodItemModel.ItemServiceTax = cursor.getString(12);
+                foodItemModel.ItemVendorName = cursor.getString(13);
                 foodItemModels.add(foodItemModel);
 
             } while (cursor.moveToNext());
@@ -336,7 +341,7 @@ public class FoodItemDBAdapter implements TableConstants {
     }
 
     //get cart items
-    public String getCartItem(){
+    public String getCartItem() {
         CommonDBHelper.getInstance().open();
         String query = "SELECT * FROM " + CART_TABLE;
         Cursor cursor = CommonDBHelper.getInstance().getDb().rawQuery(query, null);

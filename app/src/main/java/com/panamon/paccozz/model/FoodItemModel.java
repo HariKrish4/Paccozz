@@ -5,5 +5,5 @@ package com.panamon.paccozz.model;
  */
 
 public class FoodItemModel {
-    public String ItemId, ItemName, ItemCost, ItemCount, ItemCategoryId, ItemVendorId, IsItemSelected, TotalCost, ItemType, ItemTotalCost, ItemDiscount, ItemServiceTax;
+    public String ItemId, ItemName, ItemCost, ItemCount, ItemCategoryId, ItemVendorId, ItemVendorName, IsItemSelected, TotalCost, ItemType, ItemTotalCost, ItemDiscount, ItemServiceTax;
 }

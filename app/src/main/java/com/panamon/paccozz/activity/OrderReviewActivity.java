@@ -123,7 +123,7 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
     private void showFoodItems() {
         foodItemModels = foodItemDBAdapter.getSelectedFoodItems();
         if (foodItemModels.size() > 0) {
-            textView_vendor_name.setText(foodItemModels.get(0).ItemVendorId);
+            textView_vendor_name.setText(foodItemModels.get(0).ItemVendorName);
             discount = Integer.parseInt(foodItemModels.get(0).ItemDiscount);
             tax = Integer.parseInt(foodItemModels.get(0).ItemServiceTax);
             SelectedFoodItemAdapter foodItemAdapter = new SelectedFoodItemAdapter(this, foodItemModels, this);

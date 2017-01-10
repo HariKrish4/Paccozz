@@ -33,6 +33,7 @@ public class Singleton {
     public String UserGender = "";
     public String UserCity = "";
     public String UserPass = "";
+    public String UserAge = "";
     public String ParkId = "";
     public String ParkName = "";
     public String VendorId = "";

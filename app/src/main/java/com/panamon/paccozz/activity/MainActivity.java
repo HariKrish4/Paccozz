@@ -294,6 +294,7 @@ public class MainActivity extends AppCompatActivity
                                 Singleton.getInstance().UserName = jsonObject.getString("uname");
                                 Singleton.getInstance().UserEmail = jsonObject.getString("umail");
                                 Singleton.getInstance().UserPass = jsonObject.getString("upass");
+                                Singleton.getInstance().UserAge = jsonObject.getString("uage");
                                 String dob = jsonObject.getString("udob");
                                 Singleton.getInstance().UserMobile = jsonObject.getString("umobile");
                                 Singleton.getInstance().WalletAmount = jsonObject.getString("uwallet");
@@ -423,7 +424,7 @@ public class MainActivity extends AppCompatActivity
                             startActivity(intent);
                             finish();
                             sharedPref.setIsLogged(false);
-                            Hotline.clearUserData(getApplicationContext());
+                            //Hotline.clearUserData(getApplicationContext());
                         }
                     })
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {

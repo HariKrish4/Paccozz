@@ -211,6 +211,12 @@ public class RegistrationActivity extends AppCompatActivity {
             editText_mobile.setText(Singleton.getInstance().UserMobile);
             editText_emailid.setText(Singleton.getInstance().UserEmail);
             editText_name.setText(Singleton.getInstance().UserName);
+            editText_age.setText(Singleton.getInstance().UserAge);
+            if(Singleton.getInstance().UserGender.equalsIgnoreCase("1")){
+                radio_male.setChecked(true);
+            }else{
+                radio_female.setChecked(true);
+            }
             Picasso.with(this).load(Singleton.getInstance().ProfileImage).placeholder(R.drawable.image_placeholder).into(imageView_register);
         }
     }

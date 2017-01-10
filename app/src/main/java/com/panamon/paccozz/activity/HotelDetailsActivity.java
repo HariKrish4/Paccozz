@@ -232,6 +232,7 @@ public class HotelDetailsActivity extends AppCompatActivity {
                                     foodItemModel.IsItemSelected = "0";
                                     foodItemModel.ItemCategoryId = itemObject1.getString("catid");
                                     foodItemModel.ItemVendorId = itemObject1.getString("venid");
+                                    foodItemModel.ItemVendorName = vendorObject.getString("venname");
                                     foodItemModel.ItemType = itemObject1.getString("itemtype");
                                     foodItemModel.ItemDiscount = vendorObject.getString("discount");
                                     foodItemModel.ItemServiceTax = vendorObject.getString("servicetax");
