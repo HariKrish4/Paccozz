@@ -70,7 +70,13 @@
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/AppTheme" />
         <activity android:name=".activity.HelpActivity" />
-        <activity android:name=".activity.FaqActivity"></activity>
+        <activity
+            android:name=".activity.FaqActivity"
+            android:parentActivityName=".activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.panamon.paccozz.activity.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

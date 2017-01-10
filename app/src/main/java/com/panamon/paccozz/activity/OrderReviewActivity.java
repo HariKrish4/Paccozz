@@ -105,7 +105,7 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
 
         //displying seleced food items
         selectedItemLists = (RecyclerView) findViewById(R.id.food_item_lists);
-        textView_vendor_name.setText(Singleton.getInstance().VendorName);
+
         foodItemDBAdapter = new FoodItemDBAdapter();
         showFoodItems();
 
@@ -123,6 +123,7 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
     private void showFoodItems() {
         foodItemModels = foodItemDBAdapter.getSelectedFoodItems();
         if (foodItemModels.size() > 0) {
+            textView_vendor_name.setText(foodItemModels.get(0).ItemVendorId);
             discount = Integer.parseInt(foodItemModels.get(0).ItemDiscount);
             tax = Integer.parseInt(foodItemModels.get(0).ItemServiceTax);
             SelectedFoodItemAdapter foodItemAdapter = new SelectedFoodItemAdapter(this, foodItemModels, this);
@@ -199,13 +200,18 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.textView_proceed:
-                Intent payment = new Intent(this, PaymentActivity.class);
-                payment.putExtra("amount", totalCost);
-                payment.putExtra("discount",discountCost);
-                payment.putExtra("tax",taxCost);
-                payment.putExtra("packtype",packType);
-                payment.putExtra("orgamount",orgAmount);
-                startActivity(payment);
+                if(foodItemModels.size()>0) {
+                    Intent payment = new Intent(this, PaymentActivity.class);
+                    payment.putExtra("amount", totalCost);
+                    payment.putExtra("discount", discountCost);
+                    payment.putExtra("tax", taxCost);
+                    payment.putExtra("packtype", packType);
+                    payment.putExtra("orgamount", orgAmount);
+                    startActivity(payment);
+                }else{
+                    Snackbar.make(editText_applycoupon, "Please add item to cart, before clicking proceed", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
                 break;
             case R.id.apply_img:
                 if (editText_applycoupon.getText().toString().length() > 0) {

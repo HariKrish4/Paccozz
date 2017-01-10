@@ -15,7 +15,7 @@ public class HelpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
 
-        HotlineConfig hlConfig=new HotlineConfig("9d5af2db-ed0a-43d5-826c-a23a6d82db11","249ef5f7-9e48-42b6-b6d0-0dbd8eea0650");
+        HotlineConfig hlConfig=new HotlineConfig("<9d5af2db-ed0a-43d5-826c-a23a6d82db11>","<249ef5f7-9e48-42b6-b6d0-0dbd8eea0650>");
 
         hlConfig.setVoiceMessagingEnabled(true);
         hlConfig.setCameraCaptureEnabled(true);
@@ -25,7 +25,7 @@ public class HelpActivity extends AppCompatActivity {
 
         //Update user information
         HotlineUser user = Hotline.getInstance(getApplicationContext()).getUser();
-        user.setName("John Doe").setEmail("john@john.doe").setPhone("001", "2542542544");
+        user.setName("Android").setEmail("android@paccozz.com").setPhone("044", "25425424");
         Hotline.getInstance(getApplicationContext()).updateUser(user);
 
     }

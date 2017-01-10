@@ -18,7 +18,7 @@ public class Utilities {
 
     public static void showAlert(final Activity activity) {
         new AlertDialog.Builder(activity)
-                .setMessage("You have an ongoing order with a differtent vendor. Do you wish to cancel the order and continue with this vendor?")
+                .setMessage("You have an ongoing order with a different vendor. Do you wish to cancel the order and continue with this vendor?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
