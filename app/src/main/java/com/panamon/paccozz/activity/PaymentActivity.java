@@ -54,7 +54,8 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     private String item_cost;
     private String addOn_id;
     private String packType;
-    private boolean wallet;
+    private boolean wallet,partial;
+    private double walletAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,13 +76,18 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         FoodItemDBAdapter foodItemDBAdapter = new FoodItemDBAdapter();
         foodItemModels = foodItemDBAdapter.getSelectedFoodItems();
         try {
-            double walletAmount = Double.parseDouble(Singleton.getInstance().WalletAmount);
+            walletAmount = Double.parseDouble(Singleton.getInstance().WalletAmount);
             if (walletAmount >= totcost) {
                 getOrderData();
                 wallet = true;
-            } else {
+            }
+            else if(walletAmount == 0) {
                 startPayment();
                 wallet = false;
+            } else if(walletAmount <= totcost){
+                totcost = totcost - walletAmount;
+                walletAmount = totcost;
+                startPayment();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -218,11 +224,26 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
                     params.put("tranamount", totcost + "");
                     params.put("transtatus", "1");
                     params.put("tranpaytype", "card");
-                } else {
+                    params.put("paybywal", "0");
+                    params.put("paygateway", "1");
+                    params.put("paywalamt", walletAmount+"");
+                } else if(partial){
+                    params.put("transid", transactionId);
+                    params.put("tranamount", totcost + "");
+                    params.put("transtatus", "1");
+                    params.put("tranpaytype", "card");
+                    params.put("paybywal", "1");
+                    params.put("paygateway", "1");
+                    params.put("paywalamt", walletAmount+"");
+                }
+                else {
                     params.put("transid", "wallet");
                     params.put("tranamount", totcost + "");
                     params.put("transtatus", "1");
                     params.put("tranpaytype", "wallet");
+                    params.put("paybywal", "1");
+                    params.put("paygateway", "0");
+                    params.put("paywalamt", walletAmount+"");
                 }
                 params.put("packtype", packType);
 
