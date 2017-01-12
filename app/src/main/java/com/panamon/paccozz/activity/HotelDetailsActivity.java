@@ -107,6 +107,19 @@ public class HotelDetailsActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        FoodItemDBAdapter foodItemDBAdapter = new FoodItemDBAdapter();
+        ArrayList<FoodItemModel> foodItemModels = foodItemDBAdapter.getSelectedFoodItems();
+        if (foodItemModels.size() > 0) {
+            fab.setVisibility(View.VISIBLE);
+        } else {
+            fab.setVisibility(View.GONE);
+            CommonDBHelper.getInstance().deleteTableValues(TableConstants.CART_TABLE);
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.hotel_details, menu);//Menu Resource, Menu
         return true;
