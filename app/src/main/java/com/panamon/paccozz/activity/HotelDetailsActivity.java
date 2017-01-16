@@ -110,6 +110,7 @@ public class HotelDetailsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         FoodItemDBAdapter foodItemDBAdapter = new FoodItemDBAdapter();
+
         ArrayList<FoodItemModel> foodItemModels = foodItemDBAdapter.getSelectedFoodItems();
         if (foodItemModels.size() > 0) {
             fab.setVisibility(View.VISIBLE);
