@@ -1,8 +1,8 @@
 package com.panamon.paccozz.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
@@ -21,15 +21,10 @@ import com.panamon.paccozz.R;
 import com.panamon.paccozz.common.Constants;
 import com.panamon.paccozz.common.SharedPref;
 import com.panamon.paccozz.common.Singleton;
-import com.panamon.paccozz.model.CategoryModel;
-import com.panamon.paccozz.model.VendorDetailsModel;
-import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                         if(editText_otp.getHint().toString().equalsIgnoreCase("Enter password")) {
                             loginUser();
                         }else{
+                            Singleton.getInstance().mobileNumberStr=editText_phonenumber.getText().toString();
                             registerUser();
                         }
                     }

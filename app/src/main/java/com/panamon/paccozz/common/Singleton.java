@@ -43,4 +43,5 @@ public class Singleton {
     public Context Context;
     public ArrayList<CategoryModel> categories = new ArrayList<>();
     public String AddOns = "";
+    public String mobileNumberStr = "";
 }

@@ -116,7 +116,7 @@ public class RegistrationActivity extends AppCompatActivity {
         spn_city = (Spinner) findViewById(R.id.spn_city);
         spn_place = (Spinner) findViewById(R.id.spn_place);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
+        editText_mobile.setText( Singleton.getInstance().mobileNumberStr);
         //loading spinner city and setting itpark spinner
         loadCity();
         spn_city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
