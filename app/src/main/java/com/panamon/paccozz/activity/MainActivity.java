@@ -1,8 +1,12 @@
 package com.panamon.paccozz.activity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -34,7 +38,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.facebook.stetho.Stetho;
-import com.freshdesk.hotline.Hotline;
+import com.panamon.paccozz.R;
+import com.panamon.paccozz.adapter.HotelListAdapter;
+import com.panamon.paccozz.common.Constants;
 import com.panamon.paccozz.common.SharedPref;
 import com.panamon.paccozz.common.Singleton;
 import com.panamon.paccozz.dbadater.CommonDBHelper;
@@ -42,9 +48,6 @@ import com.panamon.paccozz.dbadater.FoodItemDBAdapter;
 import com.panamon.paccozz.model.FoodItemModel;
 import com.panamon.paccozz.model.HotelListModel;
 import com.panamon.paccozz.model.PlacesModel;
-import com.panamon.paccozz.R;
-import com.panamon.paccozz.adapter.HotelListAdapter;
-import com.panamon.paccozz.common.Constants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -106,6 +109,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         // get menu from navigationView
+        navigationView.setItemIconTintList(null);
         Menu menu = navigationView.getMenu();
 
         // find MenuItem you want to change
@@ -301,7 +305,7 @@ public class MainActivity extends AppCompatActivity
                                 Singleton.getInstance().ProfileImage = jsonObject.getString("uimg");
                                 String message = jsonObject.getString("message");
                                 // set new title to the MenuItem
-                                nav_wallet.setTitle("Wallet                                  ₹" + Singleton.getInstance().WalletAmount);
+                                nav_wallet.setTitle("Wallet                          ₹" + Singleton.getInstance().WalletAmount);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -403,8 +407,8 @@ public class MainActivity extends AppCompatActivity
             profile.putExtra("update", "update");
             startActivity(profile);
         } else if (id == R.id.nav_help) {
-            Intent help = new Intent(this, FaqActivity.class);
-            startActivity(help);
+            showDialog();
+
         } else if (id == R.id.nav_order) {
             Intent order = new Intent(this, OrderActivity.class);
             startActivity(order);
@@ -439,6 +443,56 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void showDialog() {
+        final Dialog dialog = new Dialog(MainActivity.this);
+        dialog.setContentView(R.layout.help_dialog_layout);
+        TextView cancel, chat, mail, faq;
+        faq=(TextView)dialog.findViewById(R.id.faq);
+        mail=(TextView)dialog.findViewById(R.id.mailus);
+        chat=(TextView)dialog.findViewById(R.id.chat);
+        cancel=(TextView)dialog.findViewById(R.id.cancel);
+        faq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent help = new Intent(MainActivity.this, FaqActivity.class);
+                startActivity(help);
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        mail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                PackageManager pm = MainActivity.this.getPackageManager();
+                PackageInfo pInfo = null;
+
+                try {
+                    pInfo = pm.getPackageInfo(MainActivity.this.getPackageName(), 0);
+
+                } catch (PackageManager.NameNotFoundException e1) {
+                    e1.printStackTrace();
+                }
+                String cuurentversion = pInfo.versionName;
+                int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+                String model = android.os.Build.MODEL;
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "support@paccozz.com", null));
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Report Issue to Support Team");
+                emailIntent.putExtra(Intent.EXTRA_TEXT,  "Device Id -" + model + "\n" + "Android version -" + currentapiVersion + "\n" + "App version -" + cuurentversion);
+                startActivity(Intent.createChooser(emailIntent, "Send email..."));
+            }
+        });
+
+
+
+        dialog.show();
     }
 
     @Override

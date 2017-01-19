@@ -146,6 +146,7 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
     public void onFoodItemCountChanged(String itemId, int itemCost, int itemCount, boolean plus) {
         if (itemCount == 1 && plus) {
             foodItemDBAdapter.insertCartItem(Singleton.getInstance().VendorId);
+            HotelDetailsActivity.fab.setVisibility(View.VISIBLE);
             if (Singleton.getInstance().AddOns.equalsIgnoreCase("1")) {
                 AddOnDBAdapter addOnDBAdapter = new AddOnDBAdapter();
                 ArrayList<AddOnItemModel> addOnItemModels = addOnDBAdapter.getAddOnItems(itemId);

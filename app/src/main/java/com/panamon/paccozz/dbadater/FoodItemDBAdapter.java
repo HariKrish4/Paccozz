@@ -40,7 +40,7 @@ public class FoodItemDBAdapter implements TableConstants {
         CommonDBHelper.getInstance().open();
         FoodItemModel foodItemModel;
         ArrayList<FoodItemModel> foodItemModels = new ArrayList<>();
-        String query = "SELECT * FROM " + FOOD_ITEM_TABLE + " WHERE " + ITEM_CATEGORY_ID + " ='" + category_id + "'" + " AND " + ITEM_TYPE + " ='" + item_type + "'";
+        String query = "SELECT * FROM " + FOOD_ITEM_TABLE + " WHERE " + ITEM_CATEGORY_ID + " ='" + category_id + "'" + " AND " + ITEM_TYPE + " ='" + item_type + "'" + " OR " + ITEM_TYPE + " = 3";
         Cursor cursor = CommonDBHelper.getInstance().getDb().rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {

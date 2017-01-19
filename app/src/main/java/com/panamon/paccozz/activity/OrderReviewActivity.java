@@ -259,6 +259,9 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
                                 String message = jsonObject.getString("message");
                                 totalCost = grnd_total;
                                 textView_totalprice.setText(grnd_total + "");
+                                editText_applycoupon.setText("");
+                                editText_applycoupon.setFocusable(false);
+                                textView_apply.setEnabled(false);
                             } else {
                                 Snackbar.make(editText_applycoupon, "Invalid Coupon", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();

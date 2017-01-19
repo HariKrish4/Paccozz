@@ -4,15 +4,15 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_photo_camera_black_24dp"
             android:title="Profile" />
         <item
             android:id="@+id/nav_order"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="My Order" />
+            android:title="My Orders" />
         <item
             android:id="@+id/nav_wallet"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_laptop_windows_black_24dp"
             android:title="Wallet" />
         <item
             android:id="@+id/nav_fav"
@@ -21,7 +21,7 @@
         <item
             android:id="@+id/nav_help"
             android:icon="@drawable/ic_menu_manage"
-            android:title="FAQ" />
+            android:title="Help" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_assignment_ind_black_24dp"

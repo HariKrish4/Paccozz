@@ -116,7 +116,7 @@ public class RegistrationActivity extends AppCompatActivity {
         spn_city = (Spinner) findViewById(R.id.spn_city);
         spn_place = (Spinner) findViewById(R.id.spn_place);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
+        editText_mobile.setText( Singleton.getInstance().mobileNumberStr);
         //loading spinner city and setting itpark spinner
         loadCity();
         spn_city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -178,7 +178,12 @@ public class RegistrationActivity extends AppCompatActivity {
                     if (editText_name.getText().length() > 0 && editText_age.getText().length() > 0 && editText_emailid.getText().length() > 0 &&
                             editText_mobile.getText().length() > 0) {
                         if (!placeId.equals("0") && placeId != null && !placeId.equalsIgnoreCase("null")) {
-                            new UpdateUser().execute();
+                            if(editText_mobile.getText().toString().length()==10) {
+                                new UpdateUser().execute();
+                            }else{
+                                Snackbar.make(view, "Invalid Phone Number", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();
+                            }
                         } else {
                             Snackbar.make(view, "Invalid city or place", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
@@ -191,9 +196,12 @@ public class RegistrationActivity extends AppCompatActivity {
                     if (editText_name.getText().length() > 0 && editText_age.getText().length() > 0 && editText_emailid.getText().length() > 0 &&
                             editText_mobile.getText().length() > 0 && editText_password.getText().length() > 0) {
                         if (!placeId.equals("0") && placeId != null && !placeId.equalsIgnoreCase("null")) {
-
-                            new RegisterUser().execute();
-
+                            if(editText_mobile.getText().toString().length()==10) {
+                                new RegisterUser().execute();
+                            }else{
+                                Snackbar.make(view, "Invalid Phone Number", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();
+                            }
                         } else {
                             Snackbar.make(view, "Invalid city or place", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
