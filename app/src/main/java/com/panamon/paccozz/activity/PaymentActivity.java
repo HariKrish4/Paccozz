@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.freshdesk.hotline.activity.am;
 import com.panamon.paccozz.R;
 import com.panamon.paccozz.common.Constants;
 import com.panamon.paccozz.common.Singleton;
@@ -305,6 +306,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
              * Eg: "500" = Rs 5.00
              */
             double amount = getIntent().getDoubleExtra("amount", 0);
+            amount = amount +1;
             int amountInt = (int) amount * 100;
             options.put("amount", amountInt + "");
 
