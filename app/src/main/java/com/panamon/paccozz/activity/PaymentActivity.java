@@ -1,12 +1,9 @@
 package com.panamon.paccozz.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +16,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.freshdesk.hotline.activity.am;
 import com.panamon.paccozz.R;
 import com.panamon.paccozz.common.Constants;
 import com.panamon.paccozz.common.Singleton;
@@ -305,7 +301,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
              * Amount is always passed in PAISE
              * Eg: "500" = Rs 5.00
              */
-            double amount = getIntent().getDoubleExtra("amount", 0);
+            double amount = totcost;
             amount = amount +1;
             int amountInt = (int) amount * 100;
             options.put("amount", amountInt + "");

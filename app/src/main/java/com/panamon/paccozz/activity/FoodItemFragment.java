@@ -19,7 +19,6 @@ import com.panamon.paccozz.adapter.AddOnItemAdapter;
 import com.panamon.paccozz.adapter.AddOnSubItemAdapter;
 import com.panamon.paccozz.adapter.FoodItemAdapter;
 import com.panamon.paccozz.common.Singleton;
-import com.panamon.paccozz.common.Utilities;
 import com.panamon.paccozz.dbadater.AddOnDBAdapter;
 import com.panamon.paccozz.dbadater.FoodItemDBAdapter;
 import com.panamon.paccozz.interfaces.AddonItemClicked;
@@ -127,11 +126,17 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
         if (foodItemModels.size() == 0) {
             noDataTxt.setVisibility(View.VISIBLE);
         }
+        if(foodItemDBAdapter.getSelectedFoodItems().size()>0){
+            HotelDetailsActivity.fab.setVisibility(View.VISIBLE);
+        }else{
+            HotelDetailsActivity.fab.setVisibility(View.GONE);
+        }
     }
 
 
     private void displayFoodItems(String itemType) {
         foodItemModels = foodItemDBAdapter.getFoodItems(categoryId, itemType);
+        foodItemModels.addAll(foodItemDBAdapter.getWeirdFoodItems(categoryId));
         foodItemAdapter = new FoodItemAdapter(this.getActivity(), foodItemModels, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Singleton.getInstance().Context, LinearLayoutManager.VERTICAL, false);
         vendorFoodLists.setLayoutManager(mLayoutManager);
@@ -139,6 +144,11 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
         noDataTxt.setVisibility(View.GONE);
         if (foodItemModels.size() == 0) {
             noDataTxt.setVisibility(View.VISIBLE);
+        }
+        if(foodItemDBAdapter.getSelectedFoodItems().size()>0){
+            HotelDetailsActivity.fab.setVisibility(View.VISIBLE);
+        }else{
+            HotelDetailsActivity.fab.setVisibility(View.GONE);
         }
     }
 
@@ -164,6 +174,13 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
                     doneClick(itemId);
                     HotelDetailsActivity.fab.setVisibility(View.GONE);
                 }
+            }
+        }
+        else if(itemCount ==0){
+            if(foodItemDBAdapter.getSelectedFoodItems().size()>0){
+                HotelDetailsActivity.fab.setVisibility(View.VISIBLE);
+            }else{
+                HotelDetailsActivity.fab.setVisibility(View.GONE);
             }
         }
     }

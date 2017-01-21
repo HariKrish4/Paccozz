@@ -3,7 +3,6 @@ package com.panamon.paccozz.dbadater;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.panamon.paccozz.model.AddOnItemModel;
 import com.panamon.paccozz.model.FoodItemModel;
 
 import java.util.ArrayList;
@@ -31,6 +30,7 @@ public class FoodItemDBAdapter implements TableConstants {
         values.put(ITEM_TOTAL_COST, foodItemModel.ItemCost);
         values.put(ITEM_DISCOUNT, foodItemModel.ItemDiscount);
         values.put(ITEM_SERVICE_TAX, foodItemModel.ItemServiceTax);
+        values.put(ITEM_PACKAGE_CHARGE, foodItemModel.ItemPackageCharge);
         CommonDBHelper.getInstance().getDb().insert(FOOD_ITEM_TABLE, null, values);
         CommonDBHelper.getInstance().close();
     }
@@ -40,7 +40,33 @@ public class FoodItemDBAdapter implements TableConstants {
         CommonDBHelper.getInstance().open();
         FoodItemModel foodItemModel;
         ArrayList<FoodItemModel> foodItemModels = new ArrayList<>();
-        String query = "SELECT * FROM " + FOOD_ITEM_TABLE + " WHERE " + ITEM_CATEGORY_ID + " ='" + category_id + "'" + " AND " + ITEM_TYPE + " ='" + item_type + "'" + " OR " + ITEM_TYPE + " = 3";
+        String query = "SELECT * FROM " + FOOD_ITEM_TABLE + " WHERE " + ITEM_CATEGORY_ID + " ='" + category_id + "'" + " AND " + ITEM_TYPE + " ='" + item_type + "'";
+        Cursor cursor = CommonDBHelper.getInstance().getDb().rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                foodItemModel = new FoodItemModel();
+                foodItemModel.ItemId = cursor.getString(1);
+                foodItemModel.ItemName = cursor.getString(2);
+                foodItemModel.ItemCost = cursor.getString(3);
+                foodItemModel.ItemCount = cursor.getString(4);
+                foodItemModel.TotalCost = cursor.getString(8);
+                foodItemModel.ItemTotalCost = cursor.getString(10);
+                foodItemModel.ItemVendorName = cursor.getString(13);
+                foodItemModels.add(foodItemModel);
+
+            } while (cursor.moveToNext());
+        }
+        CommonDBHelper.getInstance().close();
+        return foodItemModels;
+    }
+
+
+    //get food items with respect to category id
+    public ArrayList<FoodItemModel> getWeirdFoodItems(String category_id) {
+        CommonDBHelper.getInstance().open();
+        FoodItemModel foodItemModel;
+        ArrayList<FoodItemModel> foodItemModels = new ArrayList<>();
+        String query = "SELECT * FROM " + FOOD_ITEM_TABLE + " WHERE " + ITEM_CATEGORY_ID + " ='" + category_id + "'" + " AND " + ITEM_TYPE + " = 3";
         Cursor cursor = CommonDBHelper.getInstance().getDb().rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
@@ -258,6 +284,7 @@ public class FoodItemDBAdapter implements TableConstants {
                 foodItemModel.ItemDiscount = cursor.getString(11);
                 foodItemModel.ItemServiceTax = cursor.getString(12);
                 foodItemModel.ItemVendorName = cursor.getString(13);
+                foodItemModel.ItemPackageCharge = cursor.getString(14);
             } while (cursor.moveToNext());
         }
         CommonDBHelper.getInstance().close();
@@ -283,6 +310,7 @@ public class FoodItemDBAdapter implements TableConstants {
                 foodItemModel.ItemDiscount = cursor.getString(11);
                 foodItemModel.ItemServiceTax = cursor.getString(12);
                 foodItemModel.ItemVendorName = cursor.getString(13);
+                foodItemModel.ItemPackageCharge = cursor.getString(14);
                 foodItemModels.add(foodItemModel);
 
             } while (cursor.moveToNext());

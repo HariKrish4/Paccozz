@@ -638,7 +638,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             String succcess = jsonObject.getString("success");
                             if (succcess.equalsIgnoreCase(String.valueOf(1))) {
-                               // Singleton.getInstance().UserId = jsonObject.getString("uid");
+                                Singleton.getInstance().UserId = jsonObject.getString("uid");
                                 String code = jsonObject.getString("ucode");
                                 Singleton.getInstance().ParkId = jsonObject.getString("uparkid");
                                 Singleton.getInstance().ParkName = jsonObject.getString("uparkname");
