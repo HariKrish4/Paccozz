@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.panamon.paccozz.R;
 import com.panamon.paccozz.common.Constants;
 import com.panamon.paccozz.common.SharedPref;
@@ -70,7 +71,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void getOtp() {
         progressBar.setVisibility(View.VISIBLE);
-
+        final String token = FirebaseInstanceId.getInstance().getToken();
+        Log.e("token",token);
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = Constants.OTP_URL;
@@ -108,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("usermobile", editText_phonenumber.getText().toString());
-                params.put("deviceid", "0");
+                params.put("deviceid", token);
                 params.put("devicetype","2");
                 return params;
             }
