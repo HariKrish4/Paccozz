@@ -20,11 +20,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.panamon.paccozz.R;
-import com.panamon.paccozz.adapter.HotelListAdapter;
 import com.panamon.paccozz.adapter.OrderAdapter;
 import com.panamon.paccozz.common.Constants;
 import com.panamon.paccozz.common.Singleton;
-import com.panamon.paccozz.model.HotelListModel;
 import com.panamon.paccozz.model.OrderHistoryModel;
 
 import org.json.JSONArray;
@@ -96,6 +94,26 @@ public class OrderActivity extends AppCompatActivity {
                                     orderHistoryModel.TotalCost = dataObject.getString("totcost");
                                     orderHistoryModel.OrderStatus = dataObject.getString("status");
                                     orderHistoryModel.OrderTime = dataObject.getString("pushtime");
+                                    orderHistoryModel.orderCode = dataObject.getString("ocode");
+                                    orderHistoryModel.item = dataObject.getString("item");
+                                    orderHistoryModel.username = dataObject.getString("username");
+                                    orderHistoryModel.totitem = dataObject.getString("totitem");
+                                    orderHistoryModel.itemsrate = dataObject.getString("itemsrate");
+                                    orderHistoryModel.itemcnt = dataObject.getString("itemcnt");
+                                    orderHistoryModel.itemcost = dataObject.getString("itemcost");
+                                    orderHistoryModel.paystatus = dataObject.getString("paystatus");
+                                    orderHistoryModel.packtype = dataObject.getString("packtype");
+                                    orderHistoryModel.randnum = dataObject.getString("randnum");
+                                    orderHistoryModel.orgamount = dataObject.getString("orgamount");
+                                    orderHistoryModel.service = dataObject.getString("service");
+                                    orderHistoryModel.discount = dataObject.getString("discount");
+                                    orderHistoryModel.odate = dataObject.getString("odate");
+                                    orderHistoryModel.otime = dataObject.getString("otime");
+                                    orderHistoryModel.acctime = dataObject.getString("acctime");
+                                    orderHistoryModel.deltime = dataObject.getString("deltime");
+                                    orderHistoryModel.ostatus = dataObject.getString("ostatus");
+                                    orderHistoryModel.reason = dataObject.getString("reason");
+
                                     orderHistoryModels.add(orderHistoryModel);
                                 }
                                 OrderAdapter orderAdapter = new OrderAdapter(OrderActivity.this, orderHistoryModels);
@@ -114,7 +132,8 @@ public class OrderActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(OrderActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+               // Toast.makeText(OrderActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(OrderActivity.this, "Internet connection is slow.Please check internet.", Toast.LENGTH_LONG).show();
             }
         }) {
             @Override

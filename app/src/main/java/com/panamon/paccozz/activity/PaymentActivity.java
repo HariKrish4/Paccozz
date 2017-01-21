@@ -211,9 +211,9 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
                 params.put("venid", foodItemModels.get(0).ItemVendorId);
                 params.put("count", item_count);
                 params.put("cost", item_cost);
-                params.put("totcost", totcost + "");
+                params.put("totcost", orgAmount + "");
                 params.put("addons", addOn_id);
-                params.put("orgamount",  orgAmount + "");
+                params.put("orgamount",  (int)totcost + "");
                 params.put("servicetax", taxCost + "");
                 params.put("discount", discountCost + "");
                 if (!wallet) {

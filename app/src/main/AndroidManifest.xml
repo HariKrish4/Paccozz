@@ -65,6 +65,10 @@
                 android:value="com.panamon.paccozz.activity.MainActivity" />
         </activity>
         <activity
+            android:name=".activity.OrderDetailsActivity"
+            android:parentActivityName=".activity.OrderActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".activity.FavoritesActivity"
             android:label="@string/title_activity_favorites"
             android:parentActivityName=".activity.MainActivity"

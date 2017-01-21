@@ -16,16 +16,6 @@
         android:text="Veggies"
         android:textSize="@dimen/text_18" />
 
-    <ImageView
-        android:id="@+id/expandImg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/ten"
-        android:paddingBottom="@dimen/ten"
-        android:paddingTop="@dimen/ten"
-        android:src="@drawable/select_parl_list_small" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/addonSubItem_lists"
         android:layout_width="match_parent"
@@ -34,5 +24,17 @@
         android:layout_marginTop="@dimen/five"
         android:scrollbars="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v7.widget.RecyclerView>
+
+    <ImageView
+        android:id="@+id/expandImg"
+        android:layout_width="@dimen/twentyfive"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/ten"
+        android:paddingRight="@dimen/five"
+        android:paddingTop="@dimen/ten"
+        android:src="@drawable/down"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

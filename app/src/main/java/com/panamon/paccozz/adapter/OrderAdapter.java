@@ -1,6 +1,8 @@
 package com.panamon.paccozz.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.panamon.paccozz.R;
+import com.panamon.paccozz.activity.OrderDetailsActivity;
 import com.panamon.paccozz.model.OrderHistoryModel;
 
 import java.util.List;
@@ -46,6 +49,19 @@ public class OrderAdapter extends RecyclerView.Adapter {
         viewholder.ViewDetailsTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent orderDetailsIntent=new Intent(context, OrderDetailsActivity.class);
+                orderDetailsIntent.putExtra("name",orderHistoryModel.VendorName);
+                orderDetailsIntent.putExtra("price",orderHistoryModel.itemsrate);
+                orderDetailsIntent.putExtra("orderid",orderHistoryModel.OrderId);
+                orderDetailsIntent.putExtra("ordercode",orderHistoryModel.orderCode);
+                orderDetailsIntent.putExtra("pushtime",orderHistoryModel.OrderTime);
+                orderDetailsIntent.putExtra("status",orderHistoryModel.OrderStatus);
+                orderDetailsIntent.putExtra("discount",orderHistoryModel.discount);
+                orderDetailsIntent.putExtra("packagemode",orderHistoryModel.packtype);
+                orderDetailsIntent.putExtra("totcost",orderHistoryModel.TotalCost);
+                orderDetailsIntent.putExtra("item",orderHistoryModel.item);
+                orderDetailsIntent.putExtra("itemcount",orderHistoryModel.itemcnt);
+                context.startActivity(orderDetailsIntent);
 
             }
         });
@@ -59,6 +75,7 @@ public class OrderAdapter extends RecyclerView.Adapter {
     private class MyViewHolder extends RecyclerView.ViewHolder {
 
         public TextView VendorNameTxt, TotalCostTxt, DateTimeTxt, ViewDetailsTxt, StatusTxt;
+        public CardView cardView;
 
 
         public MyViewHolder(View itemView) {
@@ -68,6 +85,7 @@ public class OrderAdapter extends RecyclerView.Adapter {
             DateTimeTxt = (TextView) itemView.findViewById(R.id.dateTxt);
             ViewDetailsTxt = (TextView) itemView.findViewById(R.id.detailsTxt);
             StatusTxt = (TextView) itemView.findViewById(R.id.statusTxt);
+            cardView=(CardView)itemView.findViewById(R.id.cardView);
         }
     }
 }

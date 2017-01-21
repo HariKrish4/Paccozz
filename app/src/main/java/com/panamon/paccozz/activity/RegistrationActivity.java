@@ -9,13 +9,13 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -69,6 +69,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -178,10 +180,10 @@ public class RegistrationActivity extends AppCompatActivity {
                     if (editText_name.getText().length() > 0 && editText_age.getText().length() > 0 && editText_emailid.getText().length() > 0 &&
                             editText_mobile.getText().length() > 0) {
                         if (!placeId.equals("0") && placeId != null && !placeId.equalsIgnoreCase("null")) {
-                            if(editText_mobile.getText().toString().length()==10) {
+                            if(editText_mobile.getText().toString().length()==10&&emailValidator(editText_emailid.getText().toString())) {
                                 new UpdateUser().execute();
                             }else{
-                                Snackbar.make(view, "Invalid Phone Number", Snackbar.LENGTH_LONG)
+                                Snackbar.make(view, "Invalid Phone Number or email", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
                             }
                         } else {
@@ -196,10 +198,10 @@ public class RegistrationActivity extends AppCompatActivity {
                     if (editText_name.getText().length() > 0 && editText_age.getText().length() > 0 && editText_emailid.getText().length() > 0 &&
                             editText_mobile.getText().length() > 0 && editText_password.getText().length() > 0) {
                         if (!placeId.equals("0") && placeId != null && !placeId.equalsIgnoreCase("null")) {
-                            if(editText_mobile.getText().toString().length()==10) {
+                            if(editText_mobile.getText().toString().length()==10&&emailValidator(editText_emailid.getText().toString())) {
                                 new RegisterUser().execute();
                             }else{
-                                Snackbar.make(view, "Invalid Phone Number", Snackbar.LENGTH_LONG)
+                                Snackbar.make(view, "Invalid Phone Number or email", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
                             }
                         } else {
@@ -227,6 +229,16 @@ public class RegistrationActivity extends AppCompatActivity {
             }
             Picasso.with(this).load(Singleton.getInstance().ProfileImage).placeholder(R.drawable.image_placeholder).into(imageView_register);
         }
+    }
+
+    public boolean emailValidator(String email)
+    {
+        Pattern pattern;
+        Matcher matcher;
+        final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        pattern = Pattern.compile(EMAIL_PATTERN);
+        matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 
     @Override
