@@ -35,7 +35,7 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
 
     private Activity context;
     private List<FoodItemModel> foodItemModels;
-    private int itemCount = 0, itemCost = 0;
+    private int itemCount = 0, itemCost = 0,itemPackageCost = 0;;
     private FoodItemDBAdapter foodItemDBAdapter;
     private FoodItemChanged foodItemCountChange;
     private boolean plus;
@@ -74,6 +74,7 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
                     String itemId = clikedFoodItemModel.ItemId;
                     itemCount = Integer.parseInt(foodItemDBAdapter.getItemCount(itemId));
                     itemCost = Integer.parseInt(foodItemDBAdapter.getItemTotalCost(itemId));
+                    itemPackageCost = Integer.parseInt(clikedFoodItemModel.ItemPackageCharge);
                     itemCount++;
                     plus = true;
                     calculateTotalCost(myViewHolder, clikedFoodItemModel);
@@ -91,6 +92,7 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
                 String itemId = clikedFoodItemModel.ItemId;
                 itemCount = Integer.parseInt(foodItemDBAdapter.getItemCount(itemId));
                 itemCost = Integer.parseInt(foodItemDBAdapter.getItemTotalCost(itemId));
+                itemPackageCost = Integer.parseInt(clikedFoodItemModel.ItemPackageCharge);
                 itemCount--;
                 plus = false;
                 if (itemCount >= 0) {
@@ -136,8 +138,10 @@ public class FoodItemAdapter extends RecyclerView.Adapter {
     private void calculateTotalCost(MyViewHolder myViewHolder, FoodItemModel clikedFoodItemModel) {
         myViewHolder.ItemCount.setText(itemCount + "");
         int totalCost = itemCost * itemCount;
+        int packageCost = itemPackageCost * itemCount;
         foodItemDBAdapter.updateItemCount(itemCount + "", clikedFoodItemModel.ItemId);
         foodItemDBAdapter.updateTotalCost(totalCost + "", clikedFoodItemModel.ItemId);
+        foodItemDBAdapter.updatePackageCharge(packageCost+"",clikedFoodItemModel.ItemId);
         foodItemCountChange.onFoodItemCountChanged(clikedFoodItemModel.ItemId, itemCost, itemCount, plus);
     }
 

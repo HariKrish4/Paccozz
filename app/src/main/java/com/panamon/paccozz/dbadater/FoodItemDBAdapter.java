@@ -104,6 +104,7 @@ public class FoodItemDBAdapter implements TableConstants {
                 foodItemModel.TotalCost = cursor.getString(8);
                 foodItemModel.ItemTotalCost = cursor.getString(10);
                 foodItemModel.ItemVendorName = cursor.getString(13);
+                foodItemModel.ItemPackageCharge = cursor.getString(14);
                 foodItemModels.add(foodItemModel);
 
             } while (cursor.moveToNext());
@@ -174,6 +175,16 @@ public class FoodItemDBAdapter implements TableConstants {
         CommonDBHelper.getInstance().open();
         ContentValues values = new ContentValues();
         values.put(TOTAL_COST, totalCost);
+        CommonDBHelper.getInstance().getDb().update(FOOD_ITEM_TABLE, values, ITEM_ID + " = ?",
+                new String[]{String.valueOf(itemId)});
+        CommonDBHelper.getInstance().close();
+    }
+
+    //updating totalcost
+    public void updatePackageCharge(String packageCost, String itemId) {
+        CommonDBHelper.getInstance().open();
+        ContentValues values = new ContentValues();
+        values.put(ITEM_PACKAGE_CHARGE, packageCost);
         CommonDBHelper.getInstance().getDb().update(FOOD_ITEM_TABLE, values, ITEM_ID + " = ?",
                 new String[]{String.valueOf(itemId)});
         CommonDBHelper.getInstance().close();

@@ -29,7 +29,7 @@ import java.util.List;
 public class SelectedFoodItemAdapter extends RecyclerView.Adapter {
 
     private Context context;
-    private int itemCount = 0, itemCost = 0;
+    private int itemCount = 0, itemCost = 0,itemPackageCost = 0;
     private FoodItemChanged foodItemCountChange;
     private FoodItemDBAdapter foodItemDBAdapter;
     private List<FoodItemModel> foodItemModels;
@@ -72,6 +72,7 @@ public class SelectedFoodItemAdapter extends RecyclerView.Adapter {
                 String itemId = clikedFoodItemModel.ItemId;
                 itemCount = Integer.parseInt(foodItemDBAdapter.getItemCount(itemId));
                 itemCost = Integer.parseInt(foodItemDBAdapter.getItemTotalCost(itemId));
+                itemPackageCost = Integer.parseInt(clikedFoodItemModel.ItemPackageCharge);
                 itemCount++;
                 calculateTotalCost(myViewHolder, clikedFoodItemModel);
             }
@@ -85,6 +86,7 @@ public class SelectedFoodItemAdapter extends RecyclerView.Adapter {
                 String itemId = clikedFoodItemModel.ItemId;
                 itemCount = Integer.parseInt(foodItemDBAdapter.getItemCount(itemId));
                 itemCost = Integer.parseInt(foodItemDBAdapter.getItemTotalCost(itemId));
+                itemPackageCost = Integer.parseInt(clikedFoodItemModel.ItemPackageCharge);
                 itemCount--;
                 if (itemCount >= 0) {
                     calculateTotalCost(myViewHolder, clikedFoodItemModel);
@@ -130,8 +132,10 @@ public class SelectedFoodItemAdapter extends RecyclerView.Adapter {
     private void calculateTotalCost(MyViewHolder myViewHolder, FoodItemModel clikedFoodItemModel) {
         myViewHolder.ItemCount.setText(itemCount + "");
         int totalCost = itemCost * itemCount;
+        int packageCost = itemPackageCost * itemCount;
         foodItemDBAdapter.updateItemCount(itemCount + "", clikedFoodItemModel.ItemId);
         foodItemDBAdapter.updateTotalCost(totalCost + "", clikedFoodItemModel.ItemId);
+        foodItemDBAdapter.updatePackageCharge(packageCost+"",clikedFoodItemModel.ItemId);
         foodItemCountChange.onFoodItemCountChanged();
     }
 

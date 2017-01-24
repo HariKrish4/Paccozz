@@ -428,6 +428,7 @@ public class MainActivity extends AppCompatActivity
                             startActivity(intent);
                             finish();
                             sharedPref.setIsLogged(false);
+                            CommonDBHelper.getInstance().truncateAllTables();
                             //Hotline.clearUserData(getApplicationContext());
                         }
                     })
