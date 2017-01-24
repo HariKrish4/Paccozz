@@ -339,6 +339,26 @@ public class FoodItemDBAdapter implements TableConstants {
         return totalCost;
     }
 
+    //getting sum of total package charge
+    public String getTotalPackageCharge() {
+        String totalCost = "0.00";
+        CommonDBHelper.getInstance().open();
+        Cursor sumCursor = null;
+        try {
+            sumCursor = CommonDBHelper.getInstance().getDb().rawQuery(" SELECT SUM " + "(" + ITEM_PACKAGE_CHARGE + ")" + " FROM " + FOOD_ITEM_TABLE + " WHERE " + IS_ITEM_SELECTED + " = '" + 1 + "'", null);
+            if (sumCursor != null && sumCursor.getCount() > 0 && sumCursor.moveToFirst()) {
+                totalCost = String.format("%.2f", sumCursor.getDouble(0));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (!sumCursor.isClosed())
+                sumCursor.close();
+        }
+        CommonDBHelper.getInstance().close();
+        return totalCost;
+    }
+
     //getting sum of totalcost
     public String getTotalItems() {
         String totalItems = "0";

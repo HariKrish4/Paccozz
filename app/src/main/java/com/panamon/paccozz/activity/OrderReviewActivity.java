@@ -49,7 +49,7 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
     private TextView textView_itemTotal, textView_wallet, textView_item, textView_proceed, textView_discount, textView_taxprice, textView_totalprice, textView_vendor_name,textView_packageCharge;
     private EditText editText_applycoupon;
     private TextView textView_apply;
-    private int discount = 10, tax = 12,packageInt = 0;
+    private int discount = 10, tax = 12;
     private FoodItemDBAdapter foodItemDBAdapter;
     private ImageView arrow;
     private double totalCost = 0.00;
@@ -127,7 +127,6 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         if (foodItemModels.size() > 0) {
             textView_vendor_name.setText(foodItemModels.get(0).ItemVendorName);
             discount = Integer.parseInt(foodItemModels.get(0).ItemDiscount);
-            packageInt = Integer.parseInt(foodItemModels.get(0).ItemPackageCharge);
             tax = Integer.parseInt(foodItemModels.get(0).ItemServiceTax);
             SelectedFoodItemAdapter foodItemAdapter = new SelectedFoodItemAdapter(this, foodItemModels, this);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -140,7 +139,7 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
     private void calculateTotalCost() {
         double totalItems = Double.parseDouble(foodItemDBAdapter.getTotalItems());
         totalCost = Double.parseDouble(foodItemDBAdapter.getTotalCost());
-        packageCost = (double)packageInt;
+        packageCost = Double.parseDouble(foodItemDBAdapter.getTotalPackageCharge());;
         orgAmount = (int) totalCost;
         textView_itemTotal.setText("₹ " + totalCost);
         int totalInt = (int) totalItems;
@@ -151,9 +150,9 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         textView_packageCharge.setText("₹ " + String.format("%.2f", packageCost));
         totalCost = totalCost + taxCost;
         totalCost = totalCost - discountCost;
-        if(packType.equalsIgnoreCase("2")){
+       /* if(packType.equalsIgnoreCase("2")){
             totalCost = totalCost + packageCost;
-        }
+        }*/
         totalCost = totalCost +1;
         textView_item.setText(totalInt + "");
         textView_totalprice.setText("₹ " + (int) totalCost);
@@ -235,16 +234,22 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
                 onBackPressed();
                 break;
             case R.id.dineinll:
+                if(packType.equalsIgnoreCase("2")){
+                    totalCost = totalCost - packageCost;
+                }
                 packType = "1";
                 dineInll.setAlpha(1);
                 takeAwayll.setAlpha(0.5f);
                 packagell.setVisibility(View.GONE);
+                textView_totalprice.setText("₹ " + (int) totalCost);
                 break;
             case R.id.takeawayll:
                 packType = "2";
                 dineInll.setAlpha(0.5f);
                 takeAwayll.setAlpha(1);
                 packagell.setVisibility(View.VISIBLE);
+                totalCost = totalCost + packageCost;
+                textView_totalprice.setText("₹ " + (int) totalCost);
                 break;
         }
     }
