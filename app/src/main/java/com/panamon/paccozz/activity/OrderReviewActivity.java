@@ -63,6 +63,7 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
     private String packType = "1";
     private double taxCost,discountCost,packageCost;
     private int orgAmount;
+    private LinearLayout walletll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +98,7 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         dineInll = (LinearLayout) findViewById(R.id.dineinll);
         takeAwayll = (LinearLayout) findViewById(R.id.takeawayll);
         packagell = (LinearLayout) findViewById(R.id.package_ll);
+        walletll = (LinearLayout) findViewById(R.id.wallet_ll);
         arrow = (ImageView) findViewById(R.id.arrow);
         textView_proceed.setOnClickListener(this);
         textView_apply.setOnClickListener(this);
@@ -119,7 +121,6 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         doneTxt = (TextView) findViewById(R.id.doneTxt);
         itemPriceTxt = (TextView) findViewById(R.id.main_price);
 
-        textView_wallet.setText("₹" + Singleton.getInstance().WalletAmount);
     }
 
     private void showFoodItems() {
@@ -150,12 +151,33 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         textView_packageCharge.setText("₹ " + String.format("%.2f", packageCost));
         totalCost = totalCost + taxCost;
         totalCost = totalCost - discountCost;
-       /* if(packType.equalsIgnoreCase("2")){
-            totalCost = totalCost + packageCost;
-        }*/
         totalCost = totalCost +1;
+        if(packType.equalsIgnoreCase("2")){
+            totalCost = totalCost + packageCost;
+        }
         textView_item.setText(totalInt + "");
         textView_totalprice.setText("₹ " + (int) totalCost);
+        calculateWalletAmount();
+    }
+
+    private void calculateWalletAmount() {
+        try {
+            double walletAmount = Double.parseDouble(Singleton.getInstance().WalletAmount);
+            if (walletAmount >= totalCost) {
+                textView_wallet.setText("₹ " + (int)totalCost);
+                textView_totalprice.setText("₹ 0");
+            }
+            else if(walletAmount == 0) {
+                walletll.setVisibility(View.GONE);
+            } else if(walletAmount <= totalCost){
+                double totcost = totalCost - walletAmount;
+                textView_wallet.setText("₹ " + (int)walletAmount);
+                textView_totalprice.setText("₹ " + (int)totcost);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            textView_wallet.setText("₹ " + Singleton.getInstance().WalletAmount);
+        }
     }
 
     @Override
@@ -236,20 +258,22 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
             case R.id.dineinll:
                 if(packType.equalsIgnoreCase("2")){
                     totalCost = totalCost - packageCost;
+                    calculateWalletAmount();
                 }
                 packType = "1";
                 dineInll.setAlpha(1);
                 takeAwayll.setAlpha(0.5f);
                 packagell.setVisibility(View.GONE);
-                textView_totalprice.setText("₹ " + (int) totalCost);
                 break;
             case R.id.takeawayll:
+                if(packType.equalsIgnoreCase("1")){
+                    totalCost = totalCost + packageCost;
+                    calculateWalletAmount();
+                }
                 packType = "2";
                 dineInll.setAlpha(0.5f);
                 takeAwayll.setAlpha(1);
                 packagell.setVisibility(View.VISIBLE);
-                totalCost = totalCost + packageCost;
-                textView_totalprice.setText("₹ " + (int) totalCost);
                 break;
         }
     }

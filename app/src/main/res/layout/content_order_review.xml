@@ -185,7 +185,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.5"
-                            android:text="Total Item"
+                            android:text="No of items"
                             android:textSize="@dimen/text_16" />
 
                         <TextView
@@ -214,7 +214,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.5"
-                            android:text="Package Charge"
+                            android:text="Packaging cost"
                             android:textSize="@dimen/text_16" />
 
                         <TextView
@@ -241,7 +241,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.5"
-                            android:text="Total Item Cost"
+                            android:text="Item Cost"
                             android:textSize="@dimen/text_16" />
 
                         <TextView
@@ -268,8 +268,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.5"
-                            android:text="Total Discount"
-                            android:textColor="@android:color/holo_green_light"
+                            android:text="Discount"
                             android:textSize="@dimen/text_16" />
 
                         <TextView
@@ -278,34 +277,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight=".5"
                             android:text="0%"
-                            android:textColor="@android:color/holo_green_light"
-                            android:textSize="@dimen/text_16" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/ten"
-                        android:layout_marginRight="@dimen/ten"
-                        android:layout_marginTop="@dimen/ten"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <TextView
-                            android:id="@+id/wallet_lable_txt"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1.5"
-                            android:text="Wallet Amount"
-                            android:textSize="@dimen/text_16" />
-
-                        <TextView
-                            android:id="@+id/wallet_txt"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".5"
-                            android:text="0"
                             android:textSize="@dimen/text_16" />
 
                     </LinearLayout>
@@ -337,6 +308,34 @@
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/wallet_ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/ten"
+                        android:layout_marginRight="@dimen/ten"
+                        android:layout_marginTop="@dimen/ten"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/wallet_lable_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.5"
+                            android:text="Wallet deduction"
+                            android:textSize="@dimen/text_16" />
+
+                        <TextView
+                            android:id="@+id/wallet_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:text="0"
+                            android:textSize="@dimen/text_16" />
+
+                    </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
@@ -357,7 +356,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.5"
-                            android:text="Grand Total"
+                            android:text="Amount payable"
                             android:textSize="@dimen/text_16" />
 
                         <TextView
