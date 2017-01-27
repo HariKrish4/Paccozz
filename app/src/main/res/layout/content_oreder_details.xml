@@ -141,11 +141,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray"/>
+               <com.panamon.paccozz.common.ExpandableHeightListView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/exlv"
+                   android:layout_margin="10dp"
+                   android:divider="@null"
+                   android:dividerHeight="0dp"></com.panamon.paccozz.common.ExpandableHeightListView>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_margin="10dp">
+                    android:layout_margin="10dp"
+                    android:visibility="gone">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -198,13 +206,13 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:visibility="gone">
+                    android:layout_marginRight="10dp">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.4"
                         android:text="Item Total"
+
                         android:padding="5dp"
                         android:textColor="#000"/>
                     <TextView
@@ -212,6 +220,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="123"
+
                         android:padding="5dp"
                         android:gravity="right"
                         android:textColor="#000"
@@ -227,14 +236,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.4"
-                        android:text="Vat"
+                        android:text="VAT"
                         android:padding="5dp"
                         android:textColor="#000"/>
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="0.5%"
+                        android:text="123"
                         android:padding="5dp"
                         android:gravity="right"
                         android:textColor="#000"

@@ -42,11 +42,11 @@ public class OrderAdapter extends RecyclerView.Adapter {
         MyViewHolder viewholder = (MyViewHolder) holder;
 
         viewholder.VendorNameTxt.setText(orderHistoryModel.VendorName);
-        viewholder.TotalCostTxt.setText("₹ "+orderHistoryModel.TotalCost);
+        viewholder.TotalCostTxt.setText("₹ "+orderHistoryModel.orgamount);
         viewholder.DateTimeTxt.setText(orderHistoryModel.OrderTime);
         viewholder.StatusTxt.setText(orderHistoryModel.OrderStatus);
 
-        viewholder.ViewDetailsTxt.setOnClickListener(new View.OnClickListener() {
+        viewholder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent orderDetailsIntent=new Intent(context, OrderDetailsActivity.class);
@@ -61,6 +61,9 @@ public class OrderAdapter extends RecyclerView.Adapter {
                 orderDetailsIntent.putExtra("totcost",orderHistoryModel.TotalCost);
                 orderDetailsIntent.putExtra("item",orderHistoryModel.item);
                 orderDetailsIntent.putExtra("itemcount",orderHistoryModel.itemcnt);
+                orderDetailsIntent.putExtra("service",orderHistoryModel.service);
+                orderDetailsIntent.putExtra("pay",orderHistoryModel.orgamount);
+                orderDetailsIntent.putExtra("itemrate",orderHistoryModel.itemsrate);
                 context.startActivity(orderDetailsIntent);
 
             }

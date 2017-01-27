@@ -151,7 +151,9 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         textView_packageCharge.setText("₹ " + String.format("%.2f", packageCost));
         totalCost = totalCost + taxCost;
         totalCost = totalCost - discountCost;
-        totalCost = totalCost +1;
+        if(totalCost>0) {
+            totalCost = totalCost + 1;
+        }
         if(packType.equalsIgnoreCase("2")){
             totalCost = totalCost + packageCost;
         }
