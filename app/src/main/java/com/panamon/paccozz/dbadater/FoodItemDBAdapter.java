@@ -105,6 +105,7 @@ public class FoodItemDBAdapter implements TableConstants {
                 foodItemModel.ItemTotalCost = cursor.getString(10);
                 foodItemModel.ItemVendorName = cursor.getString(13);
                 foodItemModel.ItemPackageCharge = cursor.getString(14);
+                foodItemModel.ItemTotalPackageCharge = cursor.getString(15);
                 foodItemModels.add(foodItemModel);
 
             } while (cursor.moveToNext());
@@ -184,7 +185,7 @@ public class FoodItemDBAdapter implements TableConstants {
     public void updatePackageCharge(String packageCost, String itemId) {
         CommonDBHelper.getInstance().open();
         ContentValues values = new ContentValues();
-        values.put(ITEM_PACKAGE_CHARGE, packageCost);
+        values.put(ITEM_TOTAL_PACKAGE_CHARGE, packageCost);
         CommonDBHelper.getInstance().getDb().update(FOOD_ITEM_TABLE, values, ITEM_ID + " = ?",
                 new String[]{String.valueOf(itemId)});
         CommonDBHelper.getInstance().close();
@@ -296,6 +297,7 @@ public class FoodItemDBAdapter implements TableConstants {
                 foodItemModel.ItemServiceTax = cursor.getString(12);
                 foodItemModel.ItemVendorName = cursor.getString(13);
                 foodItemModel.ItemPackageCharge = cursor.getString(14);
+                foodItemModel.ItemTotalPackageCharge = cursor.getString(15);
             } while (cursor.moveToNext());
         }
         CommonDBHelper.getInstance().close();
@@ -322,6 +324,7 @@ public class FoodItemDBAdapter implements TableConstants {
                 foodItemModel.ItemServiceTax = cursor.getString(12);
                 foodItemModel.ItemVendorName = cursor.getString(13);
                 foodItemModel.ItemPackageCharge = cursor.getString(14);
+                foodItemModel.ItemTotalPackageCharge = cursor.getString(15);
                 foodItemModels.add(foodItemModel);
 
             } while (cursor.moveToNext());
@@ -356,7 +359,7 @@ public class FoodItemDBAdapter implements TableConstants {
         CommonDBHelper.getInstance().open();
         Cursor sumCursor = null;
         try {
-            sumCursor = CommonDBHelper.getInstance().getDb().rawQuery(" SELECT SUM " + "(" + ITEM_PACKAGE_CHARGE + ")" + " FROM " + FOOD_ITEM_TABLE + " WHERE " + IS_ITEM_SELECTED + " = '" + 1 + "'", null);
+            sumCursor = CommonDBHelper.getInstance().getDb().rawQuery(" SELECT SUM " + "(" + ITEM_TOTAL_PACKAGE_CHARGE + ")" + " FROM " + FOOD_ITEM_TABLE + " WHERE " + IS_ITEM_SELECTED + " = '" + 1 + "'", null);
             if (sumCursor != null && sumCursor.getCount() > 0 && sumCursor.moveToFirst()) {
                 totalCost = String.format("%.2f", sumCursor.getDouble(0));
             }

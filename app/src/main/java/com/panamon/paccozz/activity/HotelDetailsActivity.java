@@ -243,6 +243,7 @@ public class HotelDetailsActivity extends AppCompatActivity {
                                     foodItemModel.ItemDiscount = vendorObject.getString("discount");
                                     foodItemModel.ItemServiceTax = vendorObject.getString("servicetax");
                                     foodItemModel.ItemPackageCharge = itemObject1.getString("itempack");
+                                    foodItemModel.ItemTotalPackageCharge = itemObject1.getString("itempack");
                                     foodItemModels.add(foodItemModel);
                                     //foodItemDBAdapter.insertFoodItem(foodItemModel);
                                 }

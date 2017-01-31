@@ -88,6 +88,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
             }
         } catch (Exception e) {
             e.printStackTrace();
+            walletAmount = 0;
             startPayment();
         }
     }

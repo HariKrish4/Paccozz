@@ -199,6 +199,33 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/ten"
+                        android:layout_marginRight="@dimen/ten"
+                        android:layout_marginTop="@dimen/ten"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/item_total_lable_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.5"
+                            android:text="Item Cost"
+                            android:textSize="@dimen/text_16" />
+
+                        <TextView
+                            android:id="@+id/item_total_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:text="0"
+                            android:textSize="@dimen/text_16" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/package_ll"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -237,19 +264,19 @@
                         android:weightSum="2">
 
                         <TextView
-                            android:id="@+id/item_total_lable_txt"
+                            android:id="@+id/tax_lable_txt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.5"
-                            android:text="Item Cost"
+                            android:text="VAT"
                             android:textSize="@dimen/text_16" />
 
                         <TextView
-                            android:id="@+id/item_total_txt"
+                            android:id="@+id/tax_txt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".5"
-                            android:text="0"
+                            android:text="0%"
                             android:textSize="@dimen/text_16" />
 
                     </LinearLayout>
@@ -273,33 +300,6 @@
 
                         <TextView
                             android:id="@+id/discount_txt"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".5"
-                            android:text="0%"
-                            android:textSize="@dimen/text_16" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/ten"
-                        android:layout_marginRight="@dimen/ten"
-                        android:layout_marginTop="@dimen/ten"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <TextView
-                            android:id="@+id/tax_lable_txt"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1.5"
-                            android:text="VAT"
-                            android:textSize="@dimen/text_16" />
-
-                        <TextView
-                            android:id="@+id/tax_txt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".5"

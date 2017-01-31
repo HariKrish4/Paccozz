@@ -146,7 +146,7 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         int totalInt = (int) totalItems;
         discountCost = (discount * totalCost / 100);
         taxCost = (tax * totalCost / 100);
-        textView_discount.setText("₹ " + String.format("%.2f", discountCost));
+        textView_discount.setText("- ₹ " + String.format("%.2f", discountCost));
         textView_taxprice.setText("₹ " + String.format("%.2f", taxCost));
         textView_packageCharge.setText("₹ " + String.format("%.2f", packageCost));
         totalCost = totalCost + taxCost;
@@ -166,19 +166,20 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         try {
             double walletAmount = Double.parseDouble(Singleton.getInstance().WalletAmount);
             if (walletAmount >= totalCost) {
-                textView_wallet.setText("₹ " + (int)totalCost);
+                textView_wallet.setText("- ₹ " + (int)totalCost);
                 textView_totalprice.setText("₹ 0");
             }
             else if(walletAmount == 0) {
                 walletll.setVisibility(View.GONE);
             } else if(walletAmount <= totalCost){
                 double totcost = totalCost - walletAmount;
-                textView_wallet.setText("₹ " + (int)walletAmount);
+                textView_wallet.setText("- ₹ " + (int)walletAmount);
                 textView_totalprice.setText("₹ " + (int)totcost);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            textView_wallet.setText("₹ " + Singleton.getInstance().WalletAmount);
+            walletll.setVisibility(View.GONE);
+            textView_wallet.setText("- ₹ " + Singleton.getInstance().WalletAmount);
         }
     }
 
