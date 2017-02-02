@@ -171,6 +171,7 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
             }
             else if(walletAmount == 0) {
                 walletll.setVisibility(View.GONE);
+                textView_totalprice.setText("₹ " + (int) totalCost);
             } else if(walletAmount <= totalCost){
                 double totcost = totalCost - walletAmount;
                 textView_wallet.setText("- ₹ " + (int)walletAmount);
@@ -180,6 +181,7 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
             e.printStackTrace();
             walletll.setVisibility(View.GONE);
             textView_wallet.setText("- ₹ " + Singleton.getInstance().WalletAmount);
+            textView_totalprice.setText("₹ " + (int) totalCost);
         }
     }
 
@@ -302,7 +304,8 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
                                 String cupid = jsonObject.getString("couponid");
                                 String message = jsonObject.getString("message");
                                 totalCost = grnd_total;
-                                textView_totalprice.setText(grnd_total + "");
+                                //textView_totalprice.setText(grnd_total + "");
+                                calculateWalletAmount();
                                 editText_applycoupon.setText("");
                                 editText_applycoupon.setFocusable(false);
                                 textView_apply.setEnabled(false);
