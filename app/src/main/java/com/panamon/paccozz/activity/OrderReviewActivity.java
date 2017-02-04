@@ -350,7 +350,7 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
     }
 
     @Override
-    public void onAddonSubItemClicked(String subItemCost, String addOnItemId, String cost, boolean isChecked) {
+    public void onAddonSubItemClicked(String subItemCost,int itemCount, String addOnItemId, String cost, boolean isChecked) {
         if (isChecked) {
             itemCost = itemCost + Double.parseDouble(subItemCost);
         } else {
@@ -358,7 +358,8 @@ public class OrderReviewActivity extends AppCompatActivity implements FoodItemCh
         }
         int itemCostInt = (int) itemCost;
         itemPriceTxt.setText("Item price : ₹" + itemCostInt);
-        foodItemDBAdapter.updateTotalCost(itemCostInt + "", addOnItemId);
+        int totalCost = itemCostInt*itemCount;
+        foodItemDBAdapter.updateTotalCost(totalCost + "", addOnItemId);
         foodItemDBAdapter.updateItemTotalCost(itemCostInt + "", addOnItemId);
     }
 }

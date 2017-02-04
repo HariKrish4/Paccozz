@@ -58,7 +58,7 @@ public class SelectedFoodItemAdapter extends RecyclerView.Adapter {
         final FoodItemModel foodItemModel = foodItemModels.get(position);
         myViewHolder.ItemCount.setText(foodItemModel.ItemCount);
         myViewHolder.ItemTitle.setText(foodItemModel.ItemName);
-        myViewHolder.ItemRate.setText(foodItemModel.TotalCost);
+        myViewHolder.ItemRate.setText(foodItemModel.ItemTotalCost);
         myViewHolder.TxtPlus.setTag(position);
         myViewHolder.TxtMinus.setTag(position);
         myViewHolder.TxtCustomization.setTag(position);

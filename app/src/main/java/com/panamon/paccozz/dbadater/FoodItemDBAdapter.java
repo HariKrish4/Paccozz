@@ -319,6 +319,7 @@ public class FoodItemDBAdapter implements TableConstants {
                 foodItemModel.ItemName = cursor.getString(2);
                 foodItemModel.ItemCost = cursor.getString(3);
                 foodItemModel.ItemCount = cursor.getString(4);
+                foodItemModel.ItemTotalCost = cursor.getString(10);
                 foodItemModel.TotalCost = cursor.getString(8);
                 foodItemModel.ItemDiscount = cursor.getString(11);
                 foodItemModel.ItemServiceTax = cursor.getString(12);

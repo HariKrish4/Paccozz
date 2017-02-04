@@ -247,4 +247,22 @@ public class AddOnDBAdapter implements TableConstants {
         CommonDBHelper.getInstance().close();
         return totalCost;
     }
+
+   /* //get itemcount
+    public String getItemCount(String itemCategoryId) {
+        CommonDBHelper.getInstance().open();
+        String query = "SELECT * FROM " + ADDON_SUBITEM_TABLE + " WHERE " + ITEM_CATEGORY_ID + " =" + itemCategoryId + "";
+        Cursor cursor = CommonDBHelper.getInstance().getDb().rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                String itemcount = cursor.getString(1);
+                CommonDBHelper.getInstance().close();
+                return itemcount;
+            } while (cursor.moveToNext());
+        } else {
+            CommonDBHelper.getInstance().close();
+            return "0";
+        }
+
+    }*/
 }

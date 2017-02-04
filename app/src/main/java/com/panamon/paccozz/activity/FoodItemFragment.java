@@ -244,7 +244,7 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
     }
 
     @Override
-    public void onAddonSubItemClicked(String subItemCost, String addOnId, String cost, boolean isChecked) {
+    public void onAddonSubItemClicked(String subItemCost, int itemCount,String addOnId, String cost, boolean isChecked) {
         if (isChecked) {
             itemCost = itemCost + Double.parseDouble(subItemCost);
         } else {
@@ -252,6 +252,7 @@ public class FoodItemFragment extends Fragment implements FoodItemChanged, Addon
         }
         int itemCostInt = (int) itemCost;
         itemPriceTxt.setText("Item price : ₹" + itemCostInt);
+        int totalCost = itemCostInt*itemCount;
         foodItemDBAdapter.updateTotalCost(itemCostInt + "", addOnId);
         foodItemDBAdapter.updateItemTotalCost(itemCostInt + "", addOnId);
     }

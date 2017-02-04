@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.panamon.paccozz.R;
 import com.panamon.paccozz.dbadater.AddOnDBAdapter;
+import com.panamon.paccozz.dbadater.FoodItemDBAdapter;
 import com.panamon.paccozz.interfaces.AddonItemClicked;
 import com.panamon.paccozz.model.AddOnItemModel;
 import com.panamon.paccozz.model.AddOnSubItemModel;
@@ -101,13 +102,15 @@ public class AddOnSubItemAdapter extends RecyclerView.Adapter {
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
             int pos = (int) compoundButton.getTag();
+            FoodItemDBAdapter foodItemDBAdapter = new FoodItemDBAdapter();
             AddOnSubItemModel addOnClickedSubItemModel = addOnSubItemModels.get(pos);
             if (b) {
                 int limit = Integer.parseInt(addOnDBAdapter.getAddOnLimits(addOnClickedSubItemModel.AddOnId).AddOnLimits);
                 if (addOnDBAdapter.getAddOnSelectedSubItems(addOnClickedSubItemModel.AddOnId).size() < limit) {
                     addOnDBAdapter.updateIsItemSelected("1", addOnClickedSubItemModel.AddOnSubItemId);
                     String cost = addOnDBAdapter.getTotalSubItemCost(addOnClickedSubItemModel.AddOnSubItemId);
-                    addonItemClicked.onAddonSubItemClicked(cost, addOnClickedSubItemModel.AddOnCateroryId, addOnClickedSubItemModel.AddOnPrice, true);
+                    int itemCount = Integer.parseInt(foodItemDBAdapter.getItemCount(addOnClickedSubItemModel.AddOnCateroryId));
+                    addonItemClicked.onAddonSubItemClicked(cost,itemCount, addOnClickedSubItemModel.AddOnCateroryId, addOnClickedSubItemModel.AddOnPrice, true);
                 }else{
                     compoundButton.setChecked(false);
                     Snackbar.make(compoundButton, "You have exceeded maximum limit of addons", Snackbar.LENGTH_LONG)
@@ -116,7 +119,8 @@ public class AddOnSubItemAdapter extends RecyclerView.Adapter {
             } else {
                 addOnDBAdapter.updateIsItemSelected("0", addOnClickedSubItemModel.AddOnSubItemId);
                 String cost = addOnDBAdapter.getTotalSubItemCost(addOnClickedSubItemModel.AddOnSubItemId);
-                addonItemClicked.onAddonSubItemClicked(cost, addOnClickedSubItemModel.AddOnCateroryId, addOnClickedSubItemModel.AddOnPrice, false);
+                int itemCount = Integer.parseInt(foodItemDBAdapter.getItemCount(addOnClickedSubItemModel.AddOnCateroryId));
+                addonItemClicked.onAddonSubItemClicked(cost, itemCount,addOnClickedSubItemModel.AddOnCateroryId, addOnClickedSubItemModel.AddOnPrice, false);
             }
         }
     };
