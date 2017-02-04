@@ -8,8 +8,10 @@ android {
         applicationId "com.panamon.paccozz"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 2
-        versionName "1.01"
+        versionCode 3
+        versionName "1.02"
+        // Disabling multidex support.
+        multiDexEnabled false
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

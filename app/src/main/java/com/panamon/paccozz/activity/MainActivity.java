@@ -38,6 +38,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.facebook.stetho.Stetho;
+import com.freshdesk.hotline.Hotline;
+import com.freshdesk.hotline.HotlineConfig;
+import com.freshdesk.hotline.HotlineUser;
 import com.panamon.paccozz.R;
 import com.panamon.paccozz.adapter.HotelListAdapter;
 import com.panamon.paccozz.common.Constants;
@@ -305,7 +308,7 @@ public class MainActivity extends AppCompatActivity
                                 Singleton.getInstance().ProfileImage = jsonObject.getString("uimg");
                                 String message = jsonObject.getString("message");
                                 // set new title to the MenuItem
-                                nav_wallet.setTitle("Wallet                          ₹" + Singleton.getInstance().WalletAmount);
+                                nav_wallet.setTitle("Wallet                          ₹ " + Singleton.getInstance().WalletAmount);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -450,15 +453,36 @@ public class MainActivity extends AppCompatActivity
         final Dialog dialog = new Dialog(MainActivity.this);
         dialog.setContentView(R.layout.help_dialog_layout);
         TextView cancel, chat, mail, faq;
-        faq=(TextView)dialog.findViewById(R.id.faq);
-        mail=(TextView)dialog.findViewById(R.id.mailus);
-        chat=(TextView)dialog.findViewById(R.id.chat);
-        cancel=(TextView)dialog.findViewById(R.id.cancel);
+        faq = (TextView) dialog.findViewById(R.id.faq);
+        mail = (TextView) dialog.findViewById(R.id.mailus);
+        chat = (TextView) dialog.findViewById(R.id.chat);
+        cancel = (TextView) dialog.findViewById(R.id.cancel);
         faq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent help = new Intent(MainActivity.this, FaqActivity.class);
-                startActivity(help);
+                Intent faq = new Intent(MainActivity.this, FaqActivity.class);
+                startActivity(faq);
+            }
+        });
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("sdk version",Hotline.getSDKVersionCode()+"");
+
+                HotlineConfig hlConfig = new HotlineConfig("9d5af2db-ed0a-43d5-826c-a23a6d82db11", "249ef5f7-9e48-42b6-b6d0-0dbd8eea0650");
+
+                hlConfig.setVoiceMessagingEnabled(true);
+                hlConfig.setCameraCaptureEnabled(true);
+                hlConfig.setPictureMessagingEnabled(true);
+                Hotline.getInstance(getApplicationContext()).init(hlConfig);
+
+
+                //Update user information
+                HotlineUser user = Hotline.getInstance(getApplicationContext()).getUser();
+                user.setName("Android").setEmail("android@paccozz.com").setPhone("044", "25425424");
+                Hotline.getInstance(getApplicationContext()).updateUser(user);
+
+                Hotline.showConversations(MainActivity.this);
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -486,11 +510,10 @@ public class MainActivity extends AppCompatActivity
                 String model = android.os.Build.MODEL;
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "support@paccozz.com", null));
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Report Issue to Support Team");
-                emailIntent.putExtra(Intent.EXTRA_TEXT,  "Device Id -" + model + "\n" + "Android version -" + currentapiVersion + "\n" + "App version -" + cuurentversion);
+                emailIntent.putExtra(Intent.EXTRA_TEXT, "Device Id -" + model + "\n" + "Android version -" + currentapiVersion + "\n" + "App version -" + cuurentversion);
                 startActivity(Intent.createChooser(emailIntent, "Send email..."));
             }
         });
-
 
 
         dialog.show();

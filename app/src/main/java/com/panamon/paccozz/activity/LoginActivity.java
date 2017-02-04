@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
     private void getOtp() {
         progressBar.setVisibility(View.VISIBLE);
         final String token = FirebaseInstanceId.getInstance().getToken();
-        Log.e("token",token+"");
+        Log.e("token",token+"testtoken");
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = Constants.OTP_URL;

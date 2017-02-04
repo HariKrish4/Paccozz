@@ -303,7 +303,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
              * Eg: "500" = Rs 5.00
              */
             double amount = totcost;
-            amount = amount +1;
+            //amount = amount +1;
             int amountInt = (int) amount * 100;
             options.put("amount", amountInt + "");
 
