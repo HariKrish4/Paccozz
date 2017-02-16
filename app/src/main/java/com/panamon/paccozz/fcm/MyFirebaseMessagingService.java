@@ -68,7 +68,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
-        sendNotification(remoteMessage.getNotification().getBody());
+
+        String msg = remoteMessage.getData() + "";
+        if (msg.contains("{message=")) {
+            msg = msg.replace("{message=", "");
+            msg = msg.replace("}", "");
+            // Log.e("msg",msg+"mnb");
+        } else {
+            // Log.e("msg",msg+"rew");
+        }
+        sendNotification(msg);
     }
     // [END receive_message]
 
