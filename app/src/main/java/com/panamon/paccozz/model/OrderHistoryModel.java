@@ -6,6 +6,6 @@ package com.panamon.paccozz.model;
 
 public class OrderHistoryModel {
     public String OrderId, VendorName, TotalCost, OrderStatus, OrderTime, orderCode,
-            item, username, totitem, itemsrate, itemcnt, itemcost, paystatus, packtype,
+            item, username, totitem, itemsrate, itemcnt, itemcost, paystatus, packtype, PayMode,
             randnum, orgamount, service, discount, odate, otime, acctime, deltime, ostatus, reason;
 }

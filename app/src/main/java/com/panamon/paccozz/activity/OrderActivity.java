@@ -102,6 +102,7 @@ public class OrderActivity extends AppCompatActivity {
                                     orderHistoryModel.itemcnt = dataObject.getString("itemcnt");
                                     orderHistoryModel.itemcost = dataObject.getString("itemcost");
                                     orderHistoryModel.paystatus = dataObject.getString("paystatus");
+                                    orderHistoryModel.PayMode = dataObject.getString("paymode");
                                     orderHistoryModel.packtype = dataObject.getString("packtype");
                                     orderHistoryModel.randnum = dataObject.getString("randnum");
                                     orderHistoryModel.orgamount = dataObject.getString("orgamount");

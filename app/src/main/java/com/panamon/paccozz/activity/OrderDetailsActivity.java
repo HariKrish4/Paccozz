@@ -18,7 +18,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
     TextView itemName, itemPrice, orderId, date, itemStatus, itemName1,
             itemPrice1, itemName2, itemprice2, itemTotal, vat, discount, totalpayableAmount, packageMode, paymentMode, OrderCode;
 
-    String name, price, orderID, orderCode, pushTime, status, discountStr, packageModeStr, totCostStr, itemnamestr, serviceStr, payableStr, itemrateStr;
+    String name, price, orderID, orderCode, pushTime, status, discountStr, packageModeStr, totCostStr, itemnamestr, serviceStr, payableStr, itemrateStr,payModeStr;
     ExpandableHeightListView elv;
     OrderDetailsAdapter orderDetailsAdapter;
     @Override
@@ -46,7 +46,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         discount = (TextView) findViewById(R.id.discount);
         totalpayableAmount = (TextView) findViewById(R.id.totalPayableAmount);
         packageMode = (TextView) findViewById(R.id.packageMode);
-        paymentMode = (TextView) findViewById(R.id.paymentMode);
+        paymentMode = (TextView) findViewById(R.id.paymentmode);
         elv = (ExpandableHeightListView) findViewById(R.id.exlv);
         elv.setExpanded(true);
 
@@ -64,14 +64,13 @@ public class OrderDetailsActivity extends AppCompatActivity {
         serviceStr = intent.getStringExtra("service");
         payableStr = intent.getStringExtra("pay");
         itemrateStr = intent.getStringExtra("itemrate");
+        payModeStr = intent.getStringExtra("paymode");
 
         List<String> itemsName = Arrays.asList(itemnamestr.split("\\s*,\\s*"));
         Log.e("items", itemsName.size() + "y");
 
         List<String> itemsPrice = Arrays.asList(itemrateStr.split("\\s*,\\s*"));
         Log.e("items", itemsPrice.size() + "y");
-
-
 
         itemName.setText(name);
         itemPrice.setText("₹ " + payableStr);
@@ -84,9 +83,9 @@ public class OrderDetailsActivity extends AppCompatActivity {
         discount.setText("₹ " +discountStr);
         itemTotal.setText("₹ " + totCostStr);
         packageMode.setText(packageModeStr);
+        paymentMode.setText(payModeStr);
         orderDetailsAdapter = new OrderDetailsAdapter(OrderDetailsActivity.this, R.layout.activity_order_details, itemsName, itemsPrice);
         elv.setAdapter(orderDetailsAdapter);
-
 
     }
 }

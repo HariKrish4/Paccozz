@@ -64,7 +64,8 @@ public class OrderAdapter extends RecyclerView.Adapter {
                 orderDetailsIntent.putExtra("service",orderHistoryModel.service);
                 orderDetailsIntent.putExtra("pay",orderHistoryModel.orgamount);
                 orderDetailsIntent.putExtra("itemrate",orderHistoryModel.itemsrate);
-                context.startActivity(orderDetailsIntent);
+                orderDetailsIntent.putExtra("paymode",orderHistoryModel.PayMode);
+               context.startActivity(orderDetailsIntent);
 
             }
         });

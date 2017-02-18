@@ -20,20 +20,18 @@ import java.util.List;
 
 public class OrderDetailsAdapter extends ArrayAdapter<String> {
     Context context;
-   List<String> name;
-   List<String> price;
+    List<String> name;
+    List<String> price;
 
-
-    public OrderDetailsAdapter(Context context, int resource,List<String> names,List<String> pricesList) {
+    public OrderDetailsAdapter(Context context, int resource, List<String> names, List<String> pricesList) {
         super(context, resource, names);
         this.context = context;
         name = new ArrayList<>();
         name = names;
         price = new ArrayList<>();
         price = pricesList;
-        Log.e("price1",price+"d");
-        Log.e("price2",pricesList+"e");
-
+        Log.e("price1", price + "d");
+        Log.e("price2", pricesList + "e");
 
     }
 
@@ -47,17 +45,9 @@ public class OrderDetailsAdapter extends ArrayAdapter<String> {
             TextView nameTextView = (TextView) convertView.findViewById(R.id.name);
             TextView priceTextView = (TextView) convertView.findViewById(R.id.price);
             nameTextView.setText(name.get(position));
-            priceTextView.setText("₹ "+price.get(position));
-
-            Log.e("price2",price+"d");
-
-
-
-
-
+            priceTextView.setText("₹ " + price.get(position));
+            Log.e("price2", price + "d");
         }
-
-
         return convertView;
     }
 }

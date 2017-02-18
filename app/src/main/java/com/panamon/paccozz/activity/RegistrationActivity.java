@@ -583,7 +583,6 @@ public class RegistrationActivity extends AppCompatActivity {
                     entity.addPart("fimage", new FileBody(new File(destination.getPath()), "image/jpg"));
                 }
 
-
                 // Log.e("imagepath", new FileBody(new File( MediaActivity.mFileTemp.getPath()), "image/jpg") + "");
                 HttpClient httpclient = new DefaultHttpClient();
                 post.setEntity(entity);
@@ -595,7 +594,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
             } catch (Exception e) {
                 e.printStackTrace();
-
             }
             return null;
         }
@@ -661,6 +659,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                 Singleton.getInstance().UserEmail = jsonObject.getString("umail");
                                 Singleton.getInstance().UserPass = jsonObject.getString("upass");
                                 String dob = jsonObject.getString("udob");
+                                Singleton.getInstance().UserAge = jsonObject.getString("uage");
                                 Singleton.getInstance().UserMobile = jsonObject.getString("umobile");
                                 Singleton.getInstance().WalletAmount = jsonObject.getString("uwallet");
                                 Singleton.getInstance().ProfileImage = jsonObject.getString("uimg");
@@ -668,7 +667,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                 if (!getIntent().hasExtra("update")) {
                                     sharedPref.setIsLogged(true);
                                     sharedPref.setLoginData(Singleton.getInstance().UserId, Singleton.getInstance().UserName, Singleton.getInstance().UserMobile,
-                                            Singleton.getInstance().UserEmail, Singleton.getInstance().ParkId, Singleton.getInstance().ParkName, Singleton.getInstance().WalletAmount, Singleton.getInstance().ProfileImage, Singleton.getInstance().UserPass);
+                                            Singleton.getInstance().UserEmail, Singleton.getInstance().ParkId, Singleton.getInstance().ParkName, Singleton.getInstance().WalletAmount, Singleton.getInstance().ProfileImage, Singleton.getInstance().UserPass,Singleton.getInstance().UserAge);
                                     Intent as = new Intent(RegistrationActivity.this, MainActivity.class);
                                     startActivity(as);
                                     finish();

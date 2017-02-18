@@ -248,6 +248,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Singleton.getInstance().UserName = jsonObject.getString("uname");
                                 Singleton.getInstance().UserEmail = jsonObject.getString("umail");
                                 Singleton.getInstance().UserPass = jsonObject.getString("upass");
+                                Singleton.getInstance().UserAge = jsonObject.getString("uage");
                                 String dob = jsonObject.getString("udob");
                                 Singleton.getInstance().UserMobile = jsonObject.getString("umobile");
                                 Singleton.getInstance().WalletAmount = jsonObject.getString("uwallet");
@@ -256,7 +257,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 sharedPref.setIsLogged(true);
                                 sharedPref.setLoginData(Singleton.getInstance().UserId, Singleton.getInstance().UserName, Singleton.getInstance().UserMobile,
-                                        Singleton.getInstance().UserEmail, Singleton.getInstance().ParkId, Singleton.getInstance().ParkName,Singleton.getInstance().WalletAmount,Singleton.getInstance().ProfileImage,Singleton.getInstance().UserPass);
+                                        Singleton.getInstance().UserEmail, Singleton.getInstance().ParkId, Singleton.getInstance().ParkName,Singleton.getInstance().WalletAmount,Singleton.getInstance().ProfileImage,Singleton.getInstance().UserPass, Singleton.getInstance().UserAge);
                                 Intent as = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(as);
                                 finish();

@@ -48,6 +48,7 @@ public class SplashActivity extends AppCompatActivity {
             Singleton.getInstance().WalletAmount = sharedPref.getWalletAmount();
             Singleton.getInstance().ProfileImage = sharedPref.getProfileImage();
             Singleton.getInstance().UserPass = sharedPref.getUserPass();
+            Singleton.getInstance().UserAge = sharedPref.getUserAge();
             Intent main = new Intent(this, MainActivity.class);
             startActivity(main);
             finish();

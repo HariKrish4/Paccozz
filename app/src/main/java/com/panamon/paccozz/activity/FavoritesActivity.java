@@ -105,8 +105,11 @@ public class FavoritesActivity extends AppCompatActivity {
                                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(FavoritesActivity.this, LinearLayoutManager.VERTICAL, false);
                                 orderListView.setLayoutManager(mLayoutManager);
                                 orderListView.setAdapter(hotelListAdapter);
+                                if(orderHistoryModels.size()==0){
+                                    noDataTxt.setVisibility(View.GONE);
+                                }
                             } else if (success.equalsIgnoreCase("0")) {
-
+                                    noDataTxt.setVisibility(View.GONE);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
